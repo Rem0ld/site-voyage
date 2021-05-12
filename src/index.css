@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
+bg-color: gray-200
+text-color: gray-500
+btn-danger: red-600
+*/
