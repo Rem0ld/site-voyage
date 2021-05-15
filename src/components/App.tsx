@@ -32,10 +32,14 @@ export default function App(): ReactElement {
     <BrowserRouter>
       <Suspense fallback={<LoadingOrError />}>
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/">
+            <Home />
+          </Route>
           <Route path="/settings" component={Settings} />
           <Route path="/results" component={Results} />
-          <Route path="/trips" component={Trips} />
+          <Route path="/trips">
+            <Trips />
+          </Route>
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />
           {/* <Route path="/notifications" component={Notifications} /> */}
