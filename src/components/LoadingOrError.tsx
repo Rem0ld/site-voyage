@@ -1,6 +1,6 @@
 import Lottie from "lottie-react";
 import React, { ReactElement } from "react";
-import loader from "../../public/29582-looping-idle-location-animation.json";
+import loader from "../../public/loading_earth_globe.json";
 
 interface Properties {
   error?: Error;
