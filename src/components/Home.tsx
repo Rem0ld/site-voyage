@@ -20,7 +20,14 @@ export default function Home(): ReactElement {
             repeat: Number.POSITIVE_INFINITY,
           }}
         >
-          <Button text="Next destination" type="standard" size="big" />
+          <div className="absolute z-10 top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 ">
+            <Button
+              text="Next destination"
+              type="standard"
+              size="big"
+              isButton
+            />
+          </div>
           <img src={content} alt="logo" />
         </motion.div>
       </div>

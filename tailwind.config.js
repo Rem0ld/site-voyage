@@ -18,7 +18,10 @@ module.exports = {
       goVoyages: "#A5C73C",
       red: colors.red,
       gray: colors.warmGray,
-      primary: "#84CC16",
+      primary: {
+        DEFAULT: "#84CC16",
+        hover: "rgb(93 211 29)",
+      },
       secondary: "#064E3B",
       tertiary: "#BEF264",
     },
