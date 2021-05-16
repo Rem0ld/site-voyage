@@ -3,20 +3,14 @@ import React, { ReactElement } from "react";
 
 interface AppProperties {
   text: string;
+  isButton: boolean;
   type: "standard" | "valid" | "danger";
   size: "big" | "medium" | "small";
 }
 
 const main = ctl(`
-absolute 
-z-10 
-top-2/4 
-left-2/4
 px-2
 shadow-sm 
-transform 
--translate-x-2/4 
--translate-y-2/4 
 rounded-md
 `);
 
@@ -41,6 +35,7 @@ font-bold
 `);
 
 const valid = ctl(`
+hover:bg-primary-hover
 bg-primary
 text-white
 `);
@@ -54,6 +49,7 @@ export default function Button({
   text,
   type,
   size,
+  isButton,
 }: AppProperties): ReactElement {
   /**
    * Will conditionally build a string from props received
@@ -65,7 +61,7 @@ export default function Button({
     ${size === "big" ? big : size === "medium" ? medium : small}`;
 
   return (
-    <button type="button" className={applyStyle()}>
+    <button type={isButton ? "button" : "submit"} className={applyStyle()}>
       {text}
     </button>
   );
