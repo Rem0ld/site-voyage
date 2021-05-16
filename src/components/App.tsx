@@ -1,13 +1,21 @@
-import React, { lazy, ReactElement, Suspense, useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import LoadingOrError from "./LoadingOrError";
+import React, { ReactElement, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
+import Dashboard from "./Dashboard";
+import Header from "./Header";
+import Home from "./Home";
+// import LoadingOrError from "./LoadingOrError";
 import Login from "./Login/Login";
 import SignUp from "./Login/SignUp";
 import Results from "./Results";
+import Settings from "./Settings";
 import Trips from "./Trips";
-
-const Home = lazy(() => import("./Home"));
-const Settings = lazy(() => import("./Settings"));
+// const Home = lazy(() => import("./Home"));
+// const Settings = lazy(() => import("./Settings"));
 
 /**
  * If menu dropdown is open and click happens on body, closes menu dropdown
@@ -29,22 +37,30 @@ export default function App(): ReactElement {
     };
   }, []);
   return (
-    <BrowserRouter>
-      <Suspense fallback={<LoadingOrError />}>
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/settings" component={Settings} />
-          <Route path="/results" component={Results} />
-          <Route path="/trips">
-            <Trips />
-          </Route>
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={SignUp} />
-          {/* <Route path="/notifications" component={Notifications} /> */}
-        </Switch>
-      </Suspense>
-    </BrowserRouter>
+    <Router>
+      {/* <Suspense fallback={<LoadingOrError />}> */}
+
+      <Header />
+      <Dashboard />
+      <Switch>
+        <Route path="/settings">
+          <Settings />
+          <Redirect push to="/settings" />
+        </Route>
+        <Route path="/results">
+          <Results />
+        </Route>
+        <Route path="/trips">
+          <Trips />
+        </Route>
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={SignUp} />
+        <Route exact path="/">
+          <Home />
+        </Route>
+        {/* <Route path="/notifications" component={Notifications} /> */}
+      </Switch>
+      {/* </Suspense> */}
+    </Router>
   );
 }
