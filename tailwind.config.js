@@ -4,7 +4,7 @@ const colors = require("tailwindcss/colors");
 
 module.exports = {
   mode: "jit",
-  purge: ["index.html", "src/**/*.tsx"],
+  purge: ["index.html", "src/**/*.tsx", "src/**/*.ts"],
   theme: {
     fontFamily: {
       sans: ["Inter var", defaultConfig.theme.fontFamily.sans],
