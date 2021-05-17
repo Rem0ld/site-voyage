@@ -22,10 +22,11 @@ border
 border-gray-400
 rounded 
 leading-tight 
+outline-none
 focus:outline-none 
 focus:shadow-outline
-focus:ring-none
 focus:ring-primary
+focus:border-primary
 `);
 
 const label = ctl(`
@@ -54,7 +55,7 @@ export default function Login(): ReactElement {
   } = useForm<Inputs>();
 
   return (
-    <div className="h-screen bg-gray-200 grid place-items-center">
+    <div className="content-container">
       <div className="w-full max-w-xs bg-white rounded-md">
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -71,7 +72,11 @@ export default function Login(): ReactElement {
               className={input}
               {...register("username", { required: true })}
             />
-            {errors.password && <span>This field is required</span>}
+            {errors.password && (
+              <span className="text-red-500 text-xs italic">
+                This field is required
+              </span>
+            )}
           </div>
 
           <div className="mb-6">
@@ -85,7 +90,11 @@ export default function Login(): ReactElement {
               className={input}
               {...register("password", { required: true })}
             />
-            {errors.password && <span>This field is required</span>}
+            {errors.password && (
+              <span className="text-red-500 text-xs italic">
+                This field is required
+              </span>
+            )}
           </div>
 
           <div className="flex items-center justify-between">

@@ -8,14 +8,12 @@ import {
 import Dashboard from "./Dashboard";
 import Header from "./Header";
 import Home from "./Home";
-// import LoadingOrError from "./LoadingOrError";
 import Login from "./login/Login";
 import SignUp from "./login/SignUp";
 import Results from "./Results";
 import Settings from "./Settings";
 import Trips from "./Trips";
-// const Home = lazy(() => import("./Home"));
-// const Settings = lazy(() => import("./Settings"));
+// import LoadingOrError from "./LoadingOrError";
 
 /**
  * If menu dropdown is open and click happens on body, closes menu dropdown
@@ -36,10 +34,10 @@ export default function App(): ReactElement {
       document.removeEventListener("click", closeMenu);
     };
   }, []);
+
   return (
     <Router>
       {/* <Suspense fallback={<LoadingOrError />}> */}
-
       <Header />
       <Dashboard />
       <Switch>

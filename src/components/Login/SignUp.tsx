@@ -1,7 +1,5 @@
-import { ReactElement } from "react";
+import React, { ReactElement } from "react";
 
 export default function SignUp(): ReactElement {
-  return (
-
-  );
+  return <div className="content-container" />;
 }

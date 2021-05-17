@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../public/logo_with_plane.svg";
-import MenuDropdown from "./elements/MenuDropdown";
+import MenuDropdown from "./elements/MenuDropdown/MenuDropdown";
 
 export default function Header(): ReactElement {
   return (
