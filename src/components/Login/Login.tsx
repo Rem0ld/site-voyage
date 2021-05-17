@@ -14,17 +14,18 @@ type Inputs = {
 
 const input = ctl(`
 appearance-none 
-w-full 
-py-2 
-px-3 
-shadow 
-border
-border-gray-400
+block 
+w-full
+bg-gray-100 
+border 
+border-gray-100 
 rounded 
+py-3 
+px-4 
 leading-tight 
 outline-none
-focus:outline-none 
-focus:shadow-outline
+focus:outline-none
+focus:bg-white
 focus:ring-primary
 focus:border-primary
 `);
@@ -57,9 +58,10 @@ export default function Login(): ReactElement {
   return (
     <div className="content-container">
       <div className="w-full max-w-xs bg-white rounded-md">
+        <h2 className="font-bold text-xl text-center pt-6">Login</h2>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8"
+          className="bg-white shadow-md rounded px-8 pt-4 pb-8"
         >
           <div className="mb-4">
             <label className={label} htmlFor="username">
