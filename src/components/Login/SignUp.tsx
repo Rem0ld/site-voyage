@@ -1,5 +1,6 @@
-/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/jsx-props-no-spreading */
+
 import Button from "components/elements/Button";
 import React, { ReactElement } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
