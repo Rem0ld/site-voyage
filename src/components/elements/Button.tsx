@@ -35,7 +35,7 @@ font-bold
 `);
 
 const valid = ctl(`
-hover:bg-primary-hover
+hover:bg-secondary
 bg-primary
 text-white
 `);

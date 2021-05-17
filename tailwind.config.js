@@ -20,7 +20,6 @@ module.exports = {
       gray: colors.warmGray,
       primary: {
         DEFAULT: "#84CC16",
-        hover: "rgb(93 211 29)",
       },
       secondary: "#064E3B",
       tertiary: "#BEF264",
