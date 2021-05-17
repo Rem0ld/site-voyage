@@ -6,36 +6,12 @@ import Button from "components/elements/Button";
 import ctl from "helpers/ctl";
 import React, { ReactElement } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import classes from "./styles";
 
 type Inputs = {
   username: string;
   password: string;
 };
-
-const input = ctl(`
-appearance-none 
-block 
-w-full
-bg-gray-100 
-border 
-border-gray-100 
-rounded 
-py-3 
-px-4 
-leading-tight 
-outline-none
-focus:outline-none
-focus:bg-white
-focus:ring-primary
-focus:border-primary
-`);
-
-const label = ctl(`
-block 
-mb-2
-text-sm 
-font-bold 
-`);
 
 const link = ctl(`
 inline-block 
@@ -64,14 +40,14 @@ export default function Login(): ReactElement {
           className="bg-white shadow-md rounded px-8 pt-4 pb-8"
         >
           <div className="mb-4">
-            <label className={label} htmlFor="username">
+            <label className={classes.label} htmlFor="username">
               Username
             </label>
             <input
               id="username"
               type="text"
               placeholder="Username"
-              className={input}
+              className={classes.input}
               {...register("username", { required: true })}
             />
             {errors.password && (
@@ -82,14 +58,14 @@ export default function Login(): ReactElement {
           </div>
 
           <div className="mb-6">
-            <label className={label} htmlFor="password">
+            <label className={classes.label} htmlFor="password">
               Password
             </label>
             <input
               id="password"
               type="password"
               placeholder="******************"
-              className={input}
+              className={classes.input}
               {...register("password", { required: true })}
             />
             {errors.password && (
