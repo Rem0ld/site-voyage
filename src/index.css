@@ -7,3 +7,8 @@ bg-color: gray-200
 text-color: gray-500
 btn-danger: red-600
 */
+
+.content-container {
+  height: calc(100vh - theme("spacing.16"));
+  @apply bg-gray-200 grid place-items-center;
+}

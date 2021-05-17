@@ -82,12 +82,12 @@ export default function MenuDropdown({
   ) : (
     <div className="relative flex justify-center space-x-1">
       <div
+        className="relative"
         onClick={(event) => {
           toggleMenu(event);
         }}
         role="button"
         tabIndex={0}
-        className="relative"
       >
         <Icon icon={personIcon} className="w-6 h-6 text-primary" />
       </div>
