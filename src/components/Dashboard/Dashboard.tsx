@@ -6,6 +6,7 @@ import { motion, useCycle } from "framer-motion";
 import React, { ReactElement, useEffect, useState } from "react";
 import { Country } from "types";
 import listDangerousCountry from "../../api/listDangerousCountry";
+import { setSessionStorage } from "../../helpers/sessionStorage";
 import ButtonToggle from "../elements/ButtonToggle";
 import DashboardList from "../elements/DasboardList/DashboardList";
 import classes from "./styles";
@@ -28,6 +29,10 @@ export default function Dashboard({ countries }: AppProperties): ReactElement {
   const [authorisedCountry, setAuthorisedCountry] = useState<Country[]>([]);
   const [bannedCountry, setBannedCountry] = useState<Country[]>([]);
 
+  /**
+   * Will remove the country from authorised and put it in banned
+   * @param numericCode Country number
+   */
   const banACountry = (numericCode: number): void => {
     const country: Country | undefined = authorisedCountry?.find(
       (element) => +element.numericCode === numericCode
@@ -40,8 +45,14 @@ export default function Dashboard({ countries }: AppProperties): ReactElement {
     setBannedCountry(
       (previousState): Country[] => [...previousState, country] as Country[]
     );
+
+    setSessionStorage(filteredList, bannedCountry);
   };
 
+  /**
+   * Will remove the country from banned and put it in authorised
+   * @param numericCode Country number
+   */
   const authoriseACountry = (numericCode: number): void => {
     const country: Country | undefined = bannedCountry?.find(
       (element) => +element.numericCode === numericCode
@@ -54,6 +65,8 @@ export default function Dashboard({ countries }: AppProperties): ReactElement {
     setAuthorisedCountry(
       (previousState): Country[] => [...previousState, country] as Country[]
     );
+
+    setSessionStorage(authorisedCountry, filteredList);
   };
 
   useEffect(() => {
@@ -70,6 +83,7 @@ export default function Dashboard({ countries }: AppProperties): ReactElement {
       });
       setAuthorisedCountry(authorised);
       setBannedCountry(banned);
+      setSessionStorage(authorised, banned);
     };
     firstFiltering(listDangerousCountry);
   }, [countries]);
