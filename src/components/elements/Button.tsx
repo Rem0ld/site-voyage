@@ -6,6 +6,7 @@ interface AppProperties {
   isButton: boolean;
   type: "standard" | "valid" | "danger";
   size: "big" | "medium" | "small";
+  onClick: (event: React.MouseEvent<HTMLElement>) => void | undefined;
 }
 
 const main = ctl(`
@@ -50,6 +51,7 @@ export default function Button({
   type,
   size,
   isButton,
+  onClick,
 }: AppProperties): ReactElement {
   /**
    * Will conditionally build a string from props received
@@ -61,7 +63,11 @@ export default function Button({
     ${size === "big" ? big : size === "medium" ? medium : small}`;
 
   return (
-    <button type={isButton ? "button" : "submit"} className={applyStyle()}>
+    <button
+      onClick={onClick}
+      type={isButton ? "button" : "submit"}
+      className={applyStyle()}
+    >
       {text}
     </button>
   );
