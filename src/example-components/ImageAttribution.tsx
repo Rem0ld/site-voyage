@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { IFruit } from "types";
+import { IFruit } from "typesExample";
 
 interface Properties {
   author: IFruit["image"]["author"];

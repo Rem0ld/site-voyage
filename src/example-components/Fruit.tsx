@@ -1,6 +1,6 @@
 import React, { ReactElement, useCallback } from "react";
 import { useHistory } from "react-router-dom";
-import { IFruit } from "types";
+import { IFruit } from "typesExample";
 import ImageAttribution from "./ImageAttribution";
 
 interface Properties {
