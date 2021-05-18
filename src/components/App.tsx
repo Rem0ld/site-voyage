@@ -1,11 +1,6 @@
-import React, { ReactElement, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from "react-router-dom";
-import Dashboard from "./Dashboard";
+import React, { ReactElement, Suspense, useEffect } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Loading from "./elements/Loading";
 import Header from "./Header";
 import Home from "./Home";
 import Login from "./login/Login";
@@ -13,10 +8,9 @@ import SignUp from "./login/SignUp";
 import Results from "./Results";
 import Settings from "./Settings";
 import Trips from "./Trips";
-// import LoadingOrError from "./LoadingOrError";
 
 /**
- * If menu dropdown is open and click happens on body, closes menu dropdown
+ * If menu dropdown is open and click happens on body, closes dropdown menu
  */
 const closeMenu = (): void => {
   const isOpen: Element | null = document.querySelector(".menu");
@@ -39,23 +33,15 @@ export default function App(): ReactElement {
     <Router>
       {/* <Suspense fallback={<LoadingOrError />}> */}
       <Header />
-      <Dashboard />
       <Switch>
-        <Route path="/settings">
-          <Settings />
-          <Redirect push to="/settings" />
-        </Route>
-        <Route path="/results">
-          <Results />
-        </Route>
-        <Route path="/trips">
-          <Trips />
-        </Route>
+        <Route path="/settings" component={Settings} />
+        <Route path="/results" component={Results} />
+        <Route path="/trips" component={Trips} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
-        <Route exact path="/">
-          <Home />
-        </Route>
+        <Suspense fallback={<Loading />}>
+          <Route exact path="/" component={Home} />
+        </Suspense>
         {/* <Route path="/notifications" component={Notifications} /> */}
       </Switch>
       {/* </Suspense> */}
