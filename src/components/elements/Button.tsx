@@ -6,7 +6,7 @@ interface AppProperties {
   isButton: boolean;
   type: "standard" | "valid" | "danger";
   size: "big" | "medium" | "small";
-  onClick: (event: React.MouseEvent<HTMLElement>) => void | undefined;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const main = ctl(`
@@ -72,3 +72,7 @@ export default function Button({
     </button>
   );
 }
+
+Button.defaultProps = {
+  onClick: undefined,
+};
