@@ -1,3 +1,11 @@
+export interface Hobbies {
+  [key: string]: boolean;
+}
+
+export interface Continents {
+  [key: string]: Country[];
+}
+
 export interface Country {
   name: string;
   topLevelDomain: string[];
