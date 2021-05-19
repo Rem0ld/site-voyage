@@ -45,8 +45,9 @@ export default function Home(): ReactElement {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const makeLoading = (event: React.MouseEvent<HTMLButtonElement>) => {
     const listCountry = getSessionStorage();
-    if (listCountry?.length !== 0) {
-      console.log(listCountry[random(listCountry?.length, 0)]);
+    if (listCountry) {
+      const number: number = random(listCountry.length, 0);
+      console.log(listCountry[number]);
     }
 
     setLoading(true);
@@ -57,16 +58,16 @@ export default function Home(): ReactElement {
       <Dashboard countries={countries} />
       <motion.div
         className="relative"
-        initial={{ y: 0, x: 0 }}
-        animate={{
-          y: [-10, 0, -10],
-          x: [-10, 0, -10],
-        }}
-        transition={{
-          duration: 2,
-          ease: "easeInOut",
-          repeat: Number.POSITIVE_INFINITY,
-        }}
+        // initial={{ y: 0, x: 0 }}
+        // animate={{
+        //   y: [-10, 0, -10],
+        //   x: [-10, 0, -10],
+        // }}
+        // transition={{
+        //   duration: 2,
+        //   ease: "easeInOut",
+        //   repeat: Number.POSITIVE_INFINITY,
+        // }}
       >
         <div className={classesButton}>
           <Button
