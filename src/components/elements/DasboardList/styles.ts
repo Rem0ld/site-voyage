@@ -1,11 +1,14 @@
 import ctl from "helpers/ctl";
 
 const list = ctl(`
-w-52
+md:max-h-full
+max-h-96
+h-5/6
 bg-gray-100 
 shadow-inner 
+rounded-md
 overflow-y-scroll 
-rounded-md`);
+`);
 
 export default {
   list
