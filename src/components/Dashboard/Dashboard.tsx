@@ -1,9 +1,11 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-restricted-syntax */
 import chevronRight from "@iconify-icons/akar-icons/chevron-right";
 import magnifyIcon from "@iconify-icons/mdi-light/magnify";
 import Icon, { InlineIcon } from "@iconify/react";
 import { motion, useCycle } from "framer-motion";
-import React, { ReactElement, useEffect, useState } from "react";
+import ctl from "helpers/ctl";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { Country } from "types";
 import listDangerousCountry from "../../api/listDangerousCountry";
 import { setSessionStorage } from "../../helpers/sessionStorage";
@@ -23,6 +25,26 @@ const variants = {
 const transition = {
   duration: 0.8,
 };
+
+const classesFilterList = ctl(`
+shadow-inset-outset 
+absolute 
+top-8 
+left-12 
+z-10 
+w-40 
+h-40 
+border 
+bg-gray-100 
+rounded-md
+`);
+
+const classesCheckbox = ctl(`
+outline-none 
+focus:outline-none 
+focus:border-primary 
+focus:ring-primary 
+text-primary`);
 
 export default function Dashboard({ countries }: AppProperties): ReactElement {
   const [isOpen, toggleOpen] = useCycle(false, true);
@@ -69,8 +91,8 @@ export default function Dashboard({ countries }: AppProperties): ReactElement {
     setSessionStorage(authorisedCountry, filteredList);
   };
 
-  useEffect(() => {
-    const firstFiltering = (list: string[]) => {
+  const firstFiltering = useCallback(
+    (list: string[]) => {
       const authorised: Country[] = [];
       const banned = countries.filter((element) => {
         for (const country of list) {
@@ -84,9 +106,13 @@ export default function Dashboard({ countries }: AppProperties): ReactElement {
       setAuthorisedCountry(authorised);
       setBannedCountry(banned);
       setSessionStorage(authorised, banned);
-    };
+    },
+    [countries]
+  );
+
+  useEffect(() => {
     firstFiltering(listDangerousCountry);
-  }, [countries]);
+  }, [countries, firstFiltering]);
 
   return (
     <motion.div
@@ -116,29 +142,44 @@ export default function Dashboard({ countries }: AppProperties): ReactElement {
       </div>
       <div className="py-4">
         <h3 className="text-md font-semibold text-secondary">Filters</h3>
-        <div className="flex items-center pt-2.5 pb-4">
-          <span className="text-sm">Regions</span>
-          <Icon icon={chevronRight} />
-        </div>
-        <div className="flex items-center">
-          <span className="text-sm">Hobbies</span>
-          <Icon icon={chevronRight} />
+        <div className="flex">
+          <div className="relative flex items-center pt-2.5 pb-4 pr-4">
+            <span className="text-sm">Regions</span>
+            <Icon icon={chevronRight} />
+            <div className={classesFilterList}>
+              <ul>
+                <li className="flex items-center">
+                  <input
+                    type="checkbox"
+                    name="europe"
+                    id="europe"
+                    value="Europe"
+                    className={classesCheckbox}
+                  />
+                  <label className="pl-2" htmlFor="europe">
+                    Europe
+                  </label>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="relative flex items-center pt-2.5 pb-4">
+            <span className="text-sm">Hobbies</span>
+            <Icon icon={chevronRight} />
+            {/* <div className="absolute top-8 left-12 z-10 w-40 h-40 bg-gray-100 shadow-inner rounded-md" /> */}
+          </div>
         </div>
       </div>
-      <div className="py-4">
-        <h3 className="text-md font-semibold text-secondary">List</h3>
+      <div className="flex sm:flex-row flex-col justify-between">
         <DashboardList
-          height="h-56"
-          list={authorisedCountry}
-          onclick={banACountry}
-        />
-      </div>
-      <div className="py-4">
-        <h3 className="text-md font-semibold text-secondary">Banned</h3>
-        <DashboardList
-          height="h-32"
+          title="Exluded"
           list={bannedCountry}
           onclick={authoriseACountry}
+        />
+        <DashboardList
+          title="Included"
+          list={authorisedCountry}
+          onclick={banACountry}
         />
       </div>
     </motion.div>

@@ -8,7 +8,7 @@ border-r-0
 border-l-0 
 border-b-1 
 border-gray-300 
-w-full 
+w-2/4 
 mr-3 
 py-1 
 px-2 
@@ -23,11 +23,13 @@ hover:border-b-2
 `);
 
 const component = ctl(`
-absolute 
-z-10 
-height 
-lg:w-2/12 
-w-5/12 
+absolute
+left-0
+top-16
+z-20
+lg:min-h-screen
+lg:w-5/12 
+w-11/12
 mt-1 
 p-2 
 transform-gpu 
