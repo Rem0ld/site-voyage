@@ -1,118 +1,132 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-restricted-syntax */
-import chevronRight from "@iconify-icons/akar-icons/chevron-right";
 import magnifyIcon from "@iconify-icons/mdi-light/magnify";
-import Icon, { InlineIcon } from "@iconify/react";
+import { InlineIcon } from "@iconify/react";
+import Filters from "components/Filters/Filters";
 import { motion, useCycle } from "framer-motion";
-import ctl from "helpers/ctl";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
-import { Country } from "types";
+import { Continents, Country, Hobbies } from "types";
 import listDangerousCountry from "../../api/listDangerousCountry";
 import { setSessionStorage } from "../../helpers/sessionStorage";
 import ButtonToggle from "../elements/ButtonToggle";
-import DashboardList from "../elements/DasboardList/DashboardList";
+import DashboardList from "./DashboardList/DashboardList";
 import classes from "./styles";
+
+// To move to external file
+const hobbies: Hobbies = { beach: true, mountain: true };
 
 interface AppProperties {
   countries: Country[];
 }
+
+const toggleFilter = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  console.log(event);
+};
+
 // Objects used by framer-motion for animations
 const variants = {
   open: { x: 0 },
   closed: { x: "-100%" },
 };
-
 const transition = {
   duration: 0.8,
 };
 
-const classesFilterList = ctl(`
-shadow-inset-outset 
-absolute 
-top-8 
-left-12 
-z-10 
-w-40 
-h-40 
-border 
-bg-gray-100 
-rounded-md
-`);
-
-const classesCheckbox = ctl(`
-outline-none 
-focus:outline-none 
-focus:border-primary 
-focus:ring-primary 
-text-primary`);
-
 export default function Dashboard({ countries }: AppProperties): ReactElement {
   const [isOpen, toggleOpen] = useCycle(false, true);
-  const [authorisedCountry, setAuthorisedCountry] = useState<Country[]>([]);
-  const [bannedCountry, setBannedCountry] = useState<Country[]>([]);
+  const [includedCountry, setIncludedCountry] = useState<Country[]>([]);
+  const [excludedCountry, setExcludedCountry] = useState<Country[]>([]);
+  const [continents, setContinents] = useState<Continents>();
 
   /**
-   * Will remove the country from authorised and put it in banned
-   * @param numericCode Country number
+   * Sorts countries by continents
+   *
+   * { continentName: Countries[] }
    */
-  const banACountry = (numericCode: number): void => {
-    const country: Country | undefined = authorisedCountry?.find(
-      (element) => +element.numericCode === numericCode
-    );
-    const filteredList: Country[] = authorisedCountry.filter(
-      (element) => +element.numericCode !== numericCode
-    );
-
-    setAuthorisedCountry(() => filteredList);
-    setBannedCountry(
-      (previousState): Country[] => [...previousState, country] as Country[]
-    );
-
-    setSessionStorage(filteredList, bannedCountry);
-  };
+  const makeContinents = useCallback(
+    (): Continents =>
+      // eslint-disable-next-line unicorn/no-array-reduce
+      countries.reduce(
+        (accumulator: Continents, element: Country): Continents => {
+          const cle = element.region;
+          if (!accumulator[cle]) {
+            accumulator[cle] = [];
+          }
+          accumulator[cle].push(element);
+          return accumulator;
+        },
+        {}
+      ),
+    [countries]
+  );
 
   /**
-   * Will remove the country from banned and put it in authorised
-   * @param numericCode Country number
+   * Filters countries in 2 lists: included, excluded ( from the pool )
+   * Will fire when we receive the list of countries
+   * Subject to change
    */
-  const authoriseACountry = (numericCode: number): void => {
-    const country: Country | undefined = bannedCountry?.find(
-      (element) => +element.numericCode === numericCode
-    );
-    const filteredList: Country[] = bannedCountry.filter(
-      (element) => +element.numericCode !== numericCode
-    );
-
-    setBannedCountry(() => filteredList);
-    setAuthorisedCountry(
-      (previousState): Country[] => [...previousState, country] as Country[]
-    );
-
-    setSessionStorage(authorisedCountry, filteredList);
-  };
-
   const firstFiltering = useCallback(
     (list: string[]) => {
-      const authorised: Country[] = [];
-      const banned = countries.filter((element) => {
+      const included: Country[] = [];
+      const excluded = countries.filter((element) => {
         for (const country of list) {
           if (element.name.includes(country)) {
             return 1;
           }
         }
-        authorised.push(element);
+        included.push(element);
         return 0;
       });
-      setAuthorisedCountry(authorised);
-      setBannedCountry(banned);
-      setSessionStorage(authorised, banned);
+      setIncludedCountry(included);
+      setExcludedCountry(excluded);
+      setSessionStorage(included, excluded);
     },
     [countries]
   );
 
   useEffect(() => {
+    setContinents(makeContinents());
     firstFiltering(listDangerousCountry);
-  }, [countries, firstFiltering]);
+  }, [countries, firstFiltering, makeContinents]);
+
+  /**
+   * Will remove the country from included and put it in excluded
+   * @param numericCode Country number
+   */
+  const banACountry = (numericCode: number): void => {
+    const country: Country | undefined = includedCountry?.find(
+      (element) => +element.numericCode === numericCode
+    );
+    const filteredList: Country[] = includedCountry.filter(
+      (element) => +element.numericCode !== numericCode
+    );
+
+    setIncludedCountry(() => filteredList);
+    setExcludedCountry(
+      (previousState): Country[] => [...previousState, country] as Country[]
+    );
+
+    setSessionStorage(filteredList, excludedCountry);
+  };
+
+  /**
+   * Will remove the country from excluded and put it in included
+   * @param numericCode Country number
+   */
+  const authoriseACountry = (numericCode: number): void => {
+    const country: Country | undefined = excludedCountry?.find(
+      (element) => +element.numericCode === numericCode
+    );
+    const filteredList: Country[] = excludedCountry.filter(
+      (element) => +element.numericCode !== numericCode
+    );
+
+    setExcludedCountry(() => filteredList);
+    setIncludedCountry(
+      (previousState): Country[] => [...previousState, country] as Country[]
+    );
+    setSessionStorage(includedCountry, filteredList);
+  };
 
   return (
     <motion.div
@@ -140,45 +154,19 @@ export default function Dashboard({ countries }: AppProperties): ReactElement {
           />
         </div>
       </div>
-      <div className="py-4">
-        <h3 className="text-md font-semibold text-secondary">Filters</h3>
-        <div className="flex">
-          <div className="relative flex items-center pt-2.5 pb-4 pr-4">
-            <span className="text-sm">Regions</span>
-            <Icon icon={chevronRight} />
-            <div className={classesFilterList}>
-              <ul>
-                <li className="flex items-center">
-                  <input
-                    type="checkbox"
-                    name="europe"
-                    id="europe"
-                    value="Europe"
-                    className={classesCheckbox}
-                  />
-                  <label className="pl-2" htmlFor="europe">
-                    Europe
-                  </label>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="relative flex items-center pt-2.5 pb-4">
-            <span className="text-sm">Hobbies</span>
-            <Icon icon={chevronRight} />
-            {/* <div className="absolute top-8 left-12 z-10 w-40 h-40 bg-gray-100 shadow-inner rounded-md" /> */}
-          </div>
-        </div>
-      </div>
+      <Filters
+        listFilters={[continents as Continents, hobbies]}
+        toggleFilter={toggleFilter}
+      />
       <div className="flex sm:flex-row flex-col justify-between">
         <DashboardList
-          title="Exluded"
-          list={bannedCountry}
+          title="Excluded"
+          list={excludedCountry}
           onclick={authoriseACountry}
         />
         <DashboardList
           title="Included"
-          list={authorisedCountry}
+          list={includedCountry}
           onclick={banACountry}
         />
       </div>
