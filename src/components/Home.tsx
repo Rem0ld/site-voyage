@@ -1,7 +1,7 @@
 import GetCountries from "api/GetCountries";
 import { motion } from "framer-motion";
 import ctl from "helpers/ctl";
-import { getSessionStorage } from "helpers/sessionStorage";
+import { getSessionStorageIncluded } from "helpers/sessionStorage";
 import React, { ReactElement, useEffect, useState } from "react";
 import { Country } from "types";
 import main from "../../public/main_version2.svg";
@@ -44,9 +44,9 @@ export default function Home(): ReactElement {
   // Will be in use in the future
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const makeLoading = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const listCountry = getSessionStorage();
+    const listCountry = getSessionStorageIncluded();
     if (listCountry) {
-      const number: number = random(listCountry.length, 0);
+      const number: number = random(listCountry.length, 0) as number;
       console.log(listCountry[number]);
     }
 
