@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import chevronRight from "@iconify-icons/akar-icons/chevron-right";
 import Icon from "@iconify/react";
+import { motion } from "framer-motion";
 import ctl from "helpers/ctl";
 import React, { ReactElement } from "react";
 import { Continents, Hobbies } from "types";
@@ -9,6 +10,7 @@ import { Continents, Hobbies } from "types";
 interface AppProperties {
   list: Continents | Hobbies;
   filterName: string;
+  isOpen: boolean;
   onClickToggleMenu: (
     event: React.MouseEvent<HTMLDivElement>,
     name: string
@@ -25,7 +27,6 @@ z-10
 w-40 
 h-40 
 p-2
-opacity-0
 transition-opacity
 border 
 bg-gray-100 
@@ -39,13 +40,24 @@ focus:border-primary
 focus:ring-primary 
 text-primary`);
 
+// Objects used by framer-motion for animations
+const variants = {
+  open: { transform: "rotate(0deg)" },
+  closed: { transform: "rotate(90deg)" },
+};
+const transition = {
+  duration: 0.5,
+};
+
 export default function FilterElement({
   filterName,
   list,
   onClickToggleMenu,
   onClickToggleFilter,
+  isOpen,
 }: AppProperties): ReactElement {
   const filter = filterName.toLowerCase();
+  const opacity = !isOpen ? "opacity-0" : "";
 
   let listItems;
   if (list) {
@@ -83,9 +95,15 @@ export default function FilterElement({
         className="flex items-center"
       >
         <span className="text-sm">{filterName}</span>
-        <Icon icon={chevronRight} />
+        <motion.div
+          animate={isOpen ? "closed" : "open"}
+          variants={variants}
+          transition={transition}
+        >
+          <Icon icon={chevronRight} />
+        </motion.div>
       </div>
-      <div className={`${filter} ${classesFilterList}`}>
+      <div className={`${filter} ${classesFilterList} ${opacity}`}>
         <ul>{listItems}</ul>
       </div>
     </div>
