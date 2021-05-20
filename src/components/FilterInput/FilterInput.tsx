@@ -8,12 +8,12 @@ import classes from "./styles";
 
 interface AppProperties {
   includedCountry: Country[];
-  setIncludedCountry: React.Dispatch<React.SetStateAction<Country[]>>;
+  banACountry: (numericCode: number) => void;
 }
 
 export default function FilterInput({
   includedCountry,
-  setIncludedCountry,
+  banACountry,
 }: AppProperties): ReactElement {
   const [inputValue, setInputValue] = useState("");
 
@@ -26,13 +26,9 @@ export default function FilterInput({
     )
     .map((element) => (
       <li
-        key={element.name}
+        key={element.numericCode}
         onClick={() => {
-          setIncludedCountry(
-            includedCountry.filter(
-              (predicate) => predicate.name !== element.name
-            )
-          );
+          banACountry(+element.numericCode);
         }}
         className="p-2 cursor-pointer hover:bg-primary rounded-md"
       >
