@@ -25,6 +25,7 @@ const random = (max: number | undefined, min: number): number | undefined =>
 export default function Home(): ReactElement {
   const [isLoading, setLoading] = useState(false);
   const [countries, setCountries] = useState<Country[]>([]);
+  const [winner, setWinner] = useState<Country>({} as Country);
 
   const fetchData = async (): Promise<void> => {
     await GetCountries().then((data) => {
@@ -47,9 +48,8 @@ export default function Home(): ReactElement {
     const listCountry = getSessionStorageIncluded();
     if (listCountry) {
       const number: number = random(listCountry.length, 0) as number;
-      console.log(listCountry[number]);
+      setWinner(listCountry[number]);
     }
-
     setLoading(true);
   };
 
@@ -82,6 +82,6 @@ export default function Home(): ReactElement {
       </motion.div>
     </div>
   ) : (
-    <Loading />
+    <Loading winner={winner} />
   );
 }
