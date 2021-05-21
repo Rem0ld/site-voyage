@@ -1,6 +1,5 @@
-import React, { ReactElement, Suspense, useEffect } from "react";
+import React, { ReactElement, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Loading from "./elements/Loading";
 import Header from "./Header";
 import Home from "./Home";
 import Login from "./login/Login";
@@ -39,9 +38,7 @@ export default function App(): ReactElement {
         <Route path="/trips" component={Trips} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
-        <Suspense fallback={<Loading />}>
-          <Route exact path="/" component={Home} />
-        </Suspense>
+        <Route exact path="/" component={Home} />
         {/* <Route path="/notifications" component={Notifications} /> */}
       </Switch>
       {/* </Suspense> */}
