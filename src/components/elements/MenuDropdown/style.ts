@@ -1,16 +1,12 @@
 import ctl from "../../../helpers/ctl";
 
 const menu = ctl(`
-menu
-opacity-0
 absolute
 top-8
-z-30
 right-2
+z-special 
 w-40
 h-auto
-py-1
-px-2
 transition-opacity
 drop-shadow 
 bg-white
