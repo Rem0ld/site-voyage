@@ -22,11 +22,7 @@ export default function Content({ country }: AppProperties): ReactElement {
   return (
     <div className="w-full bg-gray-100 px-4">
       <h1 className="pt-4 text-3xl font-bold text-center">{country.name}</h1>
-      <img
-        src={country.flag}
-        alt="Country's flag"
-        className=" w-40 h-40 m-auto"
-      />
+      <img src={country.flag} alt="Country's flag" className=" w-40 m-auto" />
       <div className="xl:w-3/5 lg:w-4/5 m-auto">
         <div className="flex justify-between md:flex-row flex-col font-semibold text-lg">
           <List
