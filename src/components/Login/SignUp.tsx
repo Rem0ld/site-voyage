@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-
 import Button from "components/elements/Button";
+import { getSessionStorage } from "helpers/sessionStorage";
 import React, { ReactElement } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { Country } from "types";
 import classes from "./styles";
 
 type Inputs = {
@@ -26,6 +27,11 @@ export default function SignUp(): ReactElement {
     trigger,
     formState: { errors },
   } = useForm<Inputs>();
+  const listCountries: Country[] = getSessionStorage("countries");
+
+  const options = listCountries.map((element) => (
+    <option>{element.name}</option>
+  ));
 
   /**
    * Watching passwords to make sure they're the same
@@ -56,11 +62,11 @@ export default function SignUp(): ReactElement {
 
   return (
     <div className="content-container overscroll-auto py-3">
-      <div className="w-full max-w-lg bg-white rounded-md">
+      <div className="w-11/12 max-w-lg bg-white rounded-md">
         <h2 className="font-bold text-xl text-center pt-6">Sign Up</h2>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-full max-w-lg bg-white rounded-md px-8 pt-4 pb-8"
+          className="w-full max-w-lg bg-white rounded-md sm:px-8 px-4 pt-4 pb-8"
         >
           <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -182,9 +188,7 @@ export default function SignUp(): ReactElement {
                   className={classes.input}
                   {...register("country")}
                 >
-                  <option>France</option>
-                  <option>Spain</option>
-                  <option>Italy</option>
+                  {options}
                 </select>
               </div>
             </div>
