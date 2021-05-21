@@ -16,8 +16,10 @@ rounded-md
 `);
 
 const big = ctl(`
-w-48 
-h-16 
+md:w-48
+md:h-16 
+h-8
+w-26
 `);
 
 const medium = ctl(`
@@ -33,6 +35,8 @@ h-6
 const standard = ctl(`
 bg-gray-200
 font-bold
+md:text-base
+text-xs
 `);
 
 const valid = ctl(`
