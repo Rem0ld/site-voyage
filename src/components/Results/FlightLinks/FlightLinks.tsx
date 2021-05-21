@@ -71,7 +71,7 @@ export default function FlightLinks(): ReactElement {
         </div>
       </div>
 
-      <div className="flex pb-10">
+      <div className="flex md:flex-row flex-col pb-10">
         <input
           type="date"
           id="depart"
