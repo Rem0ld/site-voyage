@@ -28,7 +28,7 @@ export default function Results({ location }: AppProperties): ReactElement {
   const mapLeaflet = country.latlng ? <Map latLng={country.latlng} /> : "";
 
   return (
-    <div className="content-container w-10/12 m-auto">
+    <div className="content-container md:w-10/12 m-auto">
       {mapLeaflet}
       <Content country={country} />
     </div>

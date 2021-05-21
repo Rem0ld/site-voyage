@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react";
 import { Country } from "types";
+import FlightLinks from "../FlightLinks/FlightLinks";
 import List from "./List";
 
 interface AppProperties {
@@ -19,33 +20,42 @@ export default function Content({ country }: AppProperties): ReactElement {
     : [""];
 
   return (
-    <div className="w-full bg-gray-100">
+    <div className="w-full bg-gray-100 px-4">
       <h1 className="pt-4 text-3xl font-bold text-center">{country.name}</h1>
       <img
         src={country.flag}
         alt="Country's flag"
         className=" w-40 h-40 m-auto"
       />
-      <div className="flex justify-around font-semibold text-lg">
-        <List
-          name="left"
-          items={[
-            ["Capital", country.capital],
-            ["Region", country.region],
-            ["Sub Region", country.subregion],
-            ["Population", country.population],
-            ["Languages", languages],
-          ]}
-        />
-        <List
-          name="right"
-          items={[
-            ["Flag", ""],
-            ["Timezone", country.timezones],
-            ["Currencies", currencies],
-            ["Domain", country.topLevelDomain],
-          ]}
-        />
+      <div className="xl:w-3/5 lg:w-4/5 m-auto">
+        <div className="flex justify-between md:flex-row flex-col font-semibold text-lg">
+          <List
+            name="left"
+            items={[
+              ["Flag", ""],
+              ["Capital", country.capital],
+              ["Region", country.region],
+              ["Sub Region", country.subregion],
+              ["Population", country.population],
+            ]}
+          />
+          <List
+            name="right"
+            items={[
+              ["Languages", languages],
+              ["Timezone", country.timezones],
+              ["Currencies", currencies],
+              ["Domain", country.topLevelDomain],
+            ]}
+          />
+        </div>
+        <FlightLinks />
+      </div>
+      <div className="grid place-items-center h-40 mb-4 bg-gray-300">
+        No comments yet...
+      </div>
+      <div className="grid place-items-center h-40 bg-gray-300">
+        No pictures yet...
       </div>
     </div>
   );
