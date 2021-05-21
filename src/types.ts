@@ -35,21 +35,21 @@ export interface Country {
   borders: string[];
   nativeName: string;
   numericCode: string;
-  currencies: Currencies[];
-  languages: Languages[];
+  currencies: Currency[];
+  languages: Language[];
   translations: string[];
   flag: string;
   regionalBlocs: RegionalBlocs[];
   cioc: string;
 }
 
-export interface Currencies {
+export interface Currency {
   code: string;
   name: string;
   symbol: string;
 }
 
-export interface Languages {
+export interface Language {
   iso639_1: string;
   iso639_2: string;
   name: string;
