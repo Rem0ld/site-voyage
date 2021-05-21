@@ -1,10 +1,20 @@
-export interface Hobbies {
-  [key: string]: boolean;
+export interface Hobby {
+  [key: string]: {
+    isChecked: boolean;
+    list: undefined;
+  };
 }
 
-export interface Continents {
-  [key: string]: Country[];
+export interface Continent {
+  [key: string]: {
+    list: Country[];
+    isChecked: boolean;
+  };
 }
+
+export type Filter = {
+  [key in "continents" | "hobbies"]: Continent | Hobby;
+};
 
 export interface Country {
   name: string;
