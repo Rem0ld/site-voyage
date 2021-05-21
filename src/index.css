@@ -7,9 +7,6 @@ bg-color: gray-200
 text-color: gray-500
 btn-danger: red-600
 */
-/* .height {
-  height: calc(100vh - theme("spacing.16"));
-} */
 
 .shadow-inset-outset {
   box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 6%), 0 1px 3px 0 rgb(0 0 0 / 10%),
