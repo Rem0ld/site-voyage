@@ -4,7 +4,7 @@ import Header from "./Header";
 import Home from "./Home";
 import Login from "./login/Login";
 import SignUp from "./login/SignUp";
-import Results from "./Results";
+import Results from "./Results/Results";
 import Settings from "./Settings";
 import Trips from "./Trips";
 
