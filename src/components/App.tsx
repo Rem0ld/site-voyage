@@ -22,9 +22,11 @@ export default function App(): ReactElement {
   // Add event listener when component is mounted and remove it when unmounted
   useEffect(() => {
     document.querySelector("body")?.addEventListener("click", closeMenu);
+    document.querySelector("body")?.addEventListener("touchstart", closeMenu);
 
     return function cleanup() {
       document.removeEventListener("click", closeMenu);
+      document.removeEventListener("touchstart", closeMenu);
     };
   }, []);
 
