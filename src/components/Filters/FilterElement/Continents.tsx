@@ -4,18 +4,18 @@ import chevronRight from "@iconify-icons/akar-icons/chevron-right";
 import Icon from "@iconify/react";
 import { motion } from "framer-motion";
 import ctl from "helpers/ctl";
-import { getSessionStorageFilter } from "helpers/sessionStorage";
-import React, { ReactElement, useEffect, useState } from "react";
-import { Continent, Hobby } from "types";
+import React, { ReactElement } from "react";
+import { Continent } from "types";
 
 interface AppProperties {
-  list: Continent | Hobby;
+  continents: Continent;
   filterName: string;
   isOpen: boolean;
   onClickToggleMenu: (
     event: React.MouseEvent<HTMLDivElement>,
     name: string
   ) => void;
+  toggleCheckboxContinents: (element: string) => void;
 }
 
 const classesFilterList = ctl(`
@@ -49,25 +49,19 @@ const transition = {
   duration: 0.5,
 };
 
-export default function FilterElement({
+export default function Continents({
+  continents,
   filterName,
-  list,
   onClickToggleMenu,
   isOpen,
+  toggleCheckboxContinents,
 }: AppProperties): ReactElement {
   const filter = filterName.toLowerCase();
   const opacity = !isOpen ? "opacity-0" : "";
-  const [continents, setContinents] = useState<Continent>();
-  const [hobbies, setHobbies] = useState<Hobby>();
-
-  useEffect(() => {
-    setContinents(getSessionStorageFilter("continents") as Continent);
-    setHobbies(getSessionStorageFilter("hobbies") as Hobby);
-  }, []);
 
   let listItems;
-  if (list) {
-    listItems = Object.entries(list).map((element, index) => {
+  if (continents) {
+    listItems = Object.entries(continents).map((element, index) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       if (index < 5) {
         return (
@@ -76,8 +70,12 @@ export default function FilterElement({
               type="checkbox"
               name={element[0].toLowerCase()}
               id={element[0].toLowerCase()}
+              checked={element[1].isChecked}
               value={element[0]}
               className={classesCheckbox}
+              onChange={() => {
+                toggleCheckboxContinents(element[0]);
+              }}
             />
             <label className="pl-2" htmlFor={element[0].toLowerCase()}>
               {element[0]}
