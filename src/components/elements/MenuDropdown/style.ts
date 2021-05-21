@@ -5,6 +5,7 @@ menu
 opacity-0
 absolute
 top-8
+z-30
 right-2
 w-40
 h-auto
@@ -16,7 +17,9 @@ bg-white
 rounded-md
 border
 border-gray-200
-leading-7
+leading-10
+md:text-md
+text-lg
 `);
 
 const notif = ctl(`
