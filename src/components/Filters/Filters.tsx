@@ -1,10 +1,14 @@
-import FilterElement from "components/Filters/FilterElement/FilterElement";
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import ctl from "helpers/ctl";
 import React, { ReactElement, useState } from "react";
-import { Continents, Hobbies } from "types";
+import { Continent } from "types";
+import listDangerousCountry from "../../api/listDangerousCountry";
+import Continents from "./FilterElement/Continents";
 
 interface AppProperties {
-  listFilters: [Continents, Hobbies];
-  toggleFilter: (event: React.MouseEvent<HTMLDivElement>) => void;
+  continents: Continent;
+  toggleCheckboxContinents: (element: string) => void;
+  resetAll: (list: string[]) => void;
 }
 
 type ListFilters = {
@@ -12,36 +16,35 @@ type ListFilters = {
   isOpen: boolean;
 };
 
-export default function Filters({
-  listFilters,
-  toggleFilter,
-}: AppProperties): ReactElement {
-  const [isFilterOpenArray, setIsFilterOpenArray] = useState<ListFilters[]>([
-    {
-      name: "continents",
-      isOpen: false,
-    },
-    {
-      name: "hobbies",
-      isOpen: false,
-    },
-  ]);
-  // const [continents, hobbies] = listFilters;
+const DEFAULT_STATE = [
+  {
+    name: "continents",
+    isOpen: false,
+  },
+  {
+    name: "hobbies",
+    isOpen: false,
+  },
+];
 
-  // useEffect(() => {
-  //   const list = listFilters.map((_, index) =>
-  //     index === 0
-  //       ? {
-  //           name: "continents",
-  //           isOpen: false,
-  //         }
-  //       : {
-  //           name: "hobbies",
-  //           isOpen: false,
-  //         }
-  //   );
-  //   setIsFilterOpenArray(list);
-  // }, [listFilters]);
+const link = ctl(`
+inline-block 
+align-baseline
+pt-1
+pl-2
+text-xs 
+text-primary 
+hover:underline
+`);
+
+export default function Filters({
+  continents,
+  toggleCheckboxContinents,
+  resetAll,
+}: AppProperties): ReactElement {
+  const [isFilterOpenArray, setIsFilterOpenArray] = useState<ListFilters[]>(
+    DEFAULT_STATE
+  );
 
   /**
    * It will toggle modals and will make sure only one is open at a time
@@ -77,17 +80,27 @@ export default function Filters({
 
   return (
     <div className="py-4">
-      <h3 className="text-md font-semibold text-secondary">Filters</h3>
+      <div className="flex items-center">
+        <h3 className="text-md font-semibold text-secondary">Filters</h3>
+        <span
+          className={link}
+          onClick={() => {
+            resetAll(listDangerousCountry);
+          }}
+          role="button"
+          tabIndex={0}
+        >
+          Reset all
+        </span>
+      </div>
       <div className="flex">
-        {listFilters.map((element, index) => (
-          <FilterElement
-            filterName={isFilterOpenArray[index].name}
-            list={element}
-            onClickToggleMenu={toggleMenu}
-            onClickToggleFilter={toggleFilter}
-            isOpen={isFilterOpenArray[index].isOpen}
-          />
-        ))}
+        <Continents
+          continents={continents}
+          isOpen={isFilterOpenArray[0].isOpen}
+          filterName="continents"
+          onClickToggleMenu={toggleMenu}
+          toggleCheckboxContinents={toggleCheckboxContinents}
+        />
       </div>
     </div>
   );
