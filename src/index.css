@@ -14,7 +14,7 @@ btn-danger: red-600
 }
 
 .content-container {
-  @apply bg-gray-200 grid place-items-center md:h-auto;
+  @apply bg-gray-200 grid place-items-center min-h-screen md:h-auto;
 }
 
 .h-50vh {
@@ -27,4 +27,8 @@ btn-danger: red-600
 
 .right {
   @apply md:text-right;
+}
+
+.z-special {
+  z-index: 100000;
 }
