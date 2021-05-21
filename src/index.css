@@ -22,3 +22,7 @@ btn-danger: red-600
 .h-50vh {
   height: 50vh;
 }
+
+.min-h-list-filter-input {
+  min-height: 3rem;
+}
