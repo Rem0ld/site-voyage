@@ -3,6 +3,7 @@
 import chevronRight from "@iconify-icons/akar-icons/chevron-right";
 import Icon from "@iconify/react";
 import { motion } from "framer-motion";
+import capitalize from "helpers/capitalize";
 import ctl from "helpers/ctl";
 import React, { ReactElement } from "react";
 import { Continent } from "types";
@@ -21,8 +22,7 @@ interface AppProperties {
 const classesFilterList = ctl(`
 shadow-inset-outset 
 absolute 
-top-8 
-left-12 
+top-12 
 z-10 
 w-40 
 h-40 
@@ -99,9 +99,9 @@ export default function Continents({
         }}
         role="button"
         tabIndex={0}
-        className="flex items-center"
+        className="flex items-center p-1 border rounded-md bg-gray-100 shadow-sm"
       >
-        <span className="text-sm">{filterName}</span>
+        <span className="text-sm">{capitalize(filterName)}</span>
         <motion.div
           animate={isOpen ? "closed" : "open"}
           variants={variants}

@@ -46,8 +46,6 @@ export default function Dashboard({ countries }: AppProperties): ReactElement {
    * subject to change in future
    */
   const makeFilters = useCallback((): Filter => {
-    console.log("I'm changing");
-
     const continentsFiltered = countries.reduce(
       (accumulator: Continent, country: Country): Continent => {
         const key = country.region;
