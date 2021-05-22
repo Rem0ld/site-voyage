@@ -1,3 +1,4 @@
+import formatNumberWithDots from "helpers/formatNumberWithDots";
 import React, { ReactElement } from "react";
 import { Country } from "types";
 import FlightLinks from "../FlightLinks/FlightLinks";
@@ -13,11 +14,17 @@ export default function Content({ country }: AppProperties): ReactElement {
     : [""];
 
   const currencies = country.currencies
-    ? country.currencies.map(
-        (element) => `${element.code} ${element.name} ${element.symbol} `,
-        []
-      )
+    ? country.currencies.map((element) => {
+        if (element.code !== null) {
+          return `${element.code} ${element.name} ${element.symbol} `;
+        }
+        return "";
+      }, [])
     : [""];
+
+  const population = country.population
+    ? formatNumberWithDots(country.population)
+    : "";
 
   return (
     <div className="w-full bg-gray-100 px-4">
@@ -32,7 +39,7 @@ export default function Content({ country }: AppProperties): ReactElement {
               ["Capital", country.capital],
               ["Region", country.region],
               ["Sub Region", country.subregion],
-              ["Population", country.population],
+              ["Population", population],
             ]}
           />
           <List
