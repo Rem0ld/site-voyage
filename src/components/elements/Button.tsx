@@ -11,8 +11,9 @@ interface AppProperties {
 
 const main = ctl(`
 px-2
-shadow-sm 
+shadow-md
 rounded-md
+hover:shadow-hover
 `);
 
 const big = ctl(`
@@ -20,6 +21,7 @@ md:w-48
 md:h-16 
 h-8
 w-26
+font-bold
 `);
 
 const medium = ctl(`
@@ -34,7 +36,7 @@ h-6
 
 const standard = ctl(`
 bg-gray-200
-font-bold
+
 md:text-base
 text-xs
 `);
