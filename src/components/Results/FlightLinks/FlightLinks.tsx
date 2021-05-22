@@ -1,11 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { ReactElement, useEffect, useState } from "react";
+import Links from "components/Links/Links";
+import React, { ReactElement, useState } from "react";
 import classes from "./styles";
 
-const urlSkyScanner = "https://www.skyscanner.com/";
-const urlKayak = "https://www.kayak.fr/flights";
-const urlGovoyages = "https://www.govoyages.com/";
-const urlLastMinutes = "https://www.lastminute.com/";
 const INITIAL_STATE = {
   depart: "",
   return: "",
@@ -37,10 +34,6 @@ export default function FlightLinks(): ReactElement {
     }
   };
 
-  useEffect(() => {
-    console.log(radioButton);
-    console.log(dates);
-  }, [radioButton, dates]);
   return (
     <div className="mb-4 border-t-2">
       <div className="flex">
@@ -90,38 +83,7 @@ export default function FlightLinks(): ReactElement {
       </div>
 
       <div className="grid grid-cols-2 grid-rows-2 gap-10 lg:w-3/5 m-auto">
-        <a
-          href={urlSkyScanner}
-          className={`${classes.link} bg-skyScanner`}
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          <span>skyscanner</span>
-        </a>
-        <a
-          href={urlLastMinutes}
-          className={`${classes.link} bg-lastMinutes`}
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          <span>Last minutes</span>
-        </a>
-        <a
-          href={urlGovoyages}
-          className={`${classes.link} bg-goVoyages`}
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          <span>Govoyages</span>
-        </a>
-        <a
-          href={urlKayak}
-          className={`${classes.link} bg-kayak`}
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          <span>Kayak</span>
-        </a>
+        <Links />
       </div>
     </div>
   );

@@ -29,20 +29,6 @@ focus:ring-primary
 text-primary
 `)
 
-const link = ctl(`
-grid 
-place-items-center 
-w-38
-h-12
-shadow-special 
-rounded-md 
-text-white 
-font-bold 
-text-center
-filter 
-hover:brightness-75
-`)
-
 export default {
-  input, radio, link
+  input, radio
 }
