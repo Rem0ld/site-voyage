@@ -1,35 +1,14 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./Header";
 import Home from "./Home";
-import Login from "./login/Login";
-import SignUp from "./login/SignUp";
+import Login from "./Login/Login";
+import SignUp from "./Login/SignUp";
 import Results from "./Results/Results";
 import Settings from "./Settings";
 import Trips from "./Trips";
 
-/**
- * If menu dropdown is open and click happens on body, closes dropdown menu
- */
-const closeMenu = (): void => {
-  const isOpen: Element | null = document.querySelector(".menu");
-  if (!isOpen?.classList.contains("opacity-0")) {
-    isOpen?.classList.toggle("opacity-0");
-  }
-};
-
 export default function App(): ReactElement {
-  // Add event listener when component is mounted and remove it when unmounted
-  useEffect(() => {
-    document.querySelector("body")?.addEventListener("click", closeMenu);
-    document.querySelector("body")?.addEventListener("touchstart", closeMenu);
-
-    return function cleanup() {
-      document.removeEventListener("click", closeMenu);
-      document.removeEventListener("touchstart", closeMenu);
-    };
-  }, []);
-
   return (
     <Router>
       {/* <Suspense fallback={<LoadingOrError />}> */}

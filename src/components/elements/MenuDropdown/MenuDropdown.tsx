@@ -2,7 +2,7 @@
 import personIcon from "@iconify/icons-akar-icons/person";
 import { Icon } from "@iconify/react";
 import stopPropagation from "helpers/stopPropagation";
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import classes from "./style";
 
@@ -15,22 +15,22 @@ type AppProperties = {
 const listConnected = (
   <>
     <li>
-      <Link to="/trips" className="block py-1 px-2 rounded-md">
+      <Link to="/trips" className={classes.link}>
         Trips
       </Link>
     </li>
     <li>
-      <Link to="/notifications" className="block py-1 px-2 rounded-md">
+      <Link to="/notifications" className={classes.link}>
         Notifications
       </Link>
     </li>
     <li>
-      <Link to="/settings" className="block py-1 px-2 rounded-md">
+      <Link to="/settings" className={classes.link}>
         Settings
       </Link>
     </li>
     <li>
-      <Link to="/" className="block py-1 px-2 rounded-md">
+      <Link to="/" className={classes.link}>
         Log out
       </Link>
     </li>
@@ -40,12 +40,12 @@ const listConnected = (
 const listNotConnected = (
   <>
     <li>
-      <Link to="/signup" className="block py-1 px-2 rounded-md">
+      <Link to="/signup" className={classes.link}>
         Sign Up
       </Link>
     </li>
     <li>
-      <Link to="/login" className="block py-1 px-2 rounded-md">
+      <Link to="/login" className={classes.link}>
         Log In
       </Link>
     </li>
@@ -60,12 +60,37 @@ export default function MenuDropdown({
   const [isOpen, setIsOpen] = useState(false);
   const list = isConnected ? listConnected : listNotConnected;
 
-  const toggleMenu = (): void => {
+  /**
+   * Will open and close User menu
+   * @param event onclick event
+   */
+  const toggleMenu = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ): void => {
+    event.stopPropagation();
+
     setIsOpen((previousState) => !previousState);
   };
+
+  /**
+   * Will close menu when User clicks anywhere else on the screen
+   */
+  const closeMenu = useCallback(
+    (event: MouseEvent): void => {
+      event.stopPropagation();
+      setIsOpen(() => false);
+    },
+    [setIsOpen]
+  );
+
+  // Add event listener when component is mounted and remove it when unmounted
   useEffect(() => {
-    console.log(isOpen);
-  }, [isOpen]);
+    document.querySelector("body")?.addEventListener("click", closeMenu);
+
+    return function cleanup() {
+      document.removeEventListener("click", closeMenu);
+    };
+  }, [closeMenu]);
 
   return isConnected ? (
     <div className="relative flex justify-center space-x-1">
