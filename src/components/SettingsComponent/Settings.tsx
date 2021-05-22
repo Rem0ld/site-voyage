@@ -21,7 +21,7 @@ export default function Settings(): ReactElement {
   };
 
   return (
-    <div className="md:w-10/12 m-auto pb-10 mt-1 bg-white">
+    <div className="pt-16 md:w-10/12 m-auto pb-10 mt-1 bg-white">
       {isDeletingAccount ? (
         <PopupDanger deleteAccount={handleIsDeletingAccount} />
       ) : (

@@ -29,8 +29,8 @@ export default function Results({ location }: AppProperties): ReactElement {
   const mapLeaflet = country.latlng ? <Map latLng={country.latlng} /> : "";
 
   return (
-    <div className="content-container relative md:w-10/12 m-auto">
-      <div className="absolute top-0 right-2 z-back-button">
+    <div className="content-container relative md:w-10/12 m-auto pt-16">
+      <div className="absolute top-16 right-2 z-back-button">
         <BackButton />
       </div>
       {mapLeaflet}
