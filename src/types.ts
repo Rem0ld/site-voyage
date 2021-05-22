@@ -1,3 +1,9 @@
+export interface User {
+  username: string;
+  notifCount: number;
+  isConnected: boolean;
+}
+
 export interface Hobby {
   [key: string]: {
     isChecked: boolean;
