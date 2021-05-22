@@ -17,6 +17,7 @@ module.exports = {
       kayak: "#FF690F",
       goVoyages: "#A5C73C",
       red: colors.red,
+      green: colors.lime,
       gray: colors.warmGray,
       primary: {
         DEFAULT: "#84CC16",
@@ -39,6 +40,7 @@ module.exports = {
       inner: "inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)",
       none: "none",
       special: "2px 2px 2px 0px rgba(0, 0, 0, 0.25);",
+      hover: "1px 1px 2px 1px rgb(0 0 0 / 25%)",
     },
     minHeight: {
       0: "0",
