@@ -38,7 +38,9 @@ outline-none
 focus:outline-none 
 focus:border-primary 
 focus:ring-primary 
-text-primary`);
+text-primary
+cursor-pointer
+`);
 
 // Objects used by framer-motion for animations
 const variants = {
@@ -77,7 +79,10 @@ export default function Continents({
                 toggleCheckboxContinents(element[0]);
               }}
             />
-            <label className="pl-2" htmlFor={element[0].toLowerCase()}>
+            <label
+              className="pl-2 cursor-pointer"
+              htmlFor={element[0].toLowerCase()}
+            >
               {element[0]}
             </label>
           </li>
@@ -106,7 +111,7 @@ export default function Continents({
         </motion.div>
       </div>
       <div className={`${filter} ${classesFilterList} ${opacity}`}>
-        <ul>{listItems}</ul>
+        <ul>{isOpen ? listItems : ""}</ul>
       </div>
     </div>
   );

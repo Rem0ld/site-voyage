@@ -2,7 +2,7 @@
 import ctl from "helpers/ctl";
 import React, { ReactElement, useState } from "react";
 import { Continent } from "types";
-import listDangerousCountry from "../../api/listDangerousCountry";
+import listDangerousCountry from "../../../api/listDangerousCountry";
 import Continents from "./FilterElement/Continents";
 
 interface AppProperties {

@@ -1,8 +1,8 @@
 /* eslint-disable unicorn/no-array-reduce */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-restricted-syntax */
-import FilterInput from "components/FilterInput/FilterInput";
-import Filters from "components/Filters/Filters";
+import FilterInput from "components/Dashboard/FilterInput/FilterInput";
+import Filters from "components/Dashboard/Filters/Filters";
 import { motion, useCycle } from "framer-motion";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { Continent, Country, Filter, Hobby } from "types";
