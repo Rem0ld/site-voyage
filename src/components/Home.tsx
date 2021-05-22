@@ -1,11 +1,14 @@
 import GetCountries from "api/GetCountries";
 import { motion } from "framer-motion";
 import ctl from "helpers/ctl";
+import random from "helpers/randomNumber";
 import { getSessionStorageIncluded } from "helpers/sessionStorage";
+import Lottie from "lottie-react";
 import React, { ReactElement, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Country } from "types";
 import main from "../../public/main_version2.svg";
+import train from "../../public/train.json";
 import Dashboard from "./Dashboard/Dashboard";
 import Button from "./elements/Button";
 import Loading from "./elements/Loading";
@@ -19,9 +22,6 @@ transform-gpu
 -translate-x-2/4 
 -translate-y-2/4
 `);
-
-const random = (max: number | undefined, min: number): number | undefined =>
-  max ? Math.floor(Math.random() * (max - min)) + min : undefined;
 
 export default function Home(): ReactElement {
   const [isLoading, setLoading] = useState(false);
@@ -57,20 +57,20 @@ export default function Home(): ReactElement {
   };
 
   return !isLoading ? (
-    <div className="content-container">
+    <div className="content-container height-screen">
       <Dashboard countries={countries} />
       <motion.div
-        className="relative"
-        // initial={{ y: 0, x: 0 }}
-        // animate={{
-        //   y: [-10, 0, -10],
-        //   x: [-10, 0, -10],
-        // }}
-        // transition={{
-        //   duration: 2,
-        //   ease: "easeInOut",
-        //   repeat: Number.POSITIVE_INFINITY,
-        // }}
+        className="relative z-10"
+        initial={{ y: 0, x: 0 }}
+        animate={{
+          y: [-10, 0, -10],
+          x: [-10, 0, -10],
+        }}
+        transition={{
+          duration: 2,
+          ease: "easeInOut",
+          repeat: Number.POSITIVE_INFINITY,
+        }}
       >
         <div className={classesButton}>
           <Button
@@ -82,6 +82,20 @@ export default function Home(): ReactElement {
           />
         </div>
         <img src={main} alt="logo" />
+      </motion.div>
+      <motion.div
+        className="absolute z-0 transform-gpu bottom-10 left-full -translate-y-full -translate-x-full"
+        animate={{
+          x: -2000,
+        }}
+        transition={{
+          delay: random(4, 10),
+          duration: random(4, 10),
+          ease: "easeInOut",
+          repeat: Number.POSITIVE_INFINITY,
+        }}
+      >
+        <Lottie animationData={train} className="md:w-30 md:h-30 w-20 h-20" />
       </motion.div>
     </div>
   ) : (
