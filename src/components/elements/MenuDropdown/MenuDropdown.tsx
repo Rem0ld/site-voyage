@@ -1,15 +1,16 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import personIcon from "@iconify/icons-akar-icons/person";
 import { Icon } from "@iconify/react";
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import { SessionContext } from "components/App";
+import React, {
+  ReactElement,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { Link } from "react-router-dom";
 import classes from "./style";
-
-type AppProperties = {
-  notifCount: number;
-  pseudo: string;
-  isConnected: boolean;
-};
 
 const listConnected = (
   <>
@@ -51,13 +52,10 @@ const listNotConnected = (
   </>
 );
 
-export default function MenuDropdown({
-  notifCount,
-  pseudo,
-  isConnected,
-}: AppProperties): ReactElement {
+export default function MenuDropdown(): ReactElement {
+  const session = useContext(SessionContext);
   const [isOpen, setIsOpen] = useState(false);
-  const list = isConnected ? listConnected : listNotConnected;
+  const list = session.isConnected ? listConnected : listNotConnected;
 
   /**
    * Will open and close User menu
@@ -91,12 +89,14 @@ export default function MenuDropdown({
     };
   }, [closeMenu]);
 
-  return isConnected ? (
+  return session.isConnected ? (
     <div className="relative flex justify-center space-x-1">
-      <span className="">{pseudo}</span>
+      <span className="">{session.username}</span>
       <div className="relative" onClick={toggleMenu} role="button" tabIndex={0}>
         <div className={classes.notif}>
-          <div className="p-0.5 text-white text-xs leading-3">{notifCount}</div>
+          <div className="p-0.5 text-white text-xs leading-3">
+            {session.notifCount}
+          </div>
         </div>
         <Icon icon={personIcon} className="w-6 h-6 text-primary" />
       </div>

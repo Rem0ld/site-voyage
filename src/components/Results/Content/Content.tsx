@@ -1,5 +1,7 @@
+import { SessionContext } from "components/App";
+import Button from "components/elements/Button";
 import formatNumberWithDots from "helpers/formatNumberWithDots";
-import React, { ReactElement } from "react";
+import React, { ReactElement, useContext } from "react";
 import { Country } from "types";
 import FlightLinks from "../FlightLinks/FlightLinks";
 import List from "./List";
@@ -9,6 +11,7 @@ interface AppProperties {
 }
 
 export default function Content({ country }: AppProperties): ReactElement {
+  const session = useContext(SessionContext);
   const languages = country.languages
     ? country.languages.map((element) => element.name, [])
     : [""];
@@ -28,7 +31,17 @@ export default function Content({ country }: AppProperties): ReactElement {
 
   return (
     <div className="w-full bg-gray-100 px-4">
-      <h1 className="pt-4 text-3xl font-bold text-center">{country.name}</h1>
+      <div className="relative xl:w-3/5 lg:w-4/5 m-auto">
+        {session.isConnected ? (
+          <div className="absolute bottom-0 right-0">
+            <Button text="Save" type="valid" size="medium" isButton />
+          </div>
+        ) : (
+          ""
+        )}
+
+        <h1 className="pt-4 text-3xl font-bold text-center">{country.name}</h1>
+      </div>
       <img src={country.flag} alt="Country's flag" className=" w-40 m-auto" />
       <div className="xl:w-3/5 lg:w-4/5 m-auto">
         <div className="flex justify-between md:flex-row flex-col font-semibold text-lg">
