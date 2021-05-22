@@ -278,7 +278,7 @@ export default function Dashboard({ countries }: AppProperties): ReactElement {
       />
 
       {/* List included, excluded */}
-      <div className="flex sm:flex-row flex-col justify-between">
+      <div className="flex sm:flex-row flex-col-reverse justify-between">
         <DashboardList
           title="Excluded"
           list={excludedCountry}
