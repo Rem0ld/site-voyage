@@ -9,7 +9,7 @@ export default function Header(): ReactElement {
       <Link to="/">
         <img src={logo} alt="logo" width="80px" height="80px" />
       </Link>
-      <MenuDropdown notifCount={0} pseudo="PierrotLeFou" isConnected />
+      <MenuDropdown />
     </div>
   );
 }
