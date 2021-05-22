@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import personIcon from "@iconify/icons-akar-icons/person";
 import { Icon } from "@iconify/react";
-import stopPropagation from "helpers/stopPropagation";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import classes from "./style";
@@ -104,11 +103,8 @@ export default function MenuDropdown({
       <ul
         role="menu"
         className={isOpen ? `${classes.menu}` : `${classes.menu} opacity-0`}
-        onClick={(event) => {
-          stopPropagation(event);
-        }}
       >
-        {list}
+        {isOpen ? list : ""}
       </ul>
     </div>
   ) : (
@@ -119,9 +115,6 @@ export default function MenuDropdown({
       <ul
         role="menu"
         className={isOpen ? `${classes.menu}` : `${classes.menu} opacity-0`}
-        onClick={(event) => {
-          stopPropagation(event);
-        }}
       >
         {list}
       </ul>
