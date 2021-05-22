@@ -28,7 +28,7 @@ export default function MenuToggle({ toggle }: Property): ReactElement {
       className="absolute left-full shadow-md rounded-r-sm bg-white focus:outline-none"
       style={{ padding: "1px 2px 0px 1px" }}
     >
-      <svg width="23" height="23" viewBox="0 0 21 21">
+      <svg width="28" height="60" viewBox="0 0 21 21">
         <Path
           variants={{
             closed: { d: "M 2 2.5 L 20 2.5" },

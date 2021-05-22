@@ -6,7 +6,7 @@ interface AppProperties {
   isButton: boolean;
   type: "standard" | "valid" | "danger";
   size: "big" | "medium" | "small";
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onclick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const main = ctl(`
@@ -14,6 +14,7 @@ px-2
 shadow-md
 rounded-md
 hover:shadow-hover
+transition
 `);
 
 const big = ctl(`
@@ -35,19 +36,20 @@ h-6
 `);
 
 const standard = ctl(`
+hover:bg-gray-300
 bg-gray-200
-
 md:text-base
 text-xs
 `);
 
 const valid = ctl(`
-hover:bg-secondary
+hover:bg-green-600
 bg-primary
 text-white
 `);
 
 const danger = ctl(`
+hover:bg-red-700
 bg-red-600
 text-white
 `);
@@ -57,7 +59,7 @@ export default function Button({
   type,
   size,
   isButton,
-  onClick,
+  onclick,
 }: AppProperties): ReactElement {
   /**
    * Will conditionally build a string from props received
@@ -70,7 +72,7 @@ export default function Button({
 
   return (
     <button
-      onClick={onClick}
+      onClick={onclick}
       type={isButton ? "button" : "submit"}
       className={applyStyle()}
     >
@@ -80,5 +82,5 @@ export default function Button({
 }
 
 Button.defaultProps = {
-  onClick: undefined,
+  onclick: undefined,
 };

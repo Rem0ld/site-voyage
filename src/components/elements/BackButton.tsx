@@ -8,7 +8,7 @@ export default function BackButton(): ReactElement {
   return (
     <div
       data-cy="BackLink"
-      className="flex items-center gap-2 text-primary hover:text-secondary font-bold"
+      className="flex items-center gap-2 text-secondary hover:text-primary font-bold"
       onClick={() => history.goBack()}
       role="button"
       tabIndex={0}
