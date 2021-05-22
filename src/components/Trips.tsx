@@ -13,7 +13,7 @@ export default function Trips(): ReactElement {
   };
 
   return (
-    <div className="md:w-10/12 m-auto pb-10 mt-1 bg-white">
+    <div className="min-height-screen md:w-10/12 m-auto pb-10 mt-1 bg-white">
       <TopLine title="My trips" />
 
       <div className="grid gap-y-28 mt-20">
