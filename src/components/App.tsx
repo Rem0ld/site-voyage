@@ -5,7 +5,7 @@ import Home from "./Home";
 import Login from "./Login/Login";
 import SignUp from "./Login/SignUp";
 import Results from "./Results/Results";
-import Settings from "./Settings";
+import Settings from "./SettingsComponent/Settings";
 import Trips from "./Trips";
 
 export default function App(): ReactElement {

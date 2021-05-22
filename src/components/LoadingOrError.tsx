@@ -12,7 +12,10 @@ export default function LoadingOrError({ error }: Properties): ReactElement {
         {error ? (
           error.message
         ) : (
-          <Lottie animationData={loader} className="w-96 h-96" />
+          <Lottie
+            animationData={loader}
+            className="md:w-96 md:h-96 w-60 h-60"
+          />
         )}
       </h1>
     </div>

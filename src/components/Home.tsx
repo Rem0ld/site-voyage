@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import ctl from "helpers/ctl";
 import { getSessionStorageIncluded } from "helpers/sessionStorage";
 import React, { ReactElement, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Country } from "types";
 import main from "../../public/main_version2.svg";
 import Dashboard from "./Dashboard/Dashboard";
@@ -26,6 +27,7 @@ export default function Home(): ReactElement {
   const [isLoading, setLoading] = useState(false);
   const [countries, setCountries] = useState<Country[]>([]);
   const [winner, setWinner] = useState<Country>({} as Country);
+  const history = useHistory();
 
   const fetchData = async (): Promise<void> => {
     await GetCountries().then((data) => {
@@ -51,6 +53,7 @@ export default function Home(): ReactElement {
       setWinner(listCountry[number]);
     }
     setLoading(true);
+    history.push("/");
   };
 
   return !isLoading ? (
@@ -71,7 +74,7 @@ export default function Home(): ReactElement {
       >
         <div className={classesButton}>
           <Button
-            onClick={(event) => makeLoading(event)}
+            onclick={(event) => makeLoading(event)}
             text="Next destination"
             type="standard"
             size="big"

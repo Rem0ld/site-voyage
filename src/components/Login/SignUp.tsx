@@ -30,7 +30,7 @@ export default function SignUp(): ReactElement {
   const listCountries: Country[] = getSessionStorage("countries");
 
   const options = listCountries.map((element) => (
-    <option>{element.name}</option>
+    <option key={element.numericCode}>{element.name}</option>
   ));
 
   /**
