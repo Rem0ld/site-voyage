@@ -4,7 +4,9 @@ import Button from "components/elements/Button";
 import { getSessionStorage } from "helpers/sessionStorage";
 import React, { ReactElement } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 import { Country } from "types";
+import auth from "../../../firebase-auth";
 import classes from "./styles";
 
 type Inputs = {
@@ -17,6 +19,17 @@ type Inputs = {
   zip: string;
 };
 
+const createAccount = async (
+  email: string,
+  password: string
+): Promise<void> => {
+  try {
+    await auth.createUserWithEmailAndPassword(email, password);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export default function SignUp(): ReactElement {
   const {
     register,
@@ -27,8 +40,8 @@ export default function SignUp(): ReactElement {
     trigger,
     formState: { errors },
   } = useForm<Inputs>();
+  const history = useHistory();
   const listCountries: Country[] = getSessionStorage("countries");
-
   const options = listCountries.map((element) => (
     <option key={element.numericCode}>{element.name}</option>
   ));
@@ -54,9 +67,13 @@ export default function SignUp(): ReactElement {
     return result;
   };
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const onSubmit: SubmitHandler<Inputs> = (data): void => {
     if (checkPassword()) {
-      console.log("Valid", data);
+      createAccount(data.email, data.password)
+        .finally(() => {
+          history.push("/");
+        })
+        .catch((error) => console.error(error));
     }
   };
 

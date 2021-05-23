@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-console */
@@ -6,6 +5,8 @@ import Button from "components/elements/Button";
 import ctl from "helpers/ctl";
 import React, { ReactElement } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+import auth from "../../../firebase-auth";
 import classes from "./styles";
 
 type Inputs = {
@@ -22,9 +23,20 @@ text-primary
 hover:underline
 `);
 
-const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+const signIn = async (email: string, password: string): Promise<void> => {
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
+  } catch (error) {
+    console.error(error);
+  }
+};
+const onSubmit: SubmitHandler<Inputs> = (data): void => {
+  signIn(data.username, data.password).catch((error) => console.error(error));
+  // .finally(history.push("/"))
+};
 
 export default function Login(): ReactElement {
+  // const history = useHistory();
   const {
     register,
     handleSubmit,
@@ -82,9 +94,9 @@ export default function Login(): ReactElement {
               size="medium"
               isButton={false}
             />
-            <a href="#" className={link}>
+            <Link to="/forgot-password" className={link}>
               Forgot Password?
-            </a>
+            </Link>
           </div>
         </form>
       </div>
