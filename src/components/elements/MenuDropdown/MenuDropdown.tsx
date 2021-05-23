@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import personIcon from "@iconify/icons-akar-icons/person";
 import { Icon } from "@iconify/react";
-import { SessionContext } from "components/App";
 import React, {
   ReactElement,
   useCallback,
@@ -9,53 +8,65 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import auth from "../../../../firebase-auth";
+import { SessionContext } from "../../SessionProvider";
 import classes from "./style";
 
-const listConnected = (
-  <>
-    <li>
-      <Link to="/trips" className={classes.link}>
-        Trips
-      </Link>
-    </li>
-    <li>
-      <Link to="/notifications" className={classes.link}>
-        Notifications
-      </Link>
-    </li>
-    <li>
-      <Link to="/settings" className={classes.link}>
-        Settings
-      </Link>
-    </li>
-    <li>
-      <Link to="/" className={classes.link}>
-        Log out
-      </Link>
-    </li>
-  </>
-);
-
-const listNotConnected = (
-  <>
-    <li>
-      <Link to="/signup" className={classes.link}>
-        Sign Up
-      </Link>
-    </li>
-    <li>
-      <Link to="/login" className={classes.link}>
-        Log In
-      </Link>
-    </li>
-  </>
-);
-
 export default function MenuDropdown(): ReactElement {
-  const session = useContext(SessionContext);
+  const history = useHistory();
+  const user = useContext(SessionContext);
   const [isOpen, setIsOpen] = useState(false);
-  const list = session.isConnected ? listConnected : listNotConnected;
+
+  const signOut = async (): Promise<void> => {
+    await auth.signOut();
+    history.push("/");
+  };
+
+  const listConnected = (
+    <>
+      <li>
+        <Link to="/trips" className={classes.link}>
+          Trips
+        </Link>
+      </li>
+      <li>
+        <Link to="/notifications" className={classes.link}>
+          Notifications
+        </Link>
+      </li>
+      <li>
+        <Link to="/settings" className={classes.link}>
+          Settings
+        </Link>
+      </li>
+      <li>
+        <button
+          onClick={signOut}
+          className={`${classes.link} w-full text-left`}
+          type="button"
+          tabIndex={0}
+        >
+          Log out
+        </button>
+      </li>
+    </>
+  );
+
+  const listNotConnected = (
+    <>
+      <li>
+        <Link to="/signup" className={classes.link}>
+          Sign Up
+        </Link>
+      </li>
+      <li>
+        <Link to="/login" className={classes.link}>
+          Log In
+        </Link>
+      </li>
+    </>
+  );
 
   /**
    * Will open and close User menu
@@ -89,14 +100,14 @@ export default function MenuDropdown(): ReactElement {
     };
   }, [closeMenu]);
 
-  return session.isConnected ? (
+  const list = user ? listConnected : listNotConnected;
+
+  return user ? (
     <div className="relative flex justify-center space-x-1">
-      <span className="">{session.username}</span>
+      <span className="">{user.displayName || user.email}</span>
       <div className="relative" onClick={toggleMenu} role="button" tabIndex={0}>
         <div className={classes.notif}>
-          <div className="p-0.5 text-white text-xs leading-3">
-            {session.notifCount}
-          </div>
+          <div className="p-0.5 text-white text-xs leading-3">{0}</div>
         </div>
         <Icon icon={personIcon} className="w-6 h-6 text-primary" />
       </div>

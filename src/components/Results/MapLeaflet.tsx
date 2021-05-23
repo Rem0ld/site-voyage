@@ -7,10 +7,14 @@ interface AppProperties {
 }
 
 export default function MapLeaflet({ latLng }: AppProperties): ReactElement {
+  const [lat, lng] = latLng || [0, 0];
+
+  console.log(lat, lng);
+
   return (
     <div className="w-full">
       <MapContainer
-        center={[latLng[0], latLng[1]]}
+        center={[lat, lng]}
         zoom={5}
         scrollWheelZoom={false}
         className="h-96 w-full"
@@ -19,9 +23,9 @@ export default function MapLeaflet({ latLng }: AppProperties): ReactElement {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={[latLng[0], latLng[1]]}>
+        <Marker position={[lat, lng]}>
           <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
+            {lat === 0 && lng === 0 ? "This is the center of the world!" : ""}
           </Popup>
         </Marker>
       </MapContainer>

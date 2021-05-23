@@ -19,6 +19,7 @@
     "@iconify/icons-emojione": "^1.1.0",
     "@iconify/react": "^1.1.4",
     "@netlify/classnames-template-literals": "^1.0.0",
+    "firebase": "^8.6.2",
     "framer-motion": "^4.1.16",
     "leaflet": "^1.7.1",
     "lottie-react": "^2.1.0",

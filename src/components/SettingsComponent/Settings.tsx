@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { ReactElement, useState } from "react";
+import { SessionContext } from "components/SessionProvider";
+import React, { ReactElement, useContext, useState } from "react";
 import Button from "../elements/Button";
 import TopLine from "../elements/TopLine";
 import FormPassword from "./FormPassword";
@@ -9,6 +10,7 @@ import PopupDanger from "./PopupDanger";
 import classes from "./styles";
 
 export default function Settings(): ReactElement {
+  const user = useContext(SessionContext);
   const [isDeletingAccount, setIsDeletingAccount] = useState(false);
   const [isModifying, setIsModifying] = useState(false);
 
@@ -29,7 +31,9 @@ export default function Settings(): ReactElement {
       )}
       <TopLine title="Settings" />
       <div className="h-auto px-4 xl:w-3/5 md:w-4/5 m-auto">
-        <h2 className="pl-10 text-4xl font-bold">PierrotLeFou</h2>
+        <h2 className="pl-10 text-4xl font-bold">
+          {user?.displayName || user?.email}
+        </h2>
 
         <FormUpdate
           isModifying={isModifying}
@@ -37,7 +41,7 @@ export default function Settings(): ReactElement {
         />
         <div className="my-8">
           <span className={classes.label}>Email:</span>
-          <span>email@test.com</span>
+          <span>{user?.email}</span>
         </div>
 
         <FormPassword />

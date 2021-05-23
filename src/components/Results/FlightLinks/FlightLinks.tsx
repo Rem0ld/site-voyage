@@ -82,7 +82,7 @@ export default function FlightLinks(): ReactElement {
         />
       </div>
 
-      <div className="grid grid-cols-2 grid-rows-2 gap-10 lg:w-3/5 m-auto">
+      <div className="grid md:grid-cols-2 md:grid-rows-2 md:gap-10 gap-4 justify-items-center lg:w-full m-auto">
         <Links />
       </div>
     </div>

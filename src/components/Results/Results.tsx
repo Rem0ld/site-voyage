@@ -22,11 +22,12 @@ export default function Results({ location }: AppProperties): ReactElement {
   const [country, setCountry] = useState<Country>({} as Country);
 
   useEffect(() => {
-    const result: Country = location.state[1];
-    setCountry(result);
+    if (location && location.state) {
+      setCountry(location.state[1]);
+    }
   }, [location]);
 
-  const mapLeaflet = country.latlng ? <Map latLng={country.latlng} /> : "";
+  const mapLeaflet = <Map latLng={country.latlng} />;
 
   return (
     <div className="content-container relative md:w-10/12 m-auto pt-16">
