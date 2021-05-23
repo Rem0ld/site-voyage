@@ -1,6 +1,7 @@
 import GetCountries from "api/GetCountries";
 import { motion } from "framer-motion";
 import ctl from "helpers/ctl";
+import fisherYatesShuffle from "helpers/fisherYatesShuffle";
 import random from "helpers/randomNumber";
 import { getSessionStorageIncluded } from "helpers/sessionStorage";
 import Lottie from "lottie-react";
@@ -49,11 +50,12 @@ export default function Home(): ReactElement {
   const makeLoading = (event: React.MouseEvent<HTMLButtonElement>) => {
     const listCountry = getSessionStorageIncluded();
     if (listCountry) {
-      const number: number = random(listCountry.length, 0) as number;
-      setWinner(listCountry[number]);
+      const shuffledList = fisherYatesShuffle(listCountry);
+      const randomNumber: number = random(shuffledList.length, 0) as number;
+      setWinner(shuffledList[randomNumber]);
+      setLoading(true);
+      history.push("/");
     }
-    setLoading(true);
-    history.push("/");
   };
 
   return !isLoading ? (
