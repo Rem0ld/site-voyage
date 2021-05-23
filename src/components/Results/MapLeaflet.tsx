@@ -9,8 +9,6 @@ interface AppProperties {
 export default function MapLeaflet({ latLng }: AppProperties): ReactElement {
   const [lat, lng] = latLng || [0, 0];
 
-  console.log(lat, lng);
-
   return (
     <div className="w-full">
       <MapContainer

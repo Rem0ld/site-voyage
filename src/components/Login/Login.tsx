@@ -5,7 +5,7 @@ import Button from "components/elements/Button";
 import ctl from "helpers/ctl";
 import React, { ReactElement } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import auth from "../../../firebase-auth";
 import classes from "./styles";
 
@@ -30,18 +30,20 @@ const signIn = async (email: string, password: string): Promise<void> => {
     console.error(error);
   }
 };
-const onSubmit: SubmitHandler<Inputs> = (data): void => {
-  signIn(data.username, data.password).catch((error) => console.error(error));
-  // .finally(history.push("/"))
-};
 
 export default function Login(): ReactElement {
-  // const history = useHistory();
+  const history = useHistory();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
+
+  const onSubmit: SubmitHandler<Inputs> = (data): void => {
+    signIn(data.username, data.password)
+      .then(history.push("/"))
+      .catch((error) => console.error(error));
+  };
 
   return (
     <div className="content-container">
