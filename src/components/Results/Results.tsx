@@ -27,14 +27,14 @@ export default function Results({ location }: AppProperties): ReactElement {
     }
   }, [location]);
 
-  const mapLeaflet = <Map latLng={country.latlng} />;
+  const mapLeaflet = country.latlng ? <Map latLng={country.latlng} /> : "";
 
   return (
     <div className="content-container relative md:w-10/12 m-auto pt-16">
       <div className="absolute top-16 right-2 z-back-button">
         <BackButton />
       </div>
-      {mapLeaflet}
+      <div className="w-full h-96">{mapLeaflet}</div>
       <Content country={country} />
     </div>
   );

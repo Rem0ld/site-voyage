@@ -7,10 +7,10 @@ interface AppProperties {
 }
 
 export default function MapLeaflet({ latLng }: AppProperties): ReactElement {
-  const [lat, lng] = latLng || [0, 0];
+  const [lat, lng] = latLng;
 
   return (
-    <div className="w-full">
+    <>
       <MapContainer
         center={[lat, lng]}
         zoom={5}
@@ -27,6 +27,6 @@ export default function MapLeaflet({ latLng }: AppProperties): ReactElement {
           </Popup>
         </Marker>
       </MapContainer>
-    </div>
+    </>
   );
 }
