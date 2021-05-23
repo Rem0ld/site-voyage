@@ -41,7 +41,9 @@ export default function Login(): ReactElement {
 
   const onSubmit: SubmitHandler<Inputs> = (data): void => {
     signIn(data.username, data.password)
-      .then(history.push("/"))
+      .then(() => {
+        history.push("/");
+      })
       .catch((error) => console.error(error));
   };
 

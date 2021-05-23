@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import BackIcon from "example-components/BackIcon";
 import React, { ReactElement } from "react";
 import { useHistory } from "react-router-dom";
+import BackIcon from "./BackIcon";
 
 export default function BackButton(): ReactElement {
   const history = useHistory();

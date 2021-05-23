@@ -14,7 +14,7 @@ export default function MapLeaflet({ latLng }: AppProperties): ReactElement {
       <MapContainer
         center={[lat, lng]}
         zoom={5}
-        scrollWheelZoom={false}
+        scrollWheelZoom
         className="h-96 w-full"
       >
         <TileLayer
