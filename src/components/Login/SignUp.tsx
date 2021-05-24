@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 import Button from "components/elements/Button";
@@ -14,20 +15,9 @@ type Inputs = {
   email: string;
   password: string;
   confirmPassword: string;
-  country: string;
-  city: string;
-  zip: string;
-};
-
-const createAccount = async (
-  email: string,
-  password: string
-): Promise<void> => {
-  try {
-    await auth.createUserWithEmailAndPassword(email, password);
-  } catch (error) {
-    console.error(error);
-  }
+  country?: string;
+  city?: string;
+  zip?: string;
 };
 
 export default function SignUp(): ReactElement {
@@ -45,7 +35,6 @@ export default function SignUp(): ReactElement {
   const options = listCountries.map((element) => (
     <option key={element.numericCode}>{element.name}</option>
   ));
-
   /**
    * Watching passwords to make sure they're the same
    * using onBlur method on both fields then on onSubmit method again
@@ -67,13 +56,59 @@ export default function SignUp(): ReactElement {
     return result;
   };
 
-  const onSubmit: SubmitHandler<Inputs> = (data): void => {
+  /**
+   * See if there is a better way to do it
+   * as front and back should be on the same server
+   * And CHANGE URL!
+   */
+  const createAccountDatabase = async (data: Inputs) => {
+    const url = "http://localhost:3000/new-user";
+    const newAccount = {
+      username: data.username,
+      email: data.email,
+      country: data.country,
+      city: data.city,
+      zip: data.zip,
+    };
+
+    // Default options are marked with *
+    const response = await fetch(url, {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+        // "Content-Type": "application/x-www-form-urlencoded",
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify(newAccount), // body data type must match "Content-Type" header
+    });
+    return response.json();
+  };
+
+  const onSubmit: SubmitHandler<Inputs> = async (
+    data: Inputs
+  ): Promise<void> => {
     if (checkPassword()) {
-      createAccount(data.email, data.password)
-        .finally(() => {
-          history.push("/");
+      createAccountDatabase(data)
+        .then((result) => {
+          // We need set cookie here instead of this
+          // and we need to parse the data
+          localStorage.setItem("user", JSON.stringify(result));
+          auth
+            .createUserWithEmailAndPassword(data.email, data.password)
+            .then(() => {
+              history.push("/");
+            })
+            .catch((error) => {
+              throw error;
+            });
         })
-        .catch((error) => console.error(error));
+        .catch((error) => {
+          console.error(error);
+        });
     }
   };
 
@@ -205,6 +240,7 @@ export default function SignUp(): ReactElement {
                   className={classes.input}
                   {...register("country")}
                 >
+                  <option />
                   {options}
                 </select>
               </div>

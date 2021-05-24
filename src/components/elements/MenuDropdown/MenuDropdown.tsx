@@ -104,7 +104,8 @@ export default function MenuDropdown(): ReactElement {
 
   return user ? (
     <div className="relative flex justify-center space-x-1">
-      <span className="">{user.displayName || user.email}</span>
+      {/* to change when we implement the cookie with the user information from DB */}
+      <span className="">{user.email}</span>
       <div className="relative" onClick={toggleMenu} role="button" tabIndex={0}>
         <div className={classes.notif}>
           <div className="p-0.5 text-white text-xs leading-3">{0}</div>
