@@ -127,7 +127,7 @@ export default function MenuDropdown(): ReactElement {
         role="menu"
         className={isOpen ? `${classes.menu}` : `${classes.menu} opacity-0`}
       >
-        {list}
+        {isOpen ? list : ""}
       </ul>
     </div>
   );

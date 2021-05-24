@@ -11,14 +11,14 @@ export default function BackIcon(): ReactElement {
     >
       <path
         d="M8 1L1 7L8 13"
-        stroke="#84CC16"
+        stroke="#064E3B"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M1 7H17"
-        stroke="#84CC16"
+        stroke="#064E3B"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"

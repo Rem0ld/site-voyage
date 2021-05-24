@@ -59,7 +59,7 @@ export default function Home(): ReactElement {
   };
 
   return !isLoading ? (
-    <div className="content-container height-screen">
+    <div className="content-container height-screen min-height-screen">
       <Dashboard countries={countries} />
       <motion.div
         className="relative z-10"
