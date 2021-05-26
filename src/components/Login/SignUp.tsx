@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
+import urlMaker from "api/URL";
 import Button from "components/elements/Button";
 import { getSessionStorage } from "helpers/sessionStorage";
 import React, { ReactElement } from "react";
@@ -62,7 +63,7 @@ export default function SignUp(): ReactElement {
    * And CHANGE URL!
    */
   const createAccountDatabase = async (data: Inputs) => {
-    const url = "http://localhost:3000/new-user";
+    const url = urlMaker("user", "new");
     const newAccount = {
       username: data.username,
       email: data.email,
@@ -71,7 +72,6 @@ export default function SignUp(): ReactElement {
       zip: data.zip,
     };
 
-    // Default options are marked with *
     const response = await fetch(url, {
       method: "POST",
       mode: "cors",

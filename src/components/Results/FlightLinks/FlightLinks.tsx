@@ -3,37 +3,17 @@ import Links from "components/Links/Links";
 import React, { ReactElement, useState } from "react";
 import classes from "./styles";
 
-const INITIAL_STATE = {
-  depart: "",
-  return: "",
-};
+interface AppProperties {
+  setDates: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-export default function FlightLinks(): ReactElement {
+export default function FlightLinks({ setDates }: AppProperties): ReactElement {
   const [radioButton, setRadioButton] = useState("one_way");
-  const [dates, setDates] = useState(INITIAL_STATE);
-
   const handleChangeRadio = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     setRadioButton(event.target.value);
   };
-
-  const handleChangeDate = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    if (event.target.name === "depart") {
-      setDates((previousState) => ({
-        ...previousState,
-        depart: event.target.value,
-      }));
-    } else {
-      setDates((previousState) => ({
-        ...previousState,
-        return: event.target.value,
-      }));
-    }
-  };
-
   return (
     <div className="mb-4 border-t-2">
       <div className="flex">
@@ -45,7 +25,9 @@ export default function FlightLinks(): ReactElement {
             value="one_way"
             defaultChecked
             className={classes.radio}
-            onChange={handleChangeRadio}
+            onChange={(event) => {
+              handleChangeRadio(event);
+            }}
           />
           <label htmlFor="one_way">One way</label>
         </div>
@@ -57,7 +39,7 @@ export default function FlightLinks(): ReactElement {
             value="roundtrip"
             className={classes.radio}
             onChange={(event) => {
-              setRadioButton(event.target.value);
+              handleChangeRadio(event);
             }}
           />
           <label htmlFor="roundtrip">Roundtrip</label>
@@ -70,7 +52,9 @@ export default function FlightLinks(): ReactElement {
           id="depart"
           name="depart"
           className={classes.input}
-          onChange={handleChangeDate}
+          onChange={(event) => {
+            setDates(event);
+          }}
         />
         <input
           type="date"
@@ -78,7 +62,9 @@ export default function FlightLinks(): ReactElement {
           name="return"
           className={classes.input}
           disabled={radioButton === "one_way"}
-          onChange={handleChangeDate}
+          onChange={(event) => {
+            setDates(event);
+          }}
         />
       </div>
 

@@ -1,6 +1,7 @@
+import saveTravel from "api/saveTravel";
 import Button from "components/elements/Button";
 import formatNumberWithDots from "helpers/formatNumberWithDots";
-import React, { ReactElement, useContext } from "react";
+import React, { ReactElement, useContext, useState } from "react";
 import { Country } from "types";
 import { SessionContext } from "../../SessionProvider";
 import FlightLinks from "../FlightLinks/FlightLinks";
@@ -10,8 +11,37 @@ interface AppProperties {
   country: Country;
 }
 
+interface Dates {
+  depart: Date | undefined;
+  return: Date | undefined;
+}
+
+const INITIAL_STATE: Dates = {
+  depart: undefined,
+  return: undefined,
+};
+
 export default function Content({ country }: AppProperties): ReactElement {
   const user = useContext(SessionContext);
+  const [dates, setDates] = useState(INITIAL_STATE);
+  const [disabled, setDisabled] = useState(false);
+
+  const handleChangeDate = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    if (event.target.name === "depart") {
+      setDates((previousState) => ({
+        ...previousState,
+        depart: new Date(event.target.value),
+      }));
+    } else {
+      setDates((previousState) => ({
+        ...previousState,
+        return: new Date(event.target.value),
+      }));
+    }
+  };
+
   const languages = country.languages
     ? country.languages.map((element) => element.name, [])
     : [""];
@@ -32,9 +62,21 @@ export default function Content({ country }: AppProperties): ReactElement {
   return (
     <div className="w-full bg-gray-100 px-4">
       <div className="relative xl:w-4/5 lg:w-4/5 h-16 m-auto">
-        {user ? (
+        {user && !disabled ? (
           <div className="absolute bottom-0 right-0">
-            <Button text="Save" type="valid" size="medium" isButton />
+            <Button
+              text="Save"
+              type="valid"
+              size="medium"
+              isButton
+              onclick={() => {
+                saveTravel(country, dates)
+                  .then(() => {
+                    setDisabled(true);
+                  })
+                  .finally(() => {});
+              }}
+            />
           </div>
         ) : (
           ""
@@ -65,7 +107,7 @@ export default function Content({ country }: AppProperties): ReactElement {
             ]}
           />
         </div>
-        <FlightLinks />
+        <FlightLinks setDates={handleChangeDate} />
       </div>
       <div className="grid place-items-center h-40 mb-4 bg-gray-300">
         No comments yet...

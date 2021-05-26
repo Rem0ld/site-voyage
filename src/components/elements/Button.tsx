@@ -1,12 +1,15 @@
 import ctl from "helpers/ctl";
 import React, { ReactElement } from "react";
+import { Country } from "types";
 
 interface AppProperties {
   text: string;
   isButton: boolean;
   type: "standard" | "valid" | "danger";
   size: "big" | "medium" | "small";
-  onclick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onclick?: (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => void | ((country: Country) => Promise<void>);
 }
 
 const main = ctl(`

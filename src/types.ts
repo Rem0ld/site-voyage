@@ -1,3 +1,11 @@
+export interface Travel {
+  userId: number;
+  destination: string;
+  fromCountry?: string;
+  departureDate?: Date;
+  returnDate?: Date;
+}
+
 export interface User {
   username: string;
   notifCount: number;

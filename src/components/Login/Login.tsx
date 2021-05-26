@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-console */
+import urlMaker from "api/URL";
 import Button from "components/elements/Button";
 import ctl from "helpers/ctl";
 import React, { ReactElement } from "react";
@@ -10,7 +11,7 @@ import auth from "../../../firebase-auth";
 import classes from "./styles";
 
 type Inputs = {
-  username: string;
+  email: string;
   password: string;
 };
 
@@ -31,6 +32,25 @@ const signIn = async (email: string, password: string): Promise<void> => {
   }
 };
 
+const getUser = async (email: string): Promise<any> => {
+  const url = urlMaker("user", "one");
+
+  const response = await fetch(url, {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+      // "Content-Type": "application/x-www-form-urlencoded",
+    },
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify({ email }), // body data type must match "Content-Type" header
+  });
+  return response.json();
+};
+
 export default function Login(): ReactElement {
   const history = useHistory();
   const {
@@ -40,11 +60,17 @@ export default function Login(): ReactElement {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data): void => {
-    signIn(data.username, data.password)
-      .then(() => {
+    Promise.all([signIn(data.email, data.password), getUser(data.email)])
+      .then((result) => {
+        localStorage.setItem("user", JSON.stringify(result[1]));
         history.push("/");
       })
       .catch((error) => console.error(error));
+    // signIn(data.email, data.password)
+    //   .then(() => {
+    //     getUser
+    //     history.push("/");
+    //   })
   };
 
   return (
@@ -56,17 +82,17 @@ export default function Login(): ReactElement {
           className="bg-white shadow-md rounded px-8 pt-4 pb-8"
         >
           <div className="mb-4">
-            <label className={classes.label} htmlFor="username">
-              Username
+            <label className={classes.label} htmlFor="email">
+              Email
             </label>
             <input
-              id="username"
+              id="email"
               type="text"
-              placeholder="Username"
+              placeholder="Email"
               className={classes.input}
-              {...register("username", { required: true })}
+              {...register("email", { required: true })}
             />
-            {errors.password && (
+            {errors.email && (
               <span className="text-red-500 text-xs italic">
                 This field is required
               </span>
