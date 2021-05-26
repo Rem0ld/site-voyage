@@ -1,4 +1,4 @@
-import saveTravel from "api/saveTravel";
+import { saveTravel } from "api/TravelRoutes";
 import Button from "components/elements/Button";
 import formatNumberWithDots from "helpers/formatNumberWithDots";
 import React, { ReactElement, useContext, useState } from "react";

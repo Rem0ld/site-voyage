@@ -1,5 +1,7 @@
 # TODO
 
+- [ ] menu plus large
+- [ ] ajouter ville d'arriver
 - [ ] when we create a user or when we log in we need to set cookies
 - [ ] remove email validation in "forgot password" as it is a security flaw
 - [ ] remove icon dependencies and use svg code directly (more optimised?)

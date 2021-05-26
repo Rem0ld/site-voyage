@@ -1,9 +1,13 @@
 export interface Travel {
+  id?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
   userId: number;
   destination: string;
   fromCountry?: string;
   departureDate?: Date;
   returnDate?: Date;
+  done?: boolean;
 }
 
 export interface User {

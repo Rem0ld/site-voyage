@@ -17,7 +17,7 @@ const SignUp = lazy(() => import("./Login/SignUp"));
 const PrivateRoute = lazy(() => import("./PrivateRoute"));
 const Results = lazy(() => import("./Results/Results"));
 const Settings = lazy(() => import("./SettingsComponent/Settings"));
-const Trips = lazy(() => import("./Trips"));
+const Trips = lazy(() => import("./Trips/Trips"));
 
 export default function App(): ReactElement {
   return (

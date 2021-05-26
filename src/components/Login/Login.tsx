@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-console */
-import urlMaker from "api/URL";
+import getUser from "api/UserRoutes";
 import Button from "components/elements/Button";
+import { SessionContext } from "components/SessionProvider";
 import ctl from "helpers/ctl";
-import React, { ReactElement } from "react";
+import React, { ReactElement, useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Link, useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import auth from "../../../firebase-auth";
 import classes from "./styles";
 
@@ -32,32 +33,18 @@ const signIn = async (email: string, password: string): Promise<void> => {
   }
 };
 
-const getUser = async (email: string): Promise<any> => {
-  const url = urlMaker("user", "one");
-
-  const response = await fetch(url, {
-    method: "POST",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    headers: {
-      "Content-Type": "application/json",
-      // "Content-Type": "application/x-www-form-urlencoded",
-    },
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-    body: JSON.stringify({ email }), // body data type must match "Content-Type" header
-  });
-  return response.json();
-};
-
 export default function Login(): ReactElement {
+  const user = useContext(SessionContext);
   const history = useHistory();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
+
+  if (user) {
+    return <Redirect to="/" />;
+  }
 
   const onSubmit: SubmitHandler<Inputs> = (data): void => {
     Promise.all([signIn(data.email, data.password), getUser(data.email)])
@@ -66,11 +53,6 @@ export default function Login(): ReactElement {
         history.push("/");
       })
       .catch((error) => console.error(error));
-    // signIn(data.email, data.password)
-    //   .then(() => {
-    //     getUser
-    //     history.push("/");
-    //   })
   };
 
   return (
