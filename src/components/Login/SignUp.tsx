@@ -58,9 +58,8 @@ export default function SignUp(): ReactElement {
   };
 
   /**
-   * See if there is a better way to do it
-   * as front and back should be on the same server
-   * And CHANGE URL!
+   * Makes an asynchronous call to server to create a user
+   * @param data
    */
   const createAccountDatabase = async (data: Inputs) => {
     const url = urlMaker("user", "new");
@@ -88,6 +87,12 @@ export default function SignUp(): ReactElement {
     return response.json();
   };
 
+  /**
+   * On form submit, it will first try to create the user in database
+   * If ok, it will create credentials with firebase
+   * @param data
+   * Handling errors is not complete
+   */
   const onSubmit: SubmitHandler<Inputs> = async (
     data: Inputs
   ): Promise<void> => {
