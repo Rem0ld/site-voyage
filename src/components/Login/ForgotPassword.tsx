@@ -24,24 +24,13 @@ export default function ForgotPassword(): ReactElement {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors },
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data): void => {
-    resetPassword(data.email)
-      .then(() => {
-        history.push("/email-submitted");
-      })
-      .catch((error) => {
-        if (error) {
-          setError("email", {
-            type: "required",
-            message: "This email doesn't exist in our database",
-            shouldFocus: true,
-          });
-        }
-      });
+    resetPassword(data.email).finally(() => {
+      history.push("/email-submitted");
+    });
   };
 
   return (
