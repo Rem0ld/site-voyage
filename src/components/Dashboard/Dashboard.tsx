@@ -278,15 +278,15 @@ export default function Dashboard({ countries }: AppProperties): ReactElement {
       {/* List included, excluded */}
       <div className="flex sm:flex-row flex-col-reverse justify-between">
         <DashboardList
-          title="Excluded"
-          list={excludedCountry}
-          onclick={authoriseACountry}
-          removeAll={removeAll}
-        />
-        <DashboardList
           title="Included"
           list={includedCountry}
           onclick={banACountry}
+          removeAll={removeAll}
+        />
+        <DashboardList
+          title="Excluded"
+          list={excludedCountry}
+          onclick={authoriseACountry}
           removeAll={removeAll}
         />
       </div>
