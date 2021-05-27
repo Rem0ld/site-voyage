@@ -13,14 +13,13 @@ export async function saveTravel(country: Country, dates: Dates): Promise<any> {
   )) as User;
 
   const travel = {
-    userId: user.id,
+    userId: +user.id,
     destination: country.name,
     fromCountry: user.country,
     departureDate: dates.depart ?? undefined,
     returnDate: dates.return ?? undefined,
   };
 
-  console.log(travel);
   const response = await fetch(url, {
     method: "POST",
     mode: "cors",
@@ -83,3 +82,23 @@ export async function updateTravel(id: number): Promise<any> {
 
   return response.json();
 }
+
+export async function deleteTravel(id: number): Promise<any> {
+  const url = urlMaker("travel", "delete");
+
+  const response = await fetch(url, {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+      // "Content-Type": "application/x-www-form-urlencoded",
+    },
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify({ id }),
+  });
+
+  return response.json();
+};

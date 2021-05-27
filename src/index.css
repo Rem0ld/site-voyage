@@ -51,3 +51,7 @@ btn-danger: red-600
 .scale-spe {
   transform: scaleX(-1);
 }
+
+.margin-children > * {
+  margin: 0 0.5em;
+}

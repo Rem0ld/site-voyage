@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { getTravel, updateTravel } from "api/TravelRoutes";
+import { deleteTravel, getTravel, updateTravel } from "api/TravelRoutes";
 import React, { ReactElement, useEffect, useState } from "react";
 import { Travel } from "types";
 import TopLine from "../elements/TopLine";
@@ -18,26 +18,26 @@ export default function Trips(): ReactElement {
       .finally(() => {});
   }, []);
 
-  useEffect(() => {}, [travels]);
+  // useEffect(() => {}, [travels]);
 
   const handleUpdateTravel = (id: number): void => {
-    updateTravel(id)
-      .catch((error) => {
-        console.error(error);
-      })
-      .finally(() => {});
-
-    setTravels((previousState) => {
-      const newState = previousState.map((element) => {
+    updateTravel(id).finally(() => {});
+    setTravels((previousState) =>
+      previousState.map((element) => {
         const object = element;
         if (object.id === id) {
           object.done = true;
         }
         return object;
-      });
-      console.log(previousState);
-      return newState;
-    });
+      })
+    );
+  };
+
+  const handleDeleteTravel = (id: number): void => {
+    deleteTravel(id).finally(() => {});
+    setTravels((previousState) =>
+      previousState.filter((element) => element.id !== id)
+    );
   };
 
   return (
@@ -51,12 +51,13 @@ export default function Trips(): ReactElement {
           </h3>
 
           {travels
-            ?.filter((element) => element.done)
+            ?.filter((element) => !element.done)
             .map((element) => (
               <TripItem
                 travel={element}
                 key={element.id}
                 updateTravel={handleUpdateTravel}
+                deleteTravel={handleDeleteTravel}
               />
             ))}
         </div>
@@ -64,12 +65,13 @@ export default function Trips(): ReactElement {
         <div className="h-auto md:w-4/5 w-full md:px-4 px-1 m-auto border-gray-400 md:border-l-2">
           <h3 className="text-xl font-semibold border-b">Done</h3>
           {travels
-            ?.filter((element) => !element.done)
+            ?.filter((element) => element.done)
             .map((element) => (
               <TripItem
                 travel={element}
                 key={element.id}
                 updateTravel={handleUpdateTravel}
+                deleteTravel={handleDeleteTravel}
               />
             ))}
         </div>
