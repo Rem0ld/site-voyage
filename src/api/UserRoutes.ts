@@ -36,5 +36,5 @@ export async function deleteUser(email: string): Promise<any> {
     body: JSON.stringify({ email }),
   });
 
-  return response;
+  return response.json();
 };
