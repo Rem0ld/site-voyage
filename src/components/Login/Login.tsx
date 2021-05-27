@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-console */
-import getUser from "api/UserRoutes";
+import { getUser } from "api/UserRoutes";
 import Button from "components/elements/Button";
 import { SessionContext } from "components/SessionProvider";
 import ctl from "helpers/ctl";

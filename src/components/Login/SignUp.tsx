@@ -7,7 +7,7 @@ import { getSessionStorage } from "helpers/sessionStorage";
 import React, { ReactElement } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import { Country } from "types";
+import { Country, Payload } from "types";
 import auth from "../../../firebase-auth";
 import classes from "./styles";
 
@@ -93,13 +93,15 @@ export default function SignUp(): ReactElement {
   ): Promise<void> => {
     if (checkPassword()) {
       createAccountDatabase(data)
-        .then((result) => {
-          // We need set cookie here instead of this
-          // and we need to parse the data
-          localStorage.setItem("user", JSON.stringify(result));
+        .then(async (result: Payload) => {
+          if (result.type === "error") throw result.error;
+
           auth
             .createUserWithEmailAndPassword(data.email, data.password)
             .then(() => {
+              // We need set cookie here instead of this
+              // and we need to parse the data
+              // localStorage.setItem("user", JSON.stringify(result.body));
               history.push("/");
             })
             .catch((error) => {
@@ -107,7 +109,17 @@ export default function SignUp(): ReactElement {
             });
         })
         .catch((error) => {
-          console.error(error);
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          if (error.code !== undefined) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            if (error.code === "P2002") {
+              setError("email", {
+                message: "Email already in use",
+              });
+            }
+          } else {
+            console.error(error);
+          }
         });
     }
   };

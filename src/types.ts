@@ -10,11 +10,28 @@ export interface Travel {
   done?: boolean;
 }
 
-export interface User {
-  username: string;
-  notifCount: number;
-  isConnected: boolean;
+enum Role {
+  ADMIN,
+  USER,
 }
+
+export interface User {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+  email: string;
+  username: string;
+  country?: string;
+  zip?: string;
+  city?: string;
+  role: Role;
+}
+
+// export interface User {
+//   username: string;
+//   notifCount: number;
+//   isConnected: boolean;
+// }
 
 export interface Hobby {
   [key: string]: {
@@ -81,3 +98,17 @@ export interface RegionalBlocs {
   otherNames?: []
 }
 
+
+export interface Payload extends Response {
+  error: PrismaError;
+}
+
+export interface PrismaError extends Error {
+  code: string;
+  clientVersion: string;
+  meta: Meta;
+}
+
+type Meta = {
+  target: string[];
+};

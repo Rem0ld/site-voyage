@@ -1,23 +1,5 @@
-import { Country } from "types";
+import { Country, User } from "types";
 import urlMaker from "./UrlMaker";
-
-
-enum Role {
-  ADMIN,
-  USER,
-}
-
-interface User {
-  id: number;
-  createdAt: Date;
-  updatedAt: Date;
-  email: string;
-  username: string;
-  country?: string;
-  zip?: string;
-  city?: string;
-  role: Role;
-}
 
 interface Dates {
   depart: Date | undefined;
