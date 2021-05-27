@@ -53,21 +53,6 @@ export default function MenuDropdown(): ReactElement {
     </>
   );
 
-  const listNotConnected = (
-    <>
-      <li>
-        <Link to="/signup" className={classes.link}>
-          Sign Up
-        </Link>
-      </li>
-      <li>
-        <Link to="/login" className={classes.link}>
-          Log In
-        </Link>
-      </li>
-    </>
-  );
-
   /**
    * Will open and close User menu
    * @param event onclick event
@@ -100,8 +85,6 @@ export default function MenuDropdown(): ReactElement {
     };
   }, [closeMenu]);
 
-  const list = user ? listConnected : listNotConnected;
-
   return user ? (
     <div className="relative flex justify-center space-x-1">
       {/* to change when we implement the cookie with the user information from DB */}
@@ -116,19 +99,28 @@ export default function MenuDropdown(): ReactElement {
         role="menu"
         className={isOpen ? `${classes.menu}` : `${classes.menu} opacity-0`}
       >
-        {isOpen ? list : ""}
+        {isOpen ? listConnected : ""}
       </ul>
     </div>
   ) : (
     <div className="relative flex justify-center space-x-1">
-      <div className="relative" onClick={toggleMenu} role="button" tabIndex={0}>
-        <Icon icon={personIcon} className="w-6 h-6 text-primary" />
-      </div>
-      <ul
-        role="menu"
-        className={isOpen ? `${classes.menu}` : `${classes.menu} opacity-0`}
-      >
-        {isOpen ? list : ""}
+      <ul className="flex space-x-1">
+        <li>
+          <Link
+            to="/signup"
+            className={`${classes.variant} ${classes.variantPrimary}`}
+          >
+            SignUp
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/login"
+            className={`${classes.variant} ${classes.variantSecondary}`}
+          >
+            Login
+          </Link>
+        </li>
       </ul>
     </div>
   );

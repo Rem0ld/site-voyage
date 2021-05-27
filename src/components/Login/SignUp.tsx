@@ -131,7 +131,7 @@ export default function SignUp(): ReactElement {
 
   return (
     <div className="content-container min-height-screen overscroll-auto py-3">
-      <div className="w-11/12 max-w-lg bg-white rounded-md">
+      <div className="w-11/12 max-w-lg mt-16 bg-white rounded-md">
         <h2 className="font-bold text-xl text-center pt-6">Sign Up</h2>
         <form
           onSubmit={handleSubmit(onSubmit)}

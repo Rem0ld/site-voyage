@@ -41,8 +41,46 @@ rounded-md
 hover:bg-gray-100
 `)
 
+const variant = ctl(`
+w-20
+h-9
+grid
+place-items-center
+py-1 
+px-2 
+px-2
+transition
+duration-500
+transform-gpu
+hover:scale-105
+shadow-xs
+border-2
+font-bold
+rounded-full
+`);
+
+const variantPrimary = ctl(`
+bg-primary
+hover:bg-gray-100
+border-primary
+text-white
+hover:text-primary
+`);
+
+const variantSecondary = ctl(`
+bg-gray-100
+hover:bg-primary
+border-primary
+text-primary
+hover:text-gray-100
+`);
+
+
 export default {
   menu,
   notif,
-  link
+  link,
+  variant,
+  variantPrimary,
+  variantSecondary
 };

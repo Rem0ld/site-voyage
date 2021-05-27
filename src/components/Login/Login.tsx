@@ -57,7 +57,7 @@ export default function Login(): ReactElement {
 
   return (
     <div className="content-container">
-      <div className="w-11/12 max-w-xs mx-4 bg-white rounded-md">
+      <div className="w-11/12 max-w-xs mx-4 mt-16 bg-white rounded-md">
         <h2 className="font-bold text-xl text-center pt-6">Login</h2>
         <form
           onSubmit={handleSubmit(onSubmit)}
