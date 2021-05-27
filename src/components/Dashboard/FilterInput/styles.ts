@@ -4,9 +4,7 @@ import ctl from "helpers/ctl";
 const input = ctl(`
 appearance-none 
 bg-transparent 
-border-t-0 
-border-r-0 
-border-l-0 
+border-0
 border-b-1 
 border-gray-300 
 w-2/4 
@@ -31,7 +29,6 @@ z-20
 top-12 
 left-4 
 w-2/4 
-h-8 
 max-h-80
 h-auto
 p-2 

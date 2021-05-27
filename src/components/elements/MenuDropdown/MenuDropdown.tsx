@@ -1,6 +1,4 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import personIcon from "@iconify/icons-akar-icons/person";
-import { Icon } from "@iconify/react";
 import React, {
   ReactElement,
   useCallback,
@@ -11,6 +9,7 @@ import React, {
 import { Link, useHistory } from "react-router-dom";
 import auth from "../../../../firebase-auth";
 import { SessionContext } from "../../SessionProvider";
+import PersonIcon from "../PersonIcon";
 import classes from "./style";
 
 export default function MenuDropdown(): ReactElement {
@@ -93,7 +92,7 @@ export default function MenuDropdown(): ReactElement {
         <div className={classes.notif}>
           <div className="p-0.5 text-white text-xs leading-3">{0}</div>
         </div>
-        <Icon icon={personIcon} className="w-6 h-6 text-primary" />
+        <PersonIcon />
       </div>
       <ul
         role="menu"

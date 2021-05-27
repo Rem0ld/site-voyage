@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import magnifyIcon from "@iconify-icons/mdi-light/magnify";
-import { InlineIcon } from "@iconify/react";
+import MagnifyGlassIcon from "components/elements/MagnifyGlassIcon";
 import React, { ReactElement, useState } from "react";
 import { Country } from "types";
 import classes from "./styles";
@@ -40,7 +39,7 @@ export default function FilterInput({
     <div className="py-4">
       <p className="text-sm pl-2">Country to remove</p>
       <div className="relative flex items-center -pt-2">
-        <InlineIcon icon={magnifyIcon} />
+        <MagnifyGlassIcon />
         <input
           type="text"
           aria-label="Full name"

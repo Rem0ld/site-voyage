@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import chevronRight from "@iconify-icons/akar-icons/chevron-right";
-import Icon from "@iconify/react";
+import ChevronRightIcon from "components/elements/ChevronRightIcon";
 import { motion } from "framer-motion";
 import ctl from "helpers/ctl";
 import { getSessionStorageFilter } from "helpers/sessionStorage";
@@ -104,7 +103,7 @@ export default function FilterElement({
           variants={variants}
           transition={transition}
         >
-          <Icon icon={chevronRight} />
+          <ChevronRightIcon />
         </motion.div>
       </div>
       <div className={`${filter} ${classesFilterList} ${opacity}`}>

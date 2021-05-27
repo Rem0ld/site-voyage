@@ -25,7 +25,7 @@ export default function MenuToggle({ toggle }: Property): ReactElement {
     <button
       type="button"
       onClick={toggle}
-      className="absolute left-full shadow-md rounded-r-sm bg-white focus:outline-none"
+      className="absolute left-full grid place-items-center h-full w-10 -mt-2 shadow-md rounded-r-sm bg-white focus:outline-none "
       style={{ padding: "1px 2px 0px 1px" }}
     >
       <svg width="28" height="60" viewBox="0 0 21 21">

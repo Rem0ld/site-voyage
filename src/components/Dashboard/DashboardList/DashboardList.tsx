@@ -1,10 +1,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import crossMarkButton from "@iconify/icons-emojione/cross-mark-button";
-import { Icon } from "@iconify/react";
+import SwipeIcon from "components/elements/SwipeIcon";
 import ctl from "helpers/ctl";
 import React, { ReactElement } from "react";
 import { Country } from "types";
-// import arrowRight from "../../../../public/arrow_right.svg";
 import classes from "./styles";
 
 interface AppProperties {
@@ -50,34 +48,9 @@ const DashboardList = React.memo(
             tabIndex={-2}
           >
             {title === "Excluded" ? (
-              <svg
-                width="15"
-                height="15"
-                viewBox="0 0 15 15"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M15 12.4439C15 13.8128 13.875 14.9327 12.5 14.9327H2.5C1.125 14.9327 0 13.8128 0 12.4439V2.48879C0 1.11995 1.125 0 2.5 0H12.5C13.875 0 15 1.11995 15 2.48879V12.4439Z"
-                  fill="#84CC16"
-                />
-                <path
-                  d="M3 7.5625H11.1429"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M7.58032 4L11.1428 7.5625L7.58032 11.125"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <SwipeIcon type="valid" />
             ) : (
-              <Icon icon={crossMarkButton} />
+              <SwipeIcon type="danger" />
             )}
           </div>
         </li>

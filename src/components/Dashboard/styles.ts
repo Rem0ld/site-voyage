@@ -2,7 +2,7 @@ import ctl from "helpers/ctl";
 
 const component = ctl(`
 min-height-screen-dash
-absolute
+fixed
 left-0
 top-16
 z-20
