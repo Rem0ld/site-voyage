@@ -15,9 +15,18 @@ enum Role {
   USER,
 }
 
+type MyNotification = {
+  readonly id: number;
+  readonly createdAt: Date;
+  updatedAt: Date;
+  DateSendNotification: Date;
+  readonly userId: number;
+  readonly travelId: number;
+}
+
 export interface User {
-  id: number;
-  createdAt: Date;
+  readonly id: number;
+  readonly createdAt: Date;
   updatedAt: Date;
   email: string;
   username: string;
@@ -25,6 +34,7 @@ export interface User {
   zip?: string;
   city?: string;
   role: Role;
+  notifications: MyNotification[];
 }
 
 // export interface User {
