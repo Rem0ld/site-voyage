@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
+import { SubItem } from "types";
 
-type SubItem = [string, string | number | string[] | Array<string>];
 interface AppProperties {
   items: SubItem[];
   name: string;

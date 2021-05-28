@@ -1,8 +1,9 @@
 import { saveTravel } from "api/TravelRoutes";
 import Button from "components/elements/Button";
+import formatCurrencies from "helpers/formatCurrencies";
 import formatNumberWithDots from "helpers/formatNumberWithDots";
 import React, { ReactElement, useContext, useState } from "react";
-import { Country } from "types";
+import { Country, SubItem } from "types";
 import { SessionContext } from "../../SessionProvider";
 import FlightLinks from "../FlightLinks/FlightLinks";
 import List from "./List";
@@ -26,6 +27,10 @@ export default function Content({ country }: AppProperties): ReactElement {
   const [dates, setDates] = useState(INITIAL_STATE);
   const [disabled, setDisabled] = useState(false);
 
+  /**
+   * Will update date state
+   * @param event To know which input we're working with
+   */
   const handleChangeDate = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
@@ -47,17 +52,26 @@ export default function Content({ country }: AppProperties): ReactElement {
     : [""];
 
   const currencies = country.currencies
-    ? country.currencies.map((element) => {
-        if (element.code !== null) {
-          return `${element.code} ${element.name} ${element.symbol} `;
-        }
-        return "";
-      }, [])
+    ? formatCurrencies(country.currencies)
     : [""];
 
   const population = country.population
     ? formatNumberWithDots(country.population)
     : "";
+
+  const leftList: SubItem[] = [
+    ["Flag", ""],
+    ["Capital", country.capital],
+    ["Region", country.region],
+    ["Sub Region", country.subregion],
+    ["Population", population],
+  ];
+  const rightList: SubItem[] = [
+    ["Languages", languages],
+    ["Timezone", country.timezones],
+    ["Currencies", currencies],
+    ["Domain", country.topLevelDomain],
+  ];
 
   return (
     <div className="w-full bg-gray-100 px-4">
@@ -87,25 +101,8 @@ export default function Content({ country }: AppProperties): ReactElement {
       <img src={country.flag} alt="Country's flag" className=" w-40 m-auto" />
       <div className="xl:w-4/5 lg:w-4/5 m-auto">
         <div className="flex justify-between md:flex-row flex-col font-semibold text-lg">
-          <List
-            name="left"
-            items={[
-              ["Flag", ""],
-              ["Capital", country.capital],
-              ["Region", country.region],
-              ["Sub Region", country.subregion],
-              ["Population", population],
-            ]}
-          />
-          <List
-            name="right"
-            items={[
-              ["Languages", languages],
-              ["Timezone", country.timezones],
-              ["Currencies", currencies],
-              ["Domain", country.topLevelDomain],
-            ]}
-          />
+          <List name="left" items={leftList} />
+          <List name="right" items={rightList} />
         </div>
         <FlightLinks setDates={handleChangeDate} />
       </div>

@@ -98,7 +98,7 @@ export interface RegionalBlocs {
   otherNames?: []
 }
 
-
+// Used for answers from the backend
 export interface Payload extends Response {
   error: PrismaError;
 }
@@ -112,3 +112,6 @@ export interface PrismaError extends Error {
 type Meta = {
   target: string[];
 };
+
+// Used in Result/Content 
+export type SubItem = [string, string | number | string[] | Array<string>];
