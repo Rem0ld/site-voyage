@@ -4,10 +4,11 @@
 import urlMaker from "api/UrlMaker";
 import Button from "components/elements/Button";
 import { getSessionStorage } from "helpers/sessionStorage";
+import Cookies from "js-cookie";
 import React, { ReactElement } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import { Country, Payload } from "types";
+import { Country, Payload, User } from "types";
 import auth from "../../../firebase-auth";
 import classes from "./styles";
 
@@ -104,9 +105,8 @@ export default function SignUp(): ReactElement {
           auth
             .createUserWithEmailAndPassword(data.email, data.password)
             .then(() => {
-              // We need set cookie here instead of this
-              // and we need to parse the data
-              // localStorage.setItem("user", JSON.stringify(result.body));
+              const user = result.body as unknown;
+              Cookies.set("user", user as User);
               history.push("/");
             })
             .catch((error) => {

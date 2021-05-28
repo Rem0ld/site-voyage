@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { Country, User } from "types";
 import urlMaker from "./UrlMaker";
 
@@ -8,9 +9,7 @@ interface Dates {
 
 export async function saveTravel(country: Country, dates: Dates): Promise<any> {
   const url = urlMaker("travel", "new");
-  const user: User = (await JSON.parse(
-    localStorage.getItem("user") as string
-  )) as User;
+  const user: User = Cookies.getJSON("user") as User;
 
   const travel = {
     userId: +user.id,
@@ -39,9 +38,7 @@ export async function saveTravel(country: Country, dates: Dates): Promise<any> {
 
 export async function getTravel(): Promise<any> {
   const url = urlMaker("travel", "all");
-  const user: User = (await JSON.parse(
-    localStorage.getItem("user") as string
-  )) as User;
+  const user = Cookies.getJSON("user") as User;
 
   const response: Response = await fetch(url, {
     method: "POST",
@@ -62,9 +59,6 @@ export async function getTravel(): Promise<any> {
 
 export async function updateTravel(id: number): Promise<any> {
   const url = urlMaker("travel", "update-done");
-  // const user: User = (await JSON.parse(
-  //   localStorage.getItem("user") as string
-  // )) as User;
 
   const response: Response = await fetch(url, {
     method: "POST",

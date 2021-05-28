@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import Cookies from "js-cookie";
 import React, { ReactElement, useEffect, useState } from "react";
 import { User } from "types";
 import Button from "../elements/Button";
@@ -15,9 +16,7 @@ export default function Settings(): ReactElement {
   const [isModifying, setIsModifying] = useState(false);
 
   useEffect(() => {
-    const connectedUser = JSON.parse(
-      localStorage.getItem("user") as string
-    ) as User;
+    const connectedUser = Cookies.getJSON("user") as User;
     setUser(connectedUser);
   }, []);
 

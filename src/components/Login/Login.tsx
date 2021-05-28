@@ -5,6 +5,7 @@ import { getUser } from "api/UserRoutes";
 import Button from "components/elements/Button";
 import { SessionContext } from "components/SessionProvider";
 import ctl from "helpers/ctl";
+import Cookies from "js-cookie";
 import React, { ReactElement, useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, Redirect, useHistory } from "react-router-dom";
@@ -49,8 +50,8 @@ export default function Login(): ReactElement {
   const onSubmit: SubmitHandler<Inputs> = (data): void => {
     Promise.all([signIn(data.email, data.password), getUser(data.email)])
       .then((result) => {
-        localStorage.setItem("user", JSON.stringify(result[1]));
-        history.push("/");
+        Cookies.set("user", result[1]);
+        history.goBack();
       })
       .catch((error) => console.error(error));
   };
