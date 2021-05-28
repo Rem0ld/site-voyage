@@ -98,15 +98,23 @@ export default function SignUp(): ReactElement {
     data: Inputs
   ): Promise<void> => {
     if (checkPassword()) {
+      // Creating user on server
       createAccountDatabase(data)
         .then(async (result: Payload) => {
           if (result.type === "error") throw result.error;
 
+          // Creating user on firebase
           auth
             .createUserWithEmailAndPassword(data.email, data.password)
-            .then(() => {
+            .then(async (credentials) => {
+              // Getting JWT token and saving it
+              const token = await credentials.user?.getIdToken(true);
+              if (token) localStorage.setItem("@token", token);
+
+              // Setting user information in cookies
               const user = result.body as unknown;
               Cookies.set("user", user as User);
+              // Redirection to home
               history.push("/");
             })
             .catch((error) => {

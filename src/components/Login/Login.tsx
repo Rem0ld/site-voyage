@@ -4,6 +4,7 @@
 import { getUser } from "api/server/UserRoutes";
 import Button from "components/elements/Button";
 import { SessionContext } from "components/SessionProvider";
+import firebase from "firebase/app";
 import ctl from "helpers/ctl";
 import Cookies from "js-cookie";
 import React, { ReactElement, useContext } from "react";
@@ -26,16 +27,14 @@ text-primary
 hover:underline
 `);
 
-const signIn = async (email: string, password: string): Promise<void> => {
-  try {
-    await auth.signInWithEmailAndPassword(email, password);
-  } catch (error) {
-    console.error(error);
-  }
-};
+const signIn = async (
+  email: string,
+  password: string
+): Promise<firebase.auth.UserCredential> =>
+  auth.signInWithEmailAndPassword(email, password);
 
 export default function Login(): ReactElement {
-  const user = useContext(SessionContext);
+  const sessionContext = useContext(SessionContext);
   const history = useHistory();
   const {
     register,
@@ -43,14 +42,19 @@ export default function Login(): ReactElement {
     formState: { errors },
   } = useForm<Inputs>();
 
-  if (user) {
-    console.log(user.getIdToken());
+  if (sessionContext) {
     return <Redirect to="/" />;
   }
 
   const onSubmit: SubmitHandler<Inputs> = (data): void => {
     Promise.all([signIn(data.email, data.password), getUser(data.email)])
-      .then((result) => {
+      .then(async (result) => {
+        const { user } = result[0];
+        // Getting JWT token and saving it
+        const token = await user?.getIdToken(true);
+        if (token) localStorage.setItem("@token", token);
+
+        // Setting user information in cookie
         Cookies.set("user", result[1]);
         history.goBack();
       })
