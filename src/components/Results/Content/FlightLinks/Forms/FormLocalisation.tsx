@@ -1,13 +1,16 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { ReactElement } from "react";
+import { Localisation } from "types";
 import classes from "../styles";
 
 interface AppProperties {
   setLocalisation: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  localisation: Localisation;
 }
 
 export default function FormLocalisation({
   setLocalisation,
+  localisation,
 }: AppProperties): ReactElement {
   return (
     <div className="flex lg:flex-row flex-col lg:space-x-1">
@@ -19,6 +22,7 @@ export default function FormLocalisation({
           type="text"
           id="from"
           name="from"
+          value={localisation.from}
           className={classes.input}
           onChange={(event) => {
             setLocalisation(event);
@@ -33,6 +37,7 @@ export default function FormLocalisation({
           type="text"
           id="to"
           name="to"
+          value={localisation.to}
           className={classes.input}
           disabled
           onChange={(event) => {

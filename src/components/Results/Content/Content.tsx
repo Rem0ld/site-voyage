@@ -1,7 +1,8 @@
 import { saveTravel } from "api/server/TravelRoutes";
 import Button from "components/elements/Button";
-import React, { ReactElement, useContext, useState } from "react";
-import { Country, Localisation } from "types";
+import Cookies from "js-cookie";
+import React, { ReactElement, useContext, useEffect, useState } from "react";
+import { Country, Localisation, User } from "types";
 import { SessionContext } from "../../SessionProvider";
 import FlightLinks from "./FlightLinks/FlightLinks";
 import Main from "./Main/Main";
@@ -21,15 +22,34 @@ const INITIAL_STATE_DATE: Dates = {
 };
 
 const INITIAL_STATE_LOCALISATION: Localisation = {
-  from: undefined,
-  to: undefined,
+  from: "",
+  to: "",
 };
 
 export default function Content({ country }: AppProperties): ReactElement {
-  const user = useContext(SessionContext);
+  const sessionContext = useContext(SessionContext);
+  const [user, setUser] = useState<User>();
   const [disabled, setDisabled] = useState(false);
   const [dates, setDates] = useState(INITIAL_STATE_DATE);
   const [localisation, setLocalisation] = useState(INITIAL_STATE_LOCALISATION);
+
+  // When component is mounted we check if user is connected
+  // and we put it in a state
+  useEffect(() => {
+    const connectedUser = Cookies.getJSON("user") as User;
+    if (connectedUser) setUser(connectedUser);
+  }, []);
+
+  // If user exist, we check if he filled his location
+  // and fill inputs with it
+  useEffect(() => {
+    if (user && user.city) {
+      setLocalisation((previousState) => ({
+        ...previousState,
+        from: user.city,
+      }));
+    }
+  }, [user]);
 
   /**
    * Will update date state
@@ -74,7 +94,7 @@ export default function Content({ country }: AppProperties): ReactElement {
   return (
     <div className="w-full bg-gray-100 px-4">
       <div className="relative xl:w-4/5 lg:w-4/5 h-16 m-auto">
-        {user && !disabled ? (
+        {sessionContext && !disabled ? (
           <div className="absolute bottom-0 right-0">
             <Button
               text="Save"
@@ -102,6 +122,7 @@ export default function Content({ country }: AppProperties): ReactElement {
         <FlightLinks
           setDates={handleChangeDate}
           setLocalisation={handleChangeLocalisation}
+          localisation={localisation}
         />
       </div>
       <div className="grid place-items-center h-40 mb-4 bg-gray-300">
