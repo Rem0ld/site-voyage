@@ -37,12 +37,6 @@ export interface User {
   notifications: MyNotification[];
 }
 
-// export interface User {
-//   username: string;
-//   notifCount: number;
-//   isConnected: boolean;
-// }
-
 export interface Hobby {
   [key: string]: {
     isChecked: boolean;
@@ -125,3 +119,8 @@ type Meta = {
 
 // Used in Result/Content 
 export type SubItem = [string, string | number | string[] | Array<string>];
+
+export interface Localisation {
+  from: string | undefined;
+  to: string | undefined;
+}

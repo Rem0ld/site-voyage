@@ -2,8 +2,9 @@ import ctl from "helpers/ctl";
 
 const input = ctl(`
 appearance-none 
-block 
-mb-3
+block
+w-full
+h-10
 mr-2
 py-2 
 px-3 
@@ -17,10 +18,11 @@ focus:outline-none
 focus:bg-white
 focus:ring-primary
 focus:border-primary
+disabled:bg-gray-200
 `);
 
 const radio = ctl(`
-mr-2
+mr-1
 border-gray-400
 outline-none 
 focus:outline-none 

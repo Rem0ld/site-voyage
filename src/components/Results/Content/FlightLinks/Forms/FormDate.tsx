@@ -1,23 +1,24 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import Links from "components/Links/Links";
 import React, { ReactElement, useState } from "react";
-import classes from "./styles";
+import classes from "../styles";
 
 interface AppProperties {
   setDates: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function FlightLinks({ setDates }: AppProperties): ReactElement {
+export default function FormDate({ setDates }: AppProperties): ReactElement {
   const [radioButton, setRadioButton] = useState("one_way");
+
   const handleChangeRadio = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     setRadioButton(event.target.value);
   };
+
   return (
-    <div className="mb-4 border-t-2">
-      <div className="flex">
-        <div className="flex items-center m-2 ml-0">
+    <div className="space-x-1">
+      <div className="flex mb-2 space-x-2">
+        <div className="flex items-center lg:m-0 ">
           <input
             id="one_way"
             type="radio"
@@ -37,7 +38,7 @@ export default function FlightLinks({ setDates }: AppProperties): ReactElement {
             type="radio"
             name="type"
             value="roundtrip"
-            className={classes.radio}
+            className={`${classes.radio}`}
             onChange={(event) => {
               handleChangeRadio(event);
             }}
@@ -45,13 +46,12 @@ export default function FlightLinks({ setDates }: AppProperties): ReactElement {
           <label htmlFor="roundtrip">Roundtrip</label>
         </div>
       </div>
-
-      <div className="flex md:flex-row flex-col pb-10">
+      <div className="flex lg:flex-row flex-col space-y-3 lg:space-y-0">
         <input
           type="date"
           id="depart"
           name="depart"
-          className={classes.input}
+          className={`${classes.input} mb-3`}
           onChange={(event) => {
             setDates(event);
           }}
@@ -60,16 +60,12 @@ export default function FlightLinks({ setDates }: AppProperties): ReactElement {
           type="date"
           id="return"
           name="return"
-          className={classes.input}
+          className={`${classes.input} lg:mb-3`}
           disabled={radioButton === "one_way"}
           onChange={(event) => {
             setDates(event);
           }}
         />
-      </div>
-
-      <div className="grid md:grid-cols-2 md:grid-rows-2 md:gap-10 gap-4 justify-items-center lg:w-full m-auto">
-        <Links />
       </div>
     </div>
   );

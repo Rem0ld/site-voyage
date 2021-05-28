@@ -1,12 +1,10 @@
 import { saveTravel } from "api/server/TravelRoutes";
 import Button from "components/elements/Button";
-import formatCurrencies from "helpers/formatCurrencies";
-import formatNumberWithDots from "helpers/formatNumberWithDots";
 import React, { ReactElement, useContext, useState } from "react";
-import { Country, SubItem } from "types";
+import { Country, Localisation } from "types";
 import { SessionContext } from "../../SessionProvider";
-import FlightLinks from "../FlightLinks/FlightLinks";
-import List from "./List";
+import FlightLinks from "./FlightLinks/FlightLinks";
+import Main from "./Main/Main";
 
 interface AppProperties {
   country: Country;
@@ -17,15 +15,21 @@ interface Dates {
   return: Date | undefined;
 }
 
-const INITIAL_STATE: Dates = {
+const INITIAL_STATE_DATE: Dates = {
   depart: undefined,
   return: undefined,
 };
 
+const INITIAL_STATE_LOCALISATION: Localisation = {
+  from: undefined,
+  to: undefined,
+};
+
 export default function Content({ country }: AppProperties): ReactElement {
   const user = useContext(SessionContext);
-  const [dates, setDates] = useState(INITIAL_STATE);
   const [disabled, setDisabled] = useState(false);
+  const [dates, setDates] = useState(INITIAL_STATE_DATE);
+  const [localisation, setLocalisation] = useState(INITIAL_STATE_LOCALISATION);
 
   /**
    * Will update date state
@@ -47,31 +51,25 @@ export default function Content({ country }: AppProperties): ReactElement {
     }
   };
 
-  const languages = country.languages
-    ? country.languages.map((element) => element.name, [])
-    : [""];
-
-  const currencies = country.currencies
-    ? formatCurrencies(country.currencies)
-    : [""];
-
-  const population = country.population
-    ? formatNumberWithDots(country.population)
-    : "";
-
-  const leftList: SubItem[] = [
-    ["Flag", ""],
-    ["Capital", country.capital],
-    ["Region", country.region],
-    ["Sub Region", country.subregion],
-    ["Population", population],
-  ];
-  const rightList: SubItem[] = [
-    ["Languages", languages],
-    ["Timezone", country.timezones],
-    ["Currencies", currencies],
-    ["Domain", country.topLevelDomain],
-  ];
+  /**
+   * Will update localisation state
+   * @param event To know which input we're working with
+   */
+  const handleChangeLocalisation = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    if (event.target.name === "from") {
+      setLocalisation((previousState) => ({
+        ...previousState,
+        from: event.target.value,
+      }));
+    } else {
+      setLocalisation((previousState) => ({
+        ...previousState,
+        to: event.target.value,
+      }));
+    }
+  };
 
   return (
     <div className="w-full bg-gray-100 px-4">
@@ -84,7 +82,7 @@ export default function Content({ country }: AppProperties): ReactElement {
               size="medium"
               isButton
               onclick={() => {
-                saveTravel(country, dates)
+                saveTravel(country, dates, localisation)
                   .then(() => {
                     setDisabled(true);
                   })
@@ -100,11 +98,11 @@ export default function Content({ country }: AppProperties): ReactElement {
       </div>
       <img src={country.flag} alt="Country's flag" className=" w-40 m-auto" />
       <div className="xl:w-4/5 lg:w-4/5 m-auto">
-        <div className="flex justify-between md:flex-row flex-col font-semibold text-lg">
-          <List name="left" items={leftList} />
-          <List name="right" items={rightList} />
-        </div>
-        <FlightLinks setDates={handleChangeDate} />
+        <Main country={country} />
+        <FlightLinks
+          setDates={handleChangeDate}
+          setLocalisation={handleChangeLocalisation}
+        />
       </div>
       <div className="grid place-items-center h-40 mb-4 bg-gray-300">
         No comments yet...

@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { Country, User } from "types";
+import { Country, Localisation, User } from "types";
 import urlMaker from "../UrlMaker";
 
 interface Dates {
@@ -7,15 +7,16 @@ interface Dates {
   return: Date | undefined;
 }
 
-export async function saveTravel(country: Country, dates: Dates): Promise<any> {
+export async function saveTravel(country: Country, dates: Dates, localisation: Localisation): Promise<any> {
   const url = urlMaker("travel", "new");
   const user: User = Cookies.getJSON("user") as User;
   const bearer = localStorage.getItem("@token")
 
+  // We still need to add "to" which will be a city
   const travel = {
     userId: +user.id,
     destination: country.name,
-    fromCountry: user.country,
+    fromCountry: localisation.from,
     departureDate: dates.depart ?? undefined,
     returnDate: dates.return ?? undefined,
   };
