@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import SwipeIcon from "components/elements/SwipeIcon";
+import SwipeIcon from "components/elements/IconsComponents/SwipeIcon";
 import ctl from "helpers/ctl";
 import React, { ReactElement } from "react";
 import { Country } from "types";

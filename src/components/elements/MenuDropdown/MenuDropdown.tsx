@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import LogoutButton from "components/Login/LogoutButton";
 import Cookies from "js-cookie";
 import React, {
   ReactElement,
@@ -9,24 +10,16 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { User } from "types";
-import auth from "../../../../firebase-auth";
 import { SessionContext } from "../../SessionProvider";
-import PersonIcon from "../PersonIcon";
+import PersonIcon from "../IconsComponents/PersonIcon";
 import classes from "./style";
 
 export default function MenuDropdown(): ReactElement {
-  const history = useHistory();
   const sessionContext = useContext(SessionContext);
   const [user, setUser] = useState<User>();
   const [isOpen, setIsOpen] = useState(false);
-
-  const signOut = async (): Promise<void> => {
-    await auth.signOut();
-    Cookies.remove("user");
-    history.push("/");
-  };
 
   /**
    * Will open and close User menu
@@ -51,6 +44,16 @@ export default function MenuDropdown(): ReactElement {
     [setIsOpen]
   );
 
+  // Add event listener when component is mounted and remove it when unmounted
+  useEffect(() => {
+    document.querySelector("body")?.addEventListener("click", closeMenu);
+    setUser(Cookies.getJSON("user") as User);
+
+    return function cleanup() {
+      document.removeEventListener("click", closeMenu);
+    };
+  }, [closeMenu]);
+
   const listConnected = (
     <>
       <li>
@@ -69,14 +72,7 @@ export default function MenuDropdown(): ReactElement {
         </Link>
       </li>
       <li>
-        <button
-          onClick={signOut}
-          className={`${classes.link} w-full text-left`}
-          type="button"
-          tabIndex={0}
-        >
-          Log out
-        </button>
+        <LogoutButton />
       </li>
     </>
   );
@@ -128,16 +124,6 @@ export default function MenuDropdown(): ReactElement {
         </li>
       </ul>
     );
-
-  // Add event listener when component is mounted and remove it when unmounted
-  useEffect(() => {
-    document.querySelector("body")?.addEventListener("click", closeMenu);
-    setUser(Cookies.getJSON("user") as User);
-
-    return function cleanup() {
-      document.removeEventListener("click", closeMenu);
-    };
-  }, [closeMenu]);
 
   return sessionContext ? (
     <div className="relative flex justify-end space-x-1 md:w-40">

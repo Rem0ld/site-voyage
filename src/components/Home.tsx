@@ -6,7 +6,6 @@ import random from "helpers/randomNumber";
 import { getSessionStorageIncluded } from "helpers/sessionStorage";
 import Lottie from "lottie-react";
 import React, { ReactElement, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { Country } from "types";
 import main from "../../public/main_version2.svg";
 import train from "../../public/train.json";
@@ -28,9 +27,8 @@ export default function Home(): ReactElement {
   const [isLoading, setLoading] = useState(false);
   const [countries, setCountries] = useState<Country[]>([]);
   const [winner, setWinner] = useState<Country>({} as Country);
-  const history = useHistory();
 
-  const fetchData = async (): Promise<void> => {
+  const fetchRestApiCountries = async (): Promise<void> => {
     await GetCountries().then((data) => {
       setCountries(data);
     });
@@ -38,10 +36,10 @@ export default function Home(): ReactElement {
 
   useEffect(() => {
     const storedCountries = sessionStorage.getItem("countries");
-    if (storedCountries) {
+    if (storedCountries !== null) {
       setCountries(JSON.parse(storedCountries));
     } else {
-      fetchData().finally(() => {});
+      fetchRestApiCountries().finally(() => {});
     }
   }, []);
 
@@ -54,7 +52,6 @@ export default function Home(): ReactElement {
       const randomNumber: number = random(shuffledList.length, 0) as number;
       setWinner(shuffledList[randomNumber]);
       setLoading(true);
-      history.push("/");
     }
   };
 

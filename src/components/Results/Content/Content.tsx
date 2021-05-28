@@ -1,4 +1,4 @@
-import { saveTravel } from "api/TravelRoutes";
+import { saveTravel } from "api/server/TravelRoutes";
 import Button from "components/elements/Button";
 import formatCurrencies from "helpers/formatCurrencies";
 import formatNumberWithDots from "helpers/formatNumberWithDots";

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import Button from "components/elements/Button";
-import DeleteIcon from "components/elements/DeleteIcon";
-import ValidIcon from "components/elements/ValidIcon";
+import DeleteIcon from "components/elements/IconsComponents/DeleteIcon";
+import ValidIcon from "components/elements/IconsComponents/ValidIcon";
 import Links from "components/Links/Links";
 import React, { ReactElement, useState } from "react";
 import { Travel } from "types";

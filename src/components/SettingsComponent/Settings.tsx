@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import Cookies from "js-cookie";
 import React, { ReactElement, useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
 import { User } from "types";
 import Button from "../elements/Button";
 import TopLine from "../elements/TopLine";
@@ -17,6 +18,10 @@ export default function Settings(): ReactElement {
 
   useEffect(() => {
     const connectedUser = Cookies.getJSON("user") as User;
+    console.log(connectedUser);
+    if (!connectedUser) {
+      <Redirect to="/login" />;
+    }
     setUser(connectedUser);
   }, []);
 

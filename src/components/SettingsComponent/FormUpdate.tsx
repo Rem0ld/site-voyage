@@ -1,7 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import { updateUserAddress } from "api/server/UserRoutes";
 import Button from "components/elements/Button";
-import React, { ReactElement } from "react";
+import Cookies from "js-cookie";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { User } from "types";
 import classes from "./styles";
 
 interface AppProperties {
@@ -9,25 +12,68 @@ interface AppProperties {
   modifyInformation: () => void;
 }
 
-type Inputs = {
+export type Inputs = {
+  id?: number;
   country: string;
   city: string;
   zip: string;
-};
-
-const onSubmit: SubmitHandler<Inputs> = (data) => {
-  console.log("Valid", data);
 };
 
 export default function FormUpdate({
   isModifying,
   modifyInformation,
 }: AppProperties): ReactElement {
+  const [counter, setCounter] = useState(0);
   const {
     handleSubmit,
     register,
+    setValue,
     formState: { errors },
   } = useForm<Inputs>();
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    const user = Cookies.getJSON("user") as User;
+
+    const update = {
+      ...data,
+      id: user.id,
+    };
+    updateUserAddress(update)
+      .then((updatedUser) => {
+        Cookies.set("user", updatedUser);
+        // Will set state to false
+        modifyInformation();
+        setCounter(counter + 1);
+      })
+      .catch((error) => console.error(error))
+      .finally(() => {});
+  };
+
+  const updateValues = useCallback(() => {
+    const user = Cookies.getJSON("user") as User;
+
+    if (user.country) {
+      setValue("country", user.country);
+    }
+    if (user.city) {
+      setValue("city", user.city);
+    }
+    if (user.zip) {
+      setValue("zip", user.zip);
+    }
+  }, [setValue]);
+
+  useEffect(() => {
+    updateValues();
+  }, [updateValues]);
+
+  useEffect(() => {
+    updateValues();
+
+    if (counter > 0) {
+      updateValues();
+    }
+  }, [updateValues, counter]);
 
   return (
     <div className="mt-8">

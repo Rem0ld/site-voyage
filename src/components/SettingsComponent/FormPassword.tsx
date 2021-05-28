@@ -1,7 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { ReactElement } from "react";
+import { SessionContext } from "components/SessionProvider";
+import React, { ReactElement, useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import auth from "../../../firebase-auth";
 import Button from "../elements/Button";
 import classes from "./styles";
 
@@ -12,6 +14,8 @@ type Password = {
 };
 
 export default function FormPassword(): ReactElement {
+  const sessionContext = useContext(SessionContext);
+
   const {
     handleSubmit,
     watch,
@@ -43,9 +47,26 @@ export default function FormPassword(): ReactElement {
   };
 
   const onSubmit: SubmitHandler<Password> = (data) => {
-    if (checkPassword()) {
-      console.log("Valid", data);
+    const email = sessionContext?.email as string;
+    if (!checkPassword()) {
+      setError("newPassword", {
+        message: "Passwords doesn't match",
+      });
+      return;
     }
+
+    auth
+      .signInWithEmailAndPassword(email, data.currentPassword)
+      .then(() => {
+        sessionContext?.updatePassword(data.newPassword);
+        window.location.reload();
+      })
+      .catch(() => {
+        setError("currentPassword", {
+          message: "Please enter correct password",
+        });
+      })
+      .finally(() => {});
   };
 
   return (

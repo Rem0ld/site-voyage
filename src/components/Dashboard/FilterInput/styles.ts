@@ -5,7 +5,7 @@ const input = ctl(`
 appearance-none 
 bg-transparent 
 border-0
-border-b-1 
+border-b
 border-gray-300 
 w-2/4 
 mr-3 

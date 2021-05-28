@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { deleteUser } from "api/UserRoutes";
+import { deleteUser } from "api/server/UserRoutes";
 import Button from "components/elements/Button";
 import { SessionContext } from "components/SessionProvider";
 import ctl from "helpers/ctl";
@@ -49,8 +49,6 @@ export default function PopupDanger({
   } = useForm();
 
   const deleteDataServer: SubmitHandler<Input> = (data) => {
-    console.log(user);
-
     if (user) {
       const email = sessionContext?.email as string;
       console.log("data", data, "email", email);

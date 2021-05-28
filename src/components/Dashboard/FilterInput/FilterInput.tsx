@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import MagnifyGlassIcon from "components/elements/MagnifyGlassIcon";
+import MagnifyGlassIcon from "components/elements/IconsComponents/MagnifyGlassIcon";
 import React, { ReactElement, useState } from "react";
 import { Country } from "types";
 import classes from "./styles";
