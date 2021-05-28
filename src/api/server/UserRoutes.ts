@@ -1,7 +1,8 @@
-import urlMaker from "./UrlMaker";
+import urlMaker from "../UrlMaker";
 
 export async function getUser(email: string): Promise<any> {
   const url = urlMaker("user", "one");
+  const bearer = localStorage.getItem("@token")
 
   const response = await fetch(url, {
     method: "POST",
@@ -10,7 +11,7 @@ export async function getUser(email: string): Promise<any> {
     credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
-      // "Content-Type": "application/x-www-form-urlencoded",
+      "Authorization": `Bearer ${bearer as string}`,
     },
     redirect: "follow",
     referrerPolicy: "no-referrer",
@@ -21,6 +22,7 @@ export async function getUser(email: string): Promise<any> {
 
 export async function deleteUser(email: string): Promise<any> {
   const url = urlMaker("user", "delete");
+  const bearer = localStorage.getItem("@token")
 
   const response = await fetch(url, {
     method: "POST",
@@ -29,7 +31,7 @@ export async function deleteUser(email: string): Promise<any> {
     credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
-      // "Content-Type": "application/x-www-form-urlencoded",
+      "Authorization": `Bearer ${bearer as string}`,
     },
     redirect: "follow",
     referrerPolicy: "no-referrer",

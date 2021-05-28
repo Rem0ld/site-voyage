@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-console */
-import { getUser } from "api/UserRoutes";
+import { getUser } from "api/server/UserRoutes";
 import Button from "components/elements/Button";
 import { SessionContext } from "components/SessionProvider";
 import ctl from "helpers/ctl";
@@ -44,6 +44,7 @@ export default function Login(): ReactElement {
   } = useForm<Inputs>();
 
   if (user) {
+    console.log(user.getIdToken());
     return <Redirect to="/" />;
   }
 

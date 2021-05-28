@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { deleteTravel, getTravel, updateTravel } from "api/TravelRoutes";
+import { deleteTravel, getTravel, updateTravel } from "api/server/TravelRoutes";
 import React, { ReactElement, useEffect, useState } from "react";
 import { Travel } from "types";
 import TopLine from "../elements/TopLine";

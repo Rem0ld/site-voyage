@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import { Country, User } from "types";
-import urlMaker from "./UrlMaker";
+import urlMaker from "../UrlMaker";
 
 interface Dates {
   depart: Date | undefined;
@@ -10,6 +10,7 @@ interface Dates {
 export async function saveTravel(country: Country, dates: Dates): Promise<any> {
   const url = urlMaker("travel", "new");
   const user: User = Cookies.getJSON("user") as User;
+  const bearer = localStorage.getItem("@token")
 
   const travel = {
     userId: +user.id,
@@ -26,7 +27,7 @@ export async function saveTravel(country: Country, dates: Dates): Promise<any> {
     credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
-      // "Content-Type": "application/x-www-form-urlencoded",
+      "Authorization": `Bearer ${bearer as string}`,
     },
     redirect: "follow",
     referrerPolicy: "no-referrer",
@@ -39,6 +40,7 @@ export async function saveTravel(country: Country, dates: Dates): Promise<any> {
 export async function getTravel(): Promise<any> {
   const url = urlMaker("travel", "all");
   const user = Cookies.getJSON("user") as User;
+  const bearer = localStorage.getItem("@token")
 
   const response: Response = await fetch(url, {
     method: "POST",
@@ -47,7 +49,7 @@ export async function getTravel(): Promise<any> {
     credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
-      // "Content-Type": "application/x-www-form-urlencoded",
+      "Authorization": `Bearer ${bearer as string}`,
     },
     redirect: "follow",
     referrerPolicy: "no-referrer",
@@ -59,6 +61,7 @@ export async function getTravel(): Promise<any> {
 
 export async function updateTravel(id: number): Promise<any> {
   const url = urlMaker("travel", "update-done");
+  const bearer = localStorage.getItem("@token")
 
   const response: Response = await fetch(url, {
     method: "POST",
@@ -67,7 +70,7 @@ export async function updateTravel(id: number): Promise<any> {
     credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
-      // "Content-Type": "application/x-www-form-urlencoded",
+      "Authorization": `Bearer ${bearer as string}`,
     },
     redirect: "follow",
     referrerPolicy: "no-referrer",
@@ -79,6 +82,7 @@ export async function updateTravel(id: number): Promise<any> {
 
 export async function deleteTravel(id: number): Promise<any> {
   const url = urlMaker("travel", "delete");
+  const bearer = localStorage.getItem("@token")
 
   const response = await fetch(url, {
     method: "POST",
@@ -87,7 +91,7 @@ export async function deleteTravel(id: number): Promise<any> {
     credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
-      // "Content-Type": "application/x-www-form-urlencoded",
+      "Authorization": `Bearer ${bearer as string}`,
     },
     redirect: "follow",
     referrerPolicy: "no-referrer",
