@@ -1,5 +1,5 @@
 import getFakeData from "api/fakeData";
-import LoadingOrError from "components/LoadingOrError";
+import LoadingAnimation from "components/LoadingAnimation";
 import React, { ReactElement } from "react";
 import { useQuery } from "react-query";
 import { Redirect } from "react-router-dom";
@@ -10,10 +10,10 @@ interface AppProperties {
 }
 
 export default function Loading({ winner }: AppProperties): ReactElement {
-  const { isLoading, isError, error, data } = useQuery("data", getFakeData);
+  const { isLoading, isError, data } = useQuery("data", getFakeData);
 
   if (isLoading || isError) {
-    return <LoadingOrError error={error as Error} />;
+    return <LoadingAnimation />;
   }
 
   return (
