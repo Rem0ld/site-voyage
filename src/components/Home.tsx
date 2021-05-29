@@ -1,11 +1,10 @@
-import GetCountries from "api/GetCountries";
 import { motion } from "framer-motion";
 import ctl from "helpers/ctl";
 import fisherYatesShuffle from "helpers/fisherYatesShuffle";
 import random from "helpers/randomNumber";
 import { getSessionStorageIncluded } from "helpers/sessionStorage";
 import Lottie from "lottie-react";
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { Country } from "types";
 import main from "../../public/main_version2.svg";
 import train from "../../public/train.json";
@@ -25,31 +24,23 @@ transform-gpu
 
 export default function Home(): ReactElement {
   const [isLoading, setLoading] = useState(false);
-  const [countries, setCountries] = useState<Country[]>([]);
   const [winner, setWinner] = useState<Country>({} as Country);
+  // const { data } = useQuery("countries", GetCountries);
 
-  const fetchRestApiCountries = async (): Promise<void> => {
-    await GetCountries().then((data) => {
-      setCountries(data);
-    });
-  };
-
-  useEffect(() => {
-    const storedCountries = sessionStorage.getItem("countries");
-    if (storedCountries !== null) {
-      setCountries(JSON.parse(storedCountries));
-    } else {
-      fetchRestApiCountries().finally(() => {});
-    }
-  }, []);
+  // const fetchRestApiCountries = async (): Promise<void> => {
+  //   await GetCountries()
+  // };
 
   // Will be in use in the future
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const makeLoading = (event: React.MouseEvent<HTMLButtonElement>) => {
     const listCountry = getSessionStorageIncluded();
+    console.log("list", listCountry);
     if (listCountry) {
       const shuffledList = fisherYatesShuffle(listCountry);
+      console.log("shuffled list", shuffledList);
       const randomNumber: number = random(shuffledList.length, 0) as number;
+      console.log("random number", randomNumber);
       setWinner(shuffledList[randomNumber]);
       setLoading(true);
     }
@@ -57,7 +48,7 @@ export default function Home(): ReactElement {
 
   return !isLoading ? (
     <div className="content-container height-screen min-height-screen">
-      <Dashboard countries={countries} />
+      <Dashboard />
       <motion.div
         className="relative z-10"
         initial={{ y: 0, x: 0 }}
