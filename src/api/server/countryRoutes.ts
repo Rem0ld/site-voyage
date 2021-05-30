@@ -1,7 +1,6 @@
-import { Country } from "types";
 import urlMaker from "../UrlMaker";
 
-export default async function getCountry(country: Country): Promise<any> {
+export default async function getCountry(numericCode: string): Promise<any> {
   const url = urlMaker("country", "one");
   // const user = Cookies.getJSON("user") as User;
   const bearer = localStorage.getItem("@token")
@@ -17,8 +16,11 @@ export default async function getCountry(country: Country): Promise<any> {
     },
     redirect: "follow",
     referrerPolicy: "no-referrer",
-    body: JSON.stringify({ country }), // body data type must match "Content-Type" header
+    body: JSON.stringify({ numericCode }), // body data type must match "Content-Type" header
   });
 
+  if (response) {
+    console.log(response)
+  }
   return response.json();
 }

@@ -1,4 +1,4 @@
-import getFakeData from "api/fakeData";
+import getCountry from "api/server/countryRoutes";
 import LoadingAnimation from "components/LoadingAnimation";
 import React, { ReactElement } from "react";
 import { useQuery } from "react-query";
@@ -10,7 +10,9 @@ interface AppProperties {
 }
 
 export default function Loading({ winner }: AppProperties): ReactElement {
-  const { isLoading, isError, data } = useQuery("data", getFakeData);
+  const { isLoading, isError, data } = useQuery("country", async () => {
+    await getCountry(winner.numericCode);
+  });
 
   if (isLoading || isError) {
     return <LoadingAnimation />;
