@@ -19,21 +19,24 @@ export default function FilterInput({
   /**
    * Filters list of country from user input and maps it into a HTML list
    */
-  const list = includedCountry
-    .filter((element) =>
-      element.name.toLowerCase().includes(inputValue.toLowerCase())
-    )
-    .map((element) => (
-      <li
-        key={element.numericCode}
-        onClick={() => {
-          banACountry(+element.numericCode);
-        }}
-        className="p-2 cursor-pointer hover:bg-primary rounded-md"
-      >
-        {element.name}
-      </li>
-    ));
+  const list =
+    includedCountry.length > 0
+      ? includedCountry
+          .filter((element) =>
+            element.name.toLowerCase().includes(inputValue.toLowerCase())
+          )
+          .map((element) => (
+            <li
+              key={element.numericCode}
+              onClick={() => {
+                banACountry(+element.numericCode);
+              }}
+              className="p-2 cursor-pointer hover:bg-primary rounded-md"
+            >
+              {element.name}
+            </li>
+          ))
+      : "";
 
   return (
     <div className="py-4">

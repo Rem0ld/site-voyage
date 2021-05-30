@@ -1,10 +1,12 @@
 /* eslint-disable unicorn/no-array-reduce */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-restricted-syntax */
+import GetCountries from "api/GetCountries";
 import FilterInput from "components/Dashboard/FilterInput/FilterInput";
 import Filters from "components/Dashboard/Filters/Filters";
 import { motion, useCycle } from "framer-motion";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { Continent, Country, Filter, Hobby } from "types";
 import listDangerousCountry from "../../api/listDangerousCountry";
 import {
@@ -22,10 +24,6 @@ import classes from "./styles";
 // To move to external file
 const hobbies: string[] = ["beach", "mountain"];
 
-interface AppProperties {
-  countries: Country[];
-}
-
 // Objects used by framer-motion for animations
 const variants = {
   open: { x: 0 },
@@ -35,18 +33,19 @@ const transition = {
   duration: 0.8,
 };
 
-export default function Dashboard({ countries }: AppProperties): ReactElement {
+export default function Dashboard(): ReactElement {
   const [isOpen, toggleOpen] = useCycle(false, true);
   const [includedCountry, setIncludedCountry] = useState<Country[]>([]);
   const [excludedCountry, setExcludedCountry] = useState<Country[]>([]);
   const [continents, setContinents] = useState<Continent>({});
+  const { data } = useQuery<Country[]>("countries", GetCountries);
 
   /**
    * Will create filters with specific object pattern
    * subject to change in future
    */
-  const makeFilters = useCallback((): Filter => {
-    const continentsFiltered = countries.reduce(
+  const makeFilters = useCallback((): Filter | undefined => {
+    const continentsFiltered = data?.reduce(
       (accumulator: Continent, country: Country): Continent => {
         const key = country.region;
         if (!accumulator[key]) {
@@ -74,12 +73,16 @@ export default function Dashboard({ countries }: AppProperties): ReactElement {
       },
       {}
     );
-    setSessionStorageFilter("continents", continentsFiltered);
+    if (continentsFiltered) {
+      setSessionStorageFilter("continents", continentsFiltered);
+      setContinents(continentsFiltered);
+    }
     setSessionStorageFilter("hobbies", hobbiesFiltered);
+    if (continentsFiltered)
+      return { continents: continentsFiltered, hobbies: hobbiesFiltered };
 
-    setContinents(continentsFiltered);
-    return { continents: continentsFiltered, hobbies: hobbiesFiltered };
-  }, [countries]);
+    return undefined;
+  }, [data]);
 
   /**
    * Will update lists when user is (un)checking box from filters
@@ -132,8 +135,8 @@ export default function Dashboard({ countries }: AppProperties): ReactElement {
    */
   const firstFiltering = useCallback(
     (list: string[]) => {
-      let included: Country[] = [];
-      let excluded: Country[] = [];
+      let included: Country[] | undefined = [];
+      let excluded: Country[] | undefined = [];
 
       // If already in sessionStorage we use those values
       if (
@@ -143,21 +146,21 @@ export default function Dashboard({ countries }: AppProperties): ReactElement {
         included = getSessionStorageIncluded();
         excluded = getSessionStorageExcluded();
       } else {
-        excluded = countries.filter((element) => {
+        excluded = data?.filter((element) => {
           for (const country of list) {
             if (element.name.includes(country)) {
               return 1;
             }
           }
-          included.push(element);
+          included?.push(element);
           return 0;
         });
-        setSessionStorageIncludedExcluded(included, excluded);
+        if (excluded) setSessionStorageIncludedExcluded(included, excluded);
       }
       setIncludedCountry(included);
-      setExcludedCountry(excluded);
+      if (excluded) setExcludedCountry(excluded);
     },
-    [countries]
+    [data]
   );
 
   /**
@@ -173,11 +176,11 @@ export default function Dashboard({ countries }: AppProperties): ReactElement {
     );
 
     setIncludedCountry(() => filteredList);
-    setExcludedCountry(
-      (previousState): Country[] => [...previousState, country] as Country[]
-    );
-
-    setSessionStorageIncludedExcluded(filteredList, excludedCountry);
+    if (country) {
+      const excludedCountryUpdated = [...excludedCountry, country];
+      setExcludedCountry(excludedCountryUpdated);
+      setSessionStorageIncludedExcluded(filteredList, excludedCountryUpdated);
+    }
   };
 
   /**
@@ -193,10 +196,13 @@ export default function Dashboard({ countries }: AppProperties): ReactElement {
     );
 
     setExcludedCountry(() => filteredList);
-    setIncludedCountry(
-      (previousState): Country[] => [...previousState, country] as Country[]
-    );
-    setSessionStorageIncludedExcluded(includedCountry, filteredList);
+    // Here we know country will always be defined
+    // but somehow this variable could be undefined for the program
+    if (country) {
+      const includedCountryUpdated = [...includedCountry, country];
+      setIncludedCountry(includedCountryUpdated);
+      setSessionStorageIncludedExcluded(includedCountryUpdated, filteredList);
+    }
   };
 
   /**
@@ -224,9 +230,9 @@ export default function Dashboard({ countries }: AppProperties): ReactElement {
    */
   const reset = (list: string[]): void => {
     const included: Country[] = [];
-    let excluded: Country[] = [];
+    let excluded: Country[] | undefined = [];
 
-    excluded = countries.filter((element) => {
+    excluded = data?.filter((element) => {
       for (const country of list) {
         if (element.name.includes(country)) {
           return 1;
@@ -235,16 +241,18 @@ export default function Dashboard({ countries }: AppProperties): ReactElement {
       included.push(element);
       return 0;
     });
-    setSessionStorageIncludedExcluded(included, excluded);
+    if (excluded) {
+      setSessionStorageIncludedExcluded(included, excluded);
+      setExcludedCountry(excluded);
+    }
     setIncludedCountry(included);
-    setExcludedCountry(excluded);
     makeFilters();
   };
 
   useEffect(() => {
     firstFiltering(listDangerousCountry);
     makeFilters();
-  }, [countries, firstFiltering, makeFilters]);
+  }, [data, firstFiltering, makeFilters]);
 
   return (
     <motion.div

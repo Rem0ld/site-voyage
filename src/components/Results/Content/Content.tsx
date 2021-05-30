@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { Country, Localisation, User } from "types";
 import { SessionContext } from "../../SessionProvider";
+import Comment from "./Comment";
 import FlightLinks from "./FlightLinks/FlightLinks";
 import Main from "./Main/Main";
 
@@ -125,8 +126,10 @@ export default function Content({ country }: AppProperties): ReactElement {
           localisation={localisation}
         />
       </div>
-      <div className="grid place-items-center h-40 mb-4 bg-gray-300">
-        No comments yet...
+      <div className="flex justify-center items-center space-x-2 h-48 max-w-7xl mb-4 overflow-x-scroll bg-gray-300">
+        <Comment />
+        <Comment />
+        <Comment />
       </div>
       <div className="grid place-items-center h-40 bg-gray-300">
         No pictures yet...

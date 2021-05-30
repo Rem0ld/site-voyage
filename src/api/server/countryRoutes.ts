@@ -19,8 +19,9 @@ export default async function getCountry(numericCode: string): Promise<any> {
     body: JSON.stringify({ numericCode }), // body data type must match "Content-Type" header
   });
 
-  if (response) {
-    console.log(response)
+  if (!response.ok) {
+    throw new Error('Network response was not ok')
   }
+
   return response.json();
 }

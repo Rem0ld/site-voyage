@@ -4,15 +4,12 @@ import { Country } from "types";
 import Content from "./Content/Content";
 import Map from "./MapLeaflet";
 
-type Data = {
-  data: string;
-};
 type Location = {
   hash?: string;
   key?: string;
   pathname?: string;
   search?: string;
-  state: [Data, Country];
+  state: [Country | null, Country];
 };
 interface AppProperties {
   location: Location;
@@ -22,9 +19,14 @@ export default function Results({ location }: AppProperties): ReactElement {
   const [country, setCountry] = useState<Country>({} as Country);
 
   useEffect(() => {
-    if (location && location.state) {
-      setCountry(location.state[1]);
+    if (location) {
+      if (location.state[0]) {
+        setCountry(location.state[0]);
+      } else {
+        setCountry(location.state[1]);
+      }
     }
+    console.log(location);
   }, [location]);
 
   const mapLeaflet = country.latlng ? <Map latLng={country.latlng} /> : "";

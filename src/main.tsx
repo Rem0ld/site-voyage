@@ -1,4 +1,5 @@
 import App from "components/App";
+import { SessionProvider } from "components/SessionProvider";
 import React from "react";
 import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -15,7 +16,9 @@ const queryClient = new QueryClient({
 ReactDOM.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <App />
+      <SessionProvider>
+        <App />
+      </SessionProvider>
     </QueryClientProvider>
   </React.StrictMode>,
   document.querySelector("#root")
