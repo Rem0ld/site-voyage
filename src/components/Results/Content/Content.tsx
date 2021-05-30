@@ -2,9 +2,9 @@ import { saveTravel } from "api/server/TravelRoutes";
 import Button from "components/elements/Button";
 import Cookies from "js-cookie";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
-import { Country, Localisation, Review, User } from "types";
+import { Country, Localisation, User } from "types";
 import { SessionContext } from "../../SessionProvider";
-import Comment from "./Comment";
+import Carousel from "./Carousel";
 import FlightLinks from "./FlightLinks/FlightLinks";
 import Main from "./Main/Main";
 
@@ -17,10 +17,10 @@ interface Dates {
   return: Date | undefined;
 }
 
-interface Carousel {
-  comments: Review[];
-  index: number;
-}
+// interface Carousel {
+//   comments: Review[];
+//   index: number;
+// }
 
 const INITIAL_STATE_DATE: Dates = {
   depart: undefined,
@@ -32,10 +32,10 @@ const INITIAL_STATE_LOCALISATION: Localisation = {
   to: "",
 };
 
-const INITIAL_STATE_COMMENTS: Carousel = {
-  index: 0,
-  comments: [],
-};
+// const INITIAL_STATE_COMMENTS: Carousel = {
+//   index: 0,
+//   comments: [],
+// };
 
 export default function Content({ country }: AppProperties): ReactElement {
   const sessionContext = useContext(SessionContext);
@@ -43,7 +43,6 @@ export default function Content({ country }: AppProperties): ReactElement {
   const [disabled, setDisabled] = useState(false);
   const [dates, setDates] = useState(INITIAL_STATE_DATE);
   const [localisation, setLocalisation] = useState(INITIAL_STATE_LOCALISATION);
-  const [comments, setComments] = useState<Carousel>(INITIAL_STATE_COMMENTS);
 
   // When component is mounted we check if user is connected
   // and we put it in a state
@@ -62,11 +61,11 @@ export default function Content({ country }: AppProperties): ReactElement {
       }));
     }
 
-    setComments((previousState) => ({
-      index: previousState.index,
-      comments: country.review,
-    }));
-  }, [user, country]);
+    //   setComments((previousState) => ({
+    //     index: previousState.index,
+    //     comments: country.review,
+    //   }));
+  }, [user]);
 
   /**
    * Will update date state
@@ -108,12 +107,6 @@ export default function Content({ country }: AppProperties): ReactElement {
     }
   };
 
-  let displayComments;
-  if (comments.comments && comments.comments.length > 0)
-    displayComments = comments.comments
-      .slice(comments.index, comments.index + 3)
-      .map((element) => <Comment key={element.id} comment={element} />);
-
   return (
     <div className="w-full bg-gray-100 px-4">
       <div className="relative xl:w-4/5 lg:w-4/5 h-16 m-auto">
@@ -148,8 +141,8 @@ export default function Content({ country }: AppProperties): ReactElement {
           localisation={localisation}
         />
       </div>
-      <div className="flex justify-center items-center space-x-2 h-48 max-w-7xl mb-4 overflow-x-scroll bg-gray-300">
-        {displayComments}
+      <div className="relative flex justify-center items-center space-x-2 h-48 max-w-7xl mb-4 overflow-x-scroll bg-gray-300">
+        <Carousel list={country.review} />
       </div>
       <div className="grid place-items-center h-40 bg-gray-300">
         No pictures yet...

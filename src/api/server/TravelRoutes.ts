@@ -54,7 +54,7 @@ export async function getTravel(): Promise<any> {
     },
     redirect: "follow",
     referrerPolicy: "no-referrer",
-    body: JSON.stringify({ email: user.email }), // body data type must match "Content-Type" header
+    body: JSON.stringify({ email: user.email }),
   });
 
   return response.json();

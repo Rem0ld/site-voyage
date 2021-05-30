@@ -26,7 +26,6 @@ export default function Results({ location }: AppProperties): ReactElement {
         setCountry(location.state[1]);
       }
     }
-    console.log(location);
   }, [location]);
 
   const mapLeaflet = country.latlng ? <Map latLng={country.latlng} /> : "";
