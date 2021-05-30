@@ -80,6 +80,8 @@ export interface Country {
   flag: string;
   regionalBlocs: RegionalBlocs[];
   cioc: string;
+  review: Review[];
+  picture: Picture[];
 }
 
 export interface Currency {
@@ -123,4 +125,25 @@ export type SubItem = [string, string | number | string[] | Array<string>];
 export interface Localisation {
   from: string | undefined;
   to: string | undefined;
+}
+
+export interface Review {
+  readonly id: number;
+  readonly createdAt: Date;
+  updatedAt: Date;
+  comment: string;
+  score: number;
+  userId: number;
+  user: User;
+  countryId: number;
+}
+
+export interface Picture {
+  readonly id: number;
+  readonly createdAt: Date;
+  updatedAt: Date;
+  userId: number;
+  user: User;
+  url: string;
+  countryId: number;
 }
