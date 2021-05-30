@@ -130,6 +130,8 @@ export default function Content({ country }: AppProperties): ReactElement {
         <Comment />
         <Comment />
         <Comment />
+        <Comment />
+        <Comment />
       </div>
       <div className="grid place-items-center h-40 bg-gray-300">
         No pictures yet...

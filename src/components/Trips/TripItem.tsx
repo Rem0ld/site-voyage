@@ -1,9 +1,11 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import { getCountryPerName } from "api/server/countryRoutes";
 import Button from "components/elements/Button";
 import DeleteIcon from "components/elements/IconsComponents/DeleteIcon";
 import ValidIcon from "components/elements/IconsComponents/ValidIcon";
 import Links from "components/Links/Links";
 import React, { ReactElement, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Travel } from "types";
 
 interface AppProperties {
@@ -18,10 +20,19 @@ export default function TripItem({
   deleteTravel,
 }: AppProperties): ReactElement {
   const [isOpen, setIsOpen] = useState(false);
+  const history = useHistory();
 
   const toggleOpen = (): void => {
     setIsOpen((previousState) => !previousState);
   };
+
+  const handleClickDetail = (name: string) =>
+    getCountryPerName(name).then((result) => {
+      history.push({
+        pathname: "/results",
+        state: [result],
+      });
+    });
 
   const departureDate = travel.departureDate
     ? new Date().toISOString().replace("-", "/").split("T")[0].replace("-", "/")
@@ -45,7 +56,15 @@ export default function TripItem({
           </span>
         </div>
         <div className="margin-children flex justify-end items-center  w-full">
-          <Button text="Detail" type="standard" size="medium" isButton />
+          <Button
+            text="Detail"
+            type="standard"
+            size="medium"
+            isButton
+            onclick={() => {
+              handleClickDetail(travel.destination).finally(() => {});
+            }}
+          />
           {travel.done ? (
             <>
               <Button text="Comment" type="standard" size="medium" isButton />
