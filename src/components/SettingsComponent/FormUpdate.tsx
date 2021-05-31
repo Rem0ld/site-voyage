@@ -77,6 +77,7 @@ export default function FormUpdate({
 
   return (
     <div className="mt-8">
+      <h2 className="mb-6 text-xl font-bold">Address:</h2>
       <form action="" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex md:flex-row flex-col md:items-center my-2">
           <div className="">

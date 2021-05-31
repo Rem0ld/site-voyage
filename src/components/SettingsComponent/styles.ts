@@ -3,8 +3,6 @@ import ctl from "helpers/ctl";
 
 const label = ctl(`
 mr-2
-font-semibold
-underline
 `);
 
 const input = ctl(`

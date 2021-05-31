@@ -71,7 +71,7 @@ export default function FormPassword(): ReactElement {
 
   return (
     <div className="mt-8">
-      <h3 className="text-xl font-bold">Change password:</h3>
+      <h3 className=" mb-6 text-xl font-bold">Change password:</h3>
       <form action="" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-y-4">
           <div className="flex flex-col gap-y-2">

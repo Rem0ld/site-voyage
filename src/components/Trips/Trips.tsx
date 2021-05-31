@@ -15,10 +15,11 @@ export default function Trips(): ReactElement {
       .then((travel: Travel[]) => {
         setTravels(travel);
       })
+      .catch((error) => {
+        console.error(error);
+      })
       .finally(() => {});
   }, []);
-
-  // useEffect(() => {}, [travels]);
 
   const handleUpdateTravel = (id: number): void => {
     updateTravel(id).finally(() => {});
@@ -50,30 +51,32 @@ export default function Trips(): ReactElement {
             Upcoming
           </h3>
 
-          {travels
-            ?.filter((element) => !element.done)
-            .map((element) => (
-              <TripItem
-                travel={element}
-                key={element.id}
-                updateTravel={handleUpdateTravel}
-                deleteTravel={handleDeleteTravel}
-              />
-            ))}
+          {travels &&
+            travels
+              ?.filter((element) => !element.done)
+              .map((element) => (
+                <TripItem
+                  travel={element}
+                  key={element.id}
+                  updateTravel={handleUpdateTravel}
+                  deleteTravel={handleDeleteTravel}
+                />
+              ))}
         </div>
 
         <div className="h-auto md:w-4/5 w-full md:px-4 px-1 m-auto border-gray-400 md:border-l-2">
           <h3 className="text-xl font-semibold border-b">Done</h3>
-          {travels
-            ?.filter((element) => element.done)
-            .map((element) => (
-              <TripItem
-                travel={element}
-                key={element.id}
-                updateTravel={handleUpdateTravel}
-                deleteTravel={handleDeleteTravel}
-              />
-            ))}
+          {travels &&
+            travels
+              ?.filter((element) => element.done)
+              .map((element) => (
+                <TripItem
+                  travel={element}
+                  key={element.id}
+                  updateTravel={handleUpdateTravel}
+                  deleteTravel={handleDeleteTravel}
+                />
+              ))}
         </div>
       </div>
     </div>

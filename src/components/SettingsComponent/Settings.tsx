@@ -9,7 +9,6 @@ import TopLine from "../elements/TopLine";
 import FormPassword from "./FormPassword";
 import FormUpdate from "./FormUpdate";
 import PopupDanger from "./PopupDanger";
-import classes from "./styles";
 
 export default function Settings(): ReactElement {
   const [user, setUser] = useState<User>();
@@ -45,18 +44,20 @@ export default function Settings(): ReactElement {
       )}
       <TopLine title="Settings" />
       <div className="h-auto px-4 xl:w-3/5 md:w-4/5 m-auto">
-        <h2 className="pl-10 text-4xl font-bold">
+        <h2 className="pl-10 text-4xl font-bold text-center">
           {user?.username ?? user?.email}
         </h2>
+
+        <div className="my-8">
+          <h2 className="mb-2 text-xl font-bold">Email:</h2>
+          {/* <span className={classes.label}>Email:</span> */}
+          <span className="italic text-gray-400">{user?.email}</span>
+        </div>
 
         <FormUpdate
           isModifying={isModifying}
           modifyInformation={modifyInformation}
         />
-        <div className="my-8">
-          <span className={classes.label}>Email:</span>
-          <span>{user?.email}</span>
-        </div>
 
         <FormPassword />
 
