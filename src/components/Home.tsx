@@ -3,11 +3,9 @@ import ctl from "helpers/ctl";
 import fisherYatesShuffle from "helpers/fisherYatesShuffle";
 import random from "helpers/randomNumber";
 import { getSessionStorageIncluded } from "helpers/sessionStorage";
-import Lottie from "lottie-react";
 import React, { ReactElement, useState } from "react";
 import { Country } from "types";
 import main from "../../public/main_version2.svg";
-import train from "../../public/train.json";
 import Dashboard from "./Dashboard/Dashboard";
 import Button from "./elements/Button";
 import Loading from "./elements/Loading";
@@ -48,16 +46,16 @@ export default function Home(): ReactElement {
       <Dashboard />
       <motion.div
         className="relative z-10"
-        initial={{ y: 0, x: 0 }}
-        animate={{
-          y: [-10, 0, -10],
-          x: [-10, 0, -10],
-        }}
-        transition={{
-          duration: 2,
-          ease: "easeInOut",
-          repeat: Number.POSITIVE_INFINITY,
-        }}
+        // initial={{ y: 0, x: 0 }}
+        // animate={{
+        //   y: [-10, 0, -10],
+        //   x: [-10, 0, -10],
+        // }}
+        // transition={{
+        //   duration: 2,
+        //   ease: "easeInOut",
+        //   repeat: Number.POSITIVE_INFINITY,
+        // }}
       >
         <div className={classesButton}>
           <Button
@@ -68,9 +66,9 @@ export default function Home(): ReactElement {
             isButton
           />
         </div>
-        <img src={main} alt="logo" />
+        <img src={main} alt="logo" className="" />
       </motion.div>
-      <motion.div
+      {/* <motion.div
         className="absolute z-0 transform-gpu bottom-10 left-full -translate-y-full -translate-x-full"
         animate={{
           x: -2000,
@@ -83,7 +81,7 @@ export default function Home(): ReactElement {
         }}
       >
         <Lottie animationData={train} className="md:w-30 md:h-30 w-20 h-20" />
-      </motion.div>
+      </motion.div> */}
     </div>
   ) : (
     <Loading winner={winner} />

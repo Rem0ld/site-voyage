@@ -1,3 +1,4 @@
+import { saveCountry } from "api/server/countryRoutes";
 import { saveTravel } from "api/server/TravelRoutes";
 import Button from "components/elements/Button";
 import Cookies from "js-cookie";
@@ -61,11 +62,8 @@ export default function Content({ country }: AppProperties): ReactElement {
       }));
     }
 
-    //   setComments((previousState) => ({
-    //     index: previousState.index,
-    //     comments: country.review,
-    //   }));
-  }, [user]);
+    saveCountry(country).finally(() => {});
+  }, [user, country]);
 
   /**
    * Will update date state
