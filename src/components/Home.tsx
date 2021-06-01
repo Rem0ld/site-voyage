@@ -3,9 +3,11 @@ import ctl from "helpers/ctl";
 import fisherYatesShuffle from "helpers/fisherYatesShuffle";
 import random from "helpers/randomNumber";
 import { getSessionStorageIncluded } from "helpers/sessionStorage";
+import Lottie from "lottie-react";
 import React, { ReactElement, useState } from "react";
 import { Country } from "types";
 import main from "../../public/main_version2.svg";
+import train from "../../public/train.json";
 import Dashboard from "./Dashboard/Dashboard";
 import Button from "./elements/Button";
 import Loading from "./elements/Loading";
@@ -68,8 +70,8 @@ export default function Home(): ReactElement {
         </div>
         <img src={main} alt="logo" className="" />
       </motion.div>
-      {/* <motion.div
-        className="absolute z-0 transform-gpu bottom-10 left-full -translate-y-full -translate-x-full"
+      <motion.div
+        className="absolute z-0 transform-gpu bottom-24 left-full -translate-y-full -translate-x-full"
         animate={{
           x: -2000,
         }}
@@ -80,8 +82,11 @@ export default function Home(): ReactElement {
           repeat: Number.POSITIVE_INFINITY,
         }}
       >
-        <Lottie animationData={train} className="md:w-30 md:h-30 w-20 h-20" />
-      </motion.div> */}
+        <Lottie
+          animationData={train}
+          className="absolute md:w-30 md:h-30 w-20 h-20"
+        />
+      </motion.div>
     </div>
   ) : (
     <Loading winner={winner} />
