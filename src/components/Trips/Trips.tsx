@@ -7,8 +7,6 @@ import TripItem from "./TripItem";
 
 export default function Trips(): ReactElement {
   const [travels, setTravels] = useState<Travel[]>([]);
-  // const [travelUpcoming, setTravelUpcoming] = useState<Travel[]>();
-  // const [travelDone, setTravelDone] = useState<Travel[]>();
 
   useEffect(() => {
     getTravel()

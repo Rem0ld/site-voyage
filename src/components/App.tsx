@@ -1,5 +1,4 @@
 import React, { lazy, ReactElement, Suspense } from "react";
-import { ReactQueryDevtools } from "react-query/devtools";
 import {
   BrowserRouter as Router,
   Redirect,
@@ -37,10 +36,7 @@ export default function App(): ReactElement {
           {/* <Route path="/notifications" component={Notifications} /> */}
         </Switch>
       </Suspense>
-      <div className="w-full my-2 text-center">
-        &copy; Copyright 2021 - Pierre Lovergne
-      </div>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </Router>
   );
 }

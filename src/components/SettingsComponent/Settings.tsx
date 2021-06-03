@@ -50,7 +50,6 @@ export default function Settings(): ReactElement {
 
         <div className="my-8">
           <h2 className="mb-2 text-xl font-bold">Email:</h2>
-          {/* <span className={classes.label}>Email:</span> */}
           <span className="italic text-gray-400">{user?.email}</span>
         </div>
 

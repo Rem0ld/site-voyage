@@ -48,16 +48,16 @@ export default function Home(): ReactElement {
       <Dashboard />
       <motion.div
         className="relative z-10"
-        // initial={{ y: 0, x: 0 }}
-        // animate={{
-        //   y: [-10, 0, -10],
-        //   x: [-10, 0, -10],
-        // }}
-        // transition={{
-        //   duration: 2,
-        //   ease: "easeInOut",
-        //   repeat: Number.POSITIVE_INFINITY,
-        // }}
+        initial={{ y: 0, x: 0 }}
+        animate={{
+          y: [-10, 0, -10],
+          x: [-10, 0, -10],
+        }}
+        transition={{
+          duration: 2,
+          ease: "easeInOut",
+          repeat: Number.POSITIVE_INFINITY,
+        }}
       >
         <div className={classesButton}>
           <Button

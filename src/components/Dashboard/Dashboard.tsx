@@ -283,7 +283,7 @@ export default function Dashboard(): ReactElement {
         resetAll={reset}
       />
 
-      {/* List included, excluded */}
+      {/* Lists included, excluded */}
       <div className="flex sm:flex-row flex-col-reverse justify-between">
         <DashboardList
           title="Included"
@@ -297,6 +297,10 @@ export default function Dashboard(): ReactElement {
           onclick={authoriseACountry}
           removeAll={removeAll}
         />
+      </div>
+      {/* Copyright */}
+      <div className="w-full my-2 text-center">
+        &copy; Copyright 2021 - Pierre Lovergne
       </div>
     </motion.div>
   );

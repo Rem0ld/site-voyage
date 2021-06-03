@@ -144,7 +144,7 @@ export default function MenuDropdown(): ReactElement {
       </ul>
     </div>
   ) : (
-    <div className="relative flex justify-center space-x-1">
+    <div className="w-16 sm:w-40 relative flex justify-end space-x-1">
       {listNotConnected}
     </div>
   );
