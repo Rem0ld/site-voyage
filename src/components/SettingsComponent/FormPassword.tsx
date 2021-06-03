@@ -75,7 +75,7 @@ export default function FormPassword(): ReactElement {
       <form action="" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-y-4">
           <div className="flex flex-col gap-y-2">
-            <label htmlFor="currentPassword" className={classes.label}>
+            <label htmlFor="currentPassword" className="mr-2">
               Current Password:{" "}
             </label>
             <input
@@ -94,7 +94,7 @@ export default function FormPassword(): ReactElement {
           </div>
 
           <div className="flex flex-col gap-y-2">
-            <label htmlFor="newPassword" className={classes.label}>
+            <label htmlFor="newPassword" className="mr-2">
               New Password:{" "}
             </label>
             <input
@@ -121,7 +121,7 @@ export default function FormPassword(): ReactElement {
           </div>
 
           <div className="flex flex-col gap-y-2">
-            <label htmlFor="confirmPassword" className={classes.label}>
+            <label htmlFor="confirmPassword" className="mr-2">
               Confirm Password:{" "}
             </label>
             <input

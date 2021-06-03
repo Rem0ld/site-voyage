@@ -1,10 +1,5 @@
 import ctl from "helpers/ctl";
 
-
-const label = ctl(`
-mr-2
-`);
-
 const input = ctl(`
 w-full
 sm:w-50
@@ -38,7 +33,6 @@ focus:border-primary
 `);
 
 export default {
-  label,
   input,
   inputPassword
 }

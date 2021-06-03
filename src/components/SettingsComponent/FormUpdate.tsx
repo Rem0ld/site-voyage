@@ -81,7 +81,7 @@ export default function FormUpdate({
       <form action="" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex md:flex-row flex-col md:items-center my-2">
           <div className="">
-            <label htmlFor="zip" className={classes.label}>
+            <label htmlFor="zip" className="mr-2">
               Zip:{" "}
             </label>
             <input
@@ -98,7 +98,7 @@ export default function FormUpdate({
             )}
           </div>
           <div className="my-2">
-            <label htmlFor="city" className={classes.label}>
+            <label htmlFor="city" className="mr-2">
               City:{" "}
             </label>
             <input
@@ -116,7 +116,7 @@ export default function FormUpdate({
           </div>
         </div>
         <div>
-          <label htmlFor="country" className={classes.label}>
+          <label htmlFor="country" className="mr-2">
             Country:{" "}
           </label>
           <input
