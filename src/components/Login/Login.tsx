@@ -10,6 +10,7 @@ import Cookies from "js-cookie";
 import React, { ReactElement, useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, Redirect, useHistory } from "react-router-dom";
+import { User } from "types";
 import auth from "../../../firebase-auth";
 import classes from "./styles";
 
@@ -27,6 +28,12 @@ text-primary
 hover:underline
 `);
 
+type ErrorLogin = {
+  a: any;
+  code: string;
+  message: string;
+};
+
 const signIn = async (
   email: string,
   password: string
@@ -39,6 +46,7 @@ export default function Login(): ReactElement {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<Inputs>();
 
@@ -47,18 +55,38 @@ export default function Login(): ReactElement {
   }
 
   const onSubmit: SubmitHandler<Inputs> = (data): void => {
-    Promise.all([signIn(data.email, data.password), getUser(data.email)])
+    signIn(data.email, data.password)
       .then(async (result) => {
-        const { user } = result[0];
+        const { user } = result;
         // Getting JWT token and saving it
         const token = await user?.getIdToken(true);
         if (token) localStorage.setItem("@token", token);
 
+        // Getting user info from DB
+        const userDB = (await getUser(data.email)) as User;
         // Setting user information in cookie
-        Cookies.set("user", result[1]);
+        Cookies.set("user", userDB);
         history.goBack();
       })
-      .catch((error) => console.error(error));
+      .catch((error: ErrorLogin) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        if (errorCode === "auth/wrong-password") {
+          setError("password", {
+            message: errorMessage,
+          });
+        }
+
+        if (
+          errorCode === "auth/user-not-found" ||
+          errorCode === "auth/invalid-email"
+        ) {
+          setError("email", {
+            message: errorMessage,
+          });
+        }
+      });
   };
 
   return (
@@ -78,11 +106,11 @@ export default function Login(): ReactElement {
               type="text"
               placeholder="Email"
               className={classes.input}
-              {...register("email", { required: true })}
+              {...register("email", { required: "This field is required" })}
             />
             {errors.email && (
               <span className="text-red-500 text-xs italic">
-                This field is required
+                {errors.email.message}
               </span>
             )}
           </div>
@@ -96,11 +124,11 @@ export default function Login(): ReactElement {
               type="password"
               placeholder="******************"
               className={classes.input}
-              {...register("password", { required: true })}
+              {...register("password", { required: "This field is required" })}
             />
             {errors.password && (
               <span className="text-red-500 text-xs italic">
-                This field is required
+                {errors.password.message}
               </span>
             )}
           </div>
