@@ -10,17 +10,16 @@ interface AppProperties {
 }
 
 export default function Loading({ winner }: AppProperties): ReactElement {
-  const { isLoading, isError, data } = useQuery<Country>(
-    ["country", winner],
-    () => getCountry(winner.numericCode).finally(() => {})
+  const { isLoading, data } = useQuery<Country>(["country", winner], () =>
+    getCountry(winner.numericCode).finally(() => {})
   );
 
   if (isLoading) {
     return <LoadingAnimation />;
   }
-  if (isError) {
-    console.log("country doesn't exist in db");
-  }
+  // if (isError) {
+  //   console.log("country doesn't exist in db");
+  // }
 
   return (
     <Redirect

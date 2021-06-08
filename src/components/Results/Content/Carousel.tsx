@@ -5,7 +5,7 @@ import { Review } from "types";
 import Comment from "./Comment";
 
 interface AppProperties {
-  list: Review[];
+  list: Review[] | undefined;
 }
 
 export default function Carousel({ list }: AppProperties): ReactElement {
@@ -14,12 +14,11 @@ export default function Carousel({ list }: AppProperties): ReactElement {
   const [displayCarousel, setDisplayCarousel] = useState<Review[]>();
 
   useEffect(() => {
-    setCarouselItems(list);
+    if (list) setCarouselItems(list);
   }, [list]);
 
   useEffect(() => {
     if (carouselItems) {
-      console.log("indexCarousel", indexCarousel);
       setDisplayCarousel(carouselItems.slice(indexCarousel, indexCarousel + 3));
     }
   }, [carouselItems, indexCarousel]);

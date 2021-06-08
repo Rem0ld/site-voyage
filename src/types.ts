@@ -80,8 +80,8 @@ export interface Country {
   flag: string;
   regionalBlocs: RegionalBlocs[];
   cioc: string;
-  review: Review[];
-  picture: Picture[];
+  review?: Review[];
+  picture?: Picture[];
 }
 
 export interface Currency {

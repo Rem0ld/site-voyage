@@ -1,3 +1,4 @@
+import { saveCountry } from "api/server/countryRoutes";
 import BackButton from "components/elements/BackButton";
 import React, { ReactElement, useEffect, useState } from "react";
 import { Country } from "types";
@@ -11,6 +12,7 @@ type Location = {
   search?: string;
   state: [Country | null, Country];
 };
+
 interface AppProperties {
   location: Location;
 }
@@ -19,11 +21,14 @@ export default function Results({ location }: AppProperties): ReactElement {
   const [country, setCountry] = useState<Country>({} as Country);
 
   useEffect(() => {
+    console.log("in location useEffect");
     if (location) {
       if (location.state[0]) {
         setCountry(location.state[0]);
+        saveCountry(location.state[0]).finally(() => {});
       } else {
         setCountry(location.state[1]);
+        saveCountry(location.state[1]).finally(() => {});
       }
     }
   }, [location]);

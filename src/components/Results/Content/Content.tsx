@@ -1,4 +1,3 @@
-import { saveCountry } from "api/server/countryRoutes";
 import { saveTravel } from "api/server/TravelRoutes";
 import Button from "components/elements/Button";
 import Cookies from "js-cookie";
@@ -17,11 +16,6 @@ interface Dates {
   depart: Date | undefined;
   return: Date | undefined;
 }
-
-// interface Carousel {
-//   comments: Review[];
-//   index: number;
-// }
 
 const INITIAL_STATE_DATE: Dates = {
   depart: undefined,
@@ -61,9 +55,7 @@ export default function Content({ country }: AppProperties): ReactElement {
         from: user.city,
       }));
     }
-
-    saveCountry(country).finally(() => {});
-  }, [user, country]);
+  }, [user]);
 
   /**
    * Will update date state
