@@ -3,7 +3,7 @@ import ctl from "helpers/ctl";
 const input = ctl(`
 w-full
 sm:w-50
-md:w-auto
+lg:w-auto
 mb-2
 appearance-none
 rounded-md
@@ -16,6 +16,7 @@ focus:outline-none
 focus:ring-primary
 focus:border-primary
 focus:border-b-0
+disabled:bg-gray-200
 `);
 
 const inputPassword = ctl(`

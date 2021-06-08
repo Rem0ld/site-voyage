@@ -13,7 +13,7 @@ export default function FormLocalisation({
   localisation,
 }: AppProperties): ReactElement {
   return (
-    <div className="flex lg:flex-row flex-col lg:space-x-1">
+    <div className="flex xl:flex-row flex-col lg:space-x-0">
       <div>
         <label htmlFor="from" className="block mb-2">
           From:

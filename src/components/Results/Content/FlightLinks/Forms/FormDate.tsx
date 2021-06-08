@@ -46,7 +46,7 @@ export default function FormDate({ setDates }: AppProperties): ReactElement {
           <label htmlFor="roundtrip">Roundtrip</label>
         </div>
       </div>
-      <div className="flex lg:flex-row flex-col space-y-3 lg:space-y-0">
+      <div className="flex xl:flex-row flex-col space-y-3 lg:space-y-0">
         <input
           type="date"
           id="depart"

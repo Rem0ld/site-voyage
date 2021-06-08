@@ -17,14 +17,14 @@ export default function FlightLinks({
 }: AppProperties): ReactElement {
   return (
     <div className="mb-4 pt-2 border-t-2">
-      <div className="flex flex-col md:flex-row lg:justify-between justify-evenly pb-10 space-y-2 md:space-y-0">
+      <div className="flex flex-col md:flex-row lg:justify-between md:justify-around justify-evenly pb-10 space-y-2 md:space-y-0">
         <FormLocalisation
           setLocalisation={setLocalisation}
           localisation={localisation}
         />
         <FormDate setDates={setDates} />
       </div>
-      <div className="grid md:grid-cols-2 md:grid-rows-2 md:gap-10 gap-4 justify-items-center lg:w-full m-auto">
+      <div className="grid md:grid-cols-2 md:grid-rows-2 md:gap-y-4 md:gap-x-0 gap-4 justify-items-center lg:w-full m-auto">
         <Links />
       </div>
     </div>

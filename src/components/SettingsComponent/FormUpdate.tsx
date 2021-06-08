@@ -76,10 +76,10 @@ export default function FormUpdate({
   }, [updateValues, counter]);
 
   return (
-    <div className="mt-8">
+    <div className="mt-8 shadow-inner border rounded-md p-2">
       <h2 className="mb-6 text-xl font-bold">Address:</h2>
       <form action="" onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex md:flex-row flex-col md:items-center my-2">
+        <div className="flex md:flex-row flex-col md:items-center my-2 md:space-x-2">
           <div className="">
             <label htmlFor="zip" className="mr-2">
               Zip:{" "}

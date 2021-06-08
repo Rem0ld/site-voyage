@@ -24,7 +24,7 @@ export default function Header(): ReactElement {
       <Link to="/" className="sm:w-40">
         <img src={logo} alt="logo" width="80px" height="80px" />
       </Link>
-      <h1 className="lg:text-3xl text-lg font-bold text-primary">
+      <h1 className="lg:text-3xl text-center text-lg font-bold text-primary">
         Audacious Venture
       </h1>
       <MenuDropdown />

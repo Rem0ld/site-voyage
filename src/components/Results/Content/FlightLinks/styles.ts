@@ -4,6 +4,8 @@ const input = ctl(`
 appearance-none 
 block
 w-full
+lg:w-auto
+md:w-60
 h-10
 mr-2
 py-2 

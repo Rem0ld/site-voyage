@@ -48,8 +48,8 @@ export default function Settings(): ReactElement {
           {user?.username ?? user?.email}
         </h2>
 
-        <div className="my-8">
-          <h2 className="mb-2 text-xl font-bold">Email:</h2>
+        <div className="my-8 shadow-inner border rounded-md p-2">
+          <h2 className="inline pr-2 mb-2 text-xl font-bold">Email:</h2>
           <span className="italic text-gray-400">{user?.email}</span>
         </div>
 
