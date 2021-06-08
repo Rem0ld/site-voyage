@@ -29,7 +29,6 @@ export default function MenuDropdown(): ReactElement {
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ): void => {
     event.stopPropagation();
-
     setIsOpen((previousState) => !previousState);
   };
 
@@ -81,7 +80,7 @@ export default function MenuDropdown(): ReactElement {
     window.innerWidth < 640 ? (
       <>
         <div
-          className="relative"
+          className="relative focus:outline-primary"
           onClick={toggleMenu}
           role="button"
           tabIndex={0}
@@ -128,7 +127,12 @@ export default function MenuDropdown(): ReactElement {
   return sessionContext ? (
     <div className="relative flex justify-end space-x-1 md:w-40">
       <span className="lg:inline hidden">{user?.username}</span>
-      <div className="relative" onClick={toggleMenu} role="button" tabIndex={0}>
+      <div
+        className="relative focus:outline-primary"
+        onClick={toggleMenu}
+        role="button"
+        tabIndex={0}
+      >
         <div className={classes.notif}>
           <div className="p-0.5 text-white text-xs leading-3">
             {user?.notifications.length}

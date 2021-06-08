@@ -46,7 +46,7 @@ export default function FilterInput({
         <input
           type="text"
           aria-label="Full name"
-          tabIndex={-1}
+          tabIndex={0}
           className={classes.input}
           value={inputValue}
           onChange={(event) => {

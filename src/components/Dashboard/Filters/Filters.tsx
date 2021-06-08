@@ -30,11 +30,11 @@ const DEFAULT_STATE = [
 const link = ctl(`
 inline-block 
 align-baseline
-pt-1
-pl-2
+ml-1
 text-xs 
 text-primary 
 hover:underline
+focus:outline-primary
 `);
 
 export default function Filters({
@@ -80,7 +80,7 @@ export default function Filters({
 
   return (
     <div className="py-4">
-      <div className="flex items-center">
+      <div className="flex items-baseline">
         <h3 className="text-md font-semibold text-secondary">Filters</h3>
         <span
           className={link}

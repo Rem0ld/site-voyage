@@ -15,9 +15,10 @@ interface AppProperties {
 const link = ctl(`
 inline-block 
 align-baseline
-text-xs 
-text-primary 
+text-xs
+text-primary
 hover:underline
+focus:outline-primary
 `);
 
 const DashboardList = React.memo(
@@ -61,7 +62,7 @@ const DashboardList = React.memo(
 
     return (
       <div className=" md:w-2/4 w-11/12 p-2 h-full md:h-96 max-h-screen">
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
           <h3 className="text-md font-semibold text-secondary">{title}</h3>
           <span
             className={link}

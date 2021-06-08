@@ -18,6 +18,8 @@ shadow-md
 rounded-md
 hover:shadow-hover
 transition
+focus:outline-primary
+focus:rounded-sm
 `);
 
 const big = ctl(`

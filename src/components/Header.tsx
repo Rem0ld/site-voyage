@@ -21,7 +21,7 @@ bg-white
 export default function Header(): ReactElement {
   return (
     <div className={mainDiv}>
-      <Link to="/" className="sm:w-40">
+      <Link to="/" className="sm:w-40 focus:outline-primary">
         <img src={logo} alt="logo" width="80px" height="80px" />
       </Link>
       <h1 className="lg:text-3xl text-center text-lg font-bold text-primary">

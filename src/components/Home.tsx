@@ -22,16 +22,25 @@ transform-gpu
 -translate-y-2/4
 `);
 
+const classDivTrain = ctl(`
+absolute 
+z-0 
+transform-gpu 
+bottom-24 
+left-full 
+-translate-y-full 
+-translate-x-full
+`);
+
 export default function Home(): ReactElement {
   const [isLoading, setLoading] = useState(false);
   const [winner, setWinner] = useState<Country>({} as Country);
   // const { data } = useQuery("countries", GetCountries);
 
-  // const fetchRestApiCountries = async (): Promise<void> => {
-  //   await GetCountries()
-  // };
-
   // Will be in use in the future
+  // Gets the country's list, shuffles it, then pick a random number to pick a random country
+  // it will set the state winner with the country
+  // and set loading to true which will render differently this page if true
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const makeLoading = (event: React.MouseEvent<HTMLButtonElement>) => {
     const listCountry = getSessionStorageIncluded();
@@ -71,7 +80,7 @@ export default function Home(): ReactElement {
         <img src={main} alt="logo" className="" />
       </motion.div>
       <motion.div
-        className="absolute z-0 transform-gpu bottom-24 left-full -translate-y-full -translate-x-full"
+        className={classDivTrain}
         animate={{
           x: -2000,
         }}

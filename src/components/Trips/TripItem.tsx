@@ -35,25 +35,43 @@ export default function TripItem({
     });
 
   const departureDate = travel.departureDate
-    ? new Date().toISOString().replace("-", "/").split("T")[0].replace("-", "/")
+    ? new Date(travel.departureDate)
+        .toISOString()
+        .replace("-", "/")
+        .split("T")[0]
+        .replace("-", "/")
+        .split("/")
+        .reverse()
+        .join("/")
     : "";
   const returnDate = travel.returnDate
-    ? new Date().toISOString().replace("-", "/").split("T")[0].replace("-", "/")
+    ? new Date(travel.returnDate)
+        .toISOString()
+        .replace("-", "/")
+        .split("T")[0]
+        .replace("-", "/")
+        .split("/")
+        .reverse()
+        .join("/")
     : "";
 
   return (
     <div className="w-full mt-4 pb-2 border-gray-400 border-b-2">
       <div className="flex lg:flex-row flex-col justify-between lg:items-center gap-2 ">
         <div
-          className="flex items-center cursor-pointer"
+          className="flex items-center w-full cursor-pointer"
           onClick={toggleOpen}
           tabIndex={0}
           role="button"
         >
           <h4 className="pr-4 text-lg font-semibold ">{travel.destination}</h4>
-          <span>
-            {departureDate} - {returnDate}
-          </span>
+          {departureDate || returnDate ? (
+            <span>
+              {departureDate} - {returnDate}
+            </span>
+          ) : (
+            ""
+          )}
         </div>
         <div className="margin-children flex justify-end items-center  w-full">
           <Button

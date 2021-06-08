@@ -52,6 +52,9 @@ module.exports = {
       full: "100%",
       screen: "100vh",
     },
+    outline: {
+      primary: "2px solid #84CC16",
+    },
   },
   darkMode: "media",
   plugins: [formsPlugin],

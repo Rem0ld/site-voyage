@@ -1,4 +1,5 @@
 import { motion, Transition, Variants } from "framer-motion";
+import ctl from "helpers/ctl";
 import React, { MouseEventHandler, ReactElement } from "react";
 
 type AppProperties = {
@@ -20,12 +21,27 @@ const Path = (properties: AppProperties) => (
   />
 );
 
+const classButton = ctl(`
+absolute 
+left-full 
+grid 
+place-items-center 
+h-full 
+w-10 
+-mt-2 
+shadow-md 
+rounded-r-sm 
+bg-white 
+focus:outline-none
+focus:outline-primary
+`);
+
 export default function MenuToggle({ toggle }: Property): ReactElement {
   return (
     <button
       type="button"
       onClick={toggle}
-      className="absolute left-full grid place-items-center h-full w-10 -mt-2 shadow-md rounded-r-sm bg-white focus:outline-none "
+      className={classButton}
       style={{ padding: "1px 2px 0px 1px" }}
     >
       <svg width="28" height="60" viewBox="0 0 21 21">

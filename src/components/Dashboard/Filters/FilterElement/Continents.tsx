@@ -41,6 +41,18 @@ text-primary
 cursor-pointer
 `);
 
+const classButtonToggle = ctl(`
+flex 
+items-center 
+p-1 
+border 
+rounded-md 
+bg-gray-100 
+shadow-sm 
+outline-none 
+focus:outline-primary
+`);
+
 // Objects used by framer-motion for animations
 const variants = {
   open: { transform: "rotate(0deg)" },
@@ -98,7 +110,7 @@ export default function Continents({
         }}
         role="button"
         tabIndex={0}
-        className="flex items-center p-1 border rounded-md bg-gray-100 shadow-sm"
+        className={classButtonToggle}
       >
         <span className="text-sm">{capitalize(filterName)}</span>
         <motion.div
