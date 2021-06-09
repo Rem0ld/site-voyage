@@ -1,10 +1,10 @@
 # TODO
 
 - [x] menu plus large
-- [ ] ajouter ville d'arriver
-- [ ] when we create a user or when we log in we need to set cookies
+- [x] ajouter ville d'arriver
+- [x] when we create a user or when we log in we need to set cookies
 - [x] remove email validation in "forgot password" as it is a security flaw
-- [ ] remove icon dependencies and use svg code directly (more optimised?)
+- [x] remove icon dependencies and use svg code directly (more optimised?)
 - [ ] check how to use cypress and start making tests
 - [ ] Change the `favicon.png`, `apple-touch-icon.png`, `android-chrome-192x192.png` and `android-chrome-512x512.png`. [favicon.io](https://favicon.io) is a cool tool for generating these assets.
 - [ ] check how to use github actions
