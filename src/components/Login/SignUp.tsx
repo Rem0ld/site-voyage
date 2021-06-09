@@ -22,6 +22,36 @@ type Inputs = {
   zip?: string;
 };
 
+/**
+ * Makes an asynchronous call to server to create a user
+ * @param data type: Inputs
+ */
+const createAccountDatabase = async (data: Inputs) => {
+  const url = urlMaker("user", "new");
+  // Here we don't take passwords so we have to set every properties
+  const newAccount = {
+    username: data.username,
+    email: data.email,
+    country: data.country,
+    city: data.city,
+    zip: data.zip,
+  };
+
+  const response = await fetch(url, {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify(newAccount),
+  });
+  return response.json();
+};
+
 export default function SignUp(): ReactElement {
   const {
     register,
@@ -37,6 +67,7 @@ export default function SignUp(): ReactElement {
   const options = listCountries.map((element) => (
     <option key={element.numericCode}>{element.name}</option>
   ));
+
   /**
    * Watching passwords to make sure they're the same
    * using onBlur method on both fields then on onSubmit method again
@@ -56,36 +87,6 @@ export default function SignUp(): ReactElement {
       clearErrors("confirmPassword");
     }
     return result;
-  };
-
-  /**
-   * Makes an asynchronous call to server to create a user
-   * @param data
-   */
-  const createAccountDatabase = async (data: Inputs) => {
-    const url = urlMaker("user", "new");
-    const newAccount = {
-      username: data.username,
-      email: data.email,
-      country: data.country,
-      city: data.city,
-      zip: data.zip,
-    };
-
-    const response = await fetch(url, {
-      method: "POST",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json",
-        // "Content-Type": "application/x-www-form-urlencoded",
-      },
-      redirect: "follow",
-      referrerPolicy: "no-referrer",
-      body: JSON.stringify(newAccount), // body data type must match "Content-Type" header
-    });
-    return response.json();
   };
 
   /**
@@ -282,6 +283,11 @@ export default function SignUp(): ReactElement {
                 className={classes.input}
                 {...register("city")}
               />
+              {errors.city && (
+                <span className="text-red-500 text-xs italic">
+                  {errors.city.message}
+                </span>
+              )}
             </div>
 
             <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -295,6 +301,11 @@ export default function SignUp(): ReactElement {
                 className={classes.input}
                 {...register("zip")}
               />
+              {errors.zip && (
+                <span className="text-red-500 text-xs italic">
+                  {errors.zip.message}
+                </span>
+              )}
             </div>
           </div>
           <div className="flex items-center justify-between">
