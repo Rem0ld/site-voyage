@@ -1,10 +1,14 @@
 import React, { ReactElement } from "react";
 
-export default function StarFilled(): ReactElement {
+interface AppProperties {
+  size: number;
+}
+
+export default function StarFilled({ size }: AppProperties): ReactElement {
   return (
     <svg
-      width="10"
-      height="10"
+      width={size}
+      height={size}
       viewBox="0 0 10 10"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
