@@ -4,9 +4,11 @@ import Cookies from "js-cookie";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { Country, Localisation, User } from "types";
 import { SessionContext } from "../../SessionProvider";
-import Carousel from "./Carousel";
+import CarouselComments from "./CarouselComments/CarouselComments";
+import CarouselPictures from "./CarouselPictures/CarouselPictures";
 import FlightLinks from "./FlightLinks/FlightLinks";
 import Main from "./Main/Main";
+import classes from "./styles";
 
 interface AppProperties {
   country: Country;
@@ -26,11 +28,6 @@ const INITIAL_STATE_LOCALISATION: Localisation = {
   from: "",
   to: "",
 };
-
-// const INITIAL_STATE_COMMENTS: Carousel = {
-//   index: 0,
-//   comments: [],
-// };
 
 export default function Content({ country }: AppProperties): ReactElement {
   const sessionContext = useContext(SessionContext);
@@ -98,7 +95,7 @@ export default function Content({ country }: AppProperties): ReactElement {
   };
 
   return (
-    <div className="w-full bg-gray-100 px-4">
+    <div className="w-full px-4 bg-gray-100">
       <div className="relative xl:w-4/5 lg:w-4/5 h-16 m-auto">
         {sessionContext && !disabled ? (
           <div className="absolute bottom-0 right-0">
@@ -131,11 +128,11 @@ export default function Content({ country }: AppProperties): ReactElement {
           localisation={localisation}
         />
       </div>
-      <div className="relative flex justify-center items-center space-x-2 h-48 max-w-7xl mb-4 overflow-x-scroll bg-gray-300">
-        <Carousel list={country.review} />
+      <div className={classes.carousel}>
+        <CarouselComments list={country.review} />
       </div>
-      <div className="grid place-items-center h-40 bg-gray-300">
-        No pictures yet...
+      <div className={classes.carousel}>
+        <CarouselPictures list={country.picture} />
       </div>
     </div>
   );

@@ -4,9 +4,11 @@ import Button from "components/elements/Button";
 import DeleteIcon from "components/elements/IconsComponents/DeleteIcon";
 import ValidIcon from "components/elements/IconsComponents/ValidIcon";
 import Links from "components/Links/Links";
+import formatDate from "helpers/formatDate";
 import React, { ReactElement, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Travel } from "types";
+import FormComment from "./FormComment";
 
 interface AppProperties {
   travel: Travel;
@@ -20,6 +22,7 @@ export default function TripItem({
   deleteTravel,
 }: AppProperties): ReactElement {
   const [isOpen, setIsOpen] = useState(false);
+  const [isSendingComment, setIsSendingComment] = useState(false);
   const history = useHistory();
 
   const toggleOpen = (): void => {
@@ -35,31 +38,17 @@ export default function TripItem({
     });
 
   const departureDate = travel.departureDate
-    ? new Date(travel.departureDate)
-        .toISOString()
-        .replace("-", "/")
-        .split("T")[0]
-        .replace("-", "/")
-        .split("/")
-        .reverse()
-        .join("/")
+    ? formatDate(travel.departureDate, "/")
     : "";
   const returnDate = travel.returnDate
-    ? new Date(travel.returnDate)
-        .toISOString()
-        .replace("-", "/")
-        .split("T")[0]
-        .replace("-", "/")
-        .split("/")
-        .reverse()
-        .join("/")
+    ? formatDate(travel.returnDate, "/")
     : "";
 
   return (
     <div className="w-full mt-4 pb-2 border-gray-400 border-b-2">
       <div className="flex lg:flex-row flex-col justify-between lg:items-center gap-2 ">
         <div
-          className="flex items-center w-full cursor-pointer"
+          className="flex items-center w-auto cursor-pointer"
           onClick={toggleOpen}
           tabIndex={0}
           role="button"
@@ -73,7 +62,7 @@ export default function TripItem({
             ""
           )}
         </div>
-        <div className="margin-children flex justify-end items-center  w-full">
+        <div className="margin-children relative flex justify-end items-center  w-auto">
           <Button
             text="Detail"
             type="standard"
@@ -85,7 +74,26 @@ export default function TripItem({
           />
           {travel.done ? (
             <>
-              <Button text="Comment" type="standard" size="medium" isButton />
+              {isSendingComment ? (
+                <FormComment
+                  destination={travel.destination}
+                  closePopup={() => {
+                    setIsSendingComment(false);
+                  }}
+                />
+              ) : (
+                ""
+              )}
+
+              <Button
+                text="Comment"
+                type="standard"
+                size="medium"
+                isButton
+                onclick={() => {
+                  setIsSendingComment(!isSendingComment);
+                }}
+              />
               <Button
                 text="Add picture"
                 type="standard"

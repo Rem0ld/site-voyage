@@ -11,12 +11,15 @@ export default function Trips(): ReactElement {
   useEffect(() => {
     getTravel()
       .then((travel: Travel[]) => {
-        setTravels(travel);
+        if (travel.length > 0) {
+          setTravels(travel);
+        } else {
+          console.log("no travel");
+        }
       })
       .catch((error) => {
         console.error(error);
-      })
-      .finally(() => {});
+      });
   }, []);
 
   const handleUpdateTravel = (id: number): void => {
@@ -40,7 +43,7 @@ export default function Trips(): ReactElement {
   };
 
   return (
-    <div className="min-height-screen pt-16 md:w-10/12 m-auto pb-10 mt-1 bg-white">
+    <div className="min-height-screen pt-16 md:w-10/12 m-auto pb-10 bg-white">
       <TopLine title="My trips" />
 
       <div className="grid gap-y-28 mt-20">

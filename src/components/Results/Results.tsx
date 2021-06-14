@@ -21,7 +21,6 @@ export default function Results({ location }: AppProperties): ReactElement {
   const [country, setCountry] = useState<Country>({} as Country);
 
   useEffect(() => {
-    console.log("in location useEffect");
     if (location) {
       if (location.state[0]) {
         setCountry(location.state[0]);

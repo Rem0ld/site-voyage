@@ -62,14 +62,14 @@ export async function saveCountry(country: Country): Promise<any> {
   // To avoid getting errors from back we remove the properties that
   // are not in the back
   // should be fixed when we check if country already exist
-  if (country.review) {
-    // eslint-disable-next-line no-param-reassign
-    delete country.review;
-  }
-  if (country.picture) {
-    // eslint-disable-next-line no-param-reassign
-    delete country.picture;
-  }
+  // if (country.review) {
+  //   // eslint-disable-next-line no-param-reassign
+  //   delete country.review;
+  // }
+  // if (country.picture) {
+  //   // eslint-disable-next-line no-param-reassign
+  //   delete country.picture;
+  // }
 
   const response = await fetch(url, {
     method: "POST",

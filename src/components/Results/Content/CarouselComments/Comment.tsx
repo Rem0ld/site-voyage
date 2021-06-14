@@ -1,4 +1,6 @@
 import StarFilled from "components/elements/IconsComponents/StarFilled";
+import ctl from "helpers/ctl";
+import formatDate from "helpers/formatDate";
 import React, { ReactElement } from "react";
 import { Review } from "types";
 
@@ -6,15 +8,29 @@ interface AppProperties {
   comment: Review;
 }
 
+const container = ctl(`
+flex 
+flex-col 
+justify-center 
+space-y-2 
+w-60 
+h-44 
+p-2 
+bg-white 
+rounded-md
+text-sm 
+text-center
+`);
+
 export default function Comment({ comment }: AppProperties): ReactElement {
   const stars = [];
-  const date = new Date(comment.createdAt).toISOString().split("T")[0];
+  const date = formatDate(comment.createdAt, "-");
 
   for (let index = 0; index < comment.score; index += 1) {
-    stars.push(<StarFilled key={index} />);
+    stars.push(<StarFilled key={index} size={10} />);
   }
   return (
-    <div className="flex flex-col justify-center space-y-2 w-60 h-44 p-2 bg-white rounded-sm text-sm text-center">
+    <div className={container}>
       <div>
         <p>{comment.comment}</p>
       </div>
