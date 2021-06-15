@@ -13,7 +13,10 @@ import React, {
 import { Link } from "react-router-dom";
 import { User } from "types";
 import { SessionContext } from "../../SessionProvider";
+import BellIcon from "../IconsComponents/BellIcon";
 import PersonIcon from "../IconsComponents/PersonIcon";
+import SettingsIcon from "../IconsComponents/SettingsIcon";
+import TripIcon from "../IconsComponents/TripIcon";
 import classes from "./style";
 
 export default function MenuDropdown(): ReactElement {
@@ -56,17 +59,20 @@ export default function MenuDropdown(): ReactElement {
   const listConnected = (
     <>
       <li>
-        <Link to="/trips" className={classes.link}>
+        <Link to="/trips" className={classes.linkDesktop}>
+          <TripIcon />
           Trips
         </Link>
       </li>
       <li>
-        <Link to="/notifications" className={classes.link}>
+        <Link to="/notifications" className={classes.linkDesktop}>
+          <BellIcon />
           Notifications
         </Link>
       </li>
       <li>
-        <Link to="/settings" className={classes.link}>
+        <Link to="/settings" className={classes.linkDesktop}>
+          <SettingsIcon />
           Settings
         </Link>
       </li>
@@ -125,7 +131,19 @@ export default function MenuDropdown(): ReactElement {
     );
 
   return sessionContext ? (
-    <div className="relative flex justify-end space-x-1 md:w-40">
+    <div className="relative flex justify-end items-center space-x-2 md:w-auto">
+      <span className="lg:inline hidden">{user?.username}</span>
+      <ul className="flex space-x-2">{listConnected}</ul>
+    </div>
+  ) : (
+    <div className="w-16 sm:w-40 relative flex justify-end space-x-1">
+      {listNotConnected}
+    </div>
+  );
+}
+
+{
+  /* <div className="relative flex justify-end space-x-1 md:w-40">
       <span className="lg:inline hidden">{user?.username}</span>
       <div
         className="relative focus:outline-primary"
@@ -146,10 +164,5 @@ export default function MenuDropdown(): ReactElement {
       >
         {isOpen ? listConnected : ""}
       </ul>
-    </div>
-  ) : (
-    <div className="w-16 sm:w-40 relative flex justify-end space-x-1">
-      {listNotConnected}
-    </div>
-  );
+    </div> */
 }

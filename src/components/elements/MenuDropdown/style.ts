@@ -34,11 +34,20 @@ rounded-md
 `);
 
 const link = ctl(`
-block 
+flex
 py-1 
 px-2 
 rounded-md
 hover:bg-gray-100
+`)
+
+const linkDesktop = ctl(`
+flex
+flex-col
+text-xs
+items-center
+justify-center
+leading-5
 `)
 
 const variant = ctl(`
@@ -80,6 +89,7 @@ export default {
   menu,
   notif,
   link,
+  linkDesktop,
   variant,
   variantPrimary,
   variantSecondary

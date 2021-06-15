@@ -1,3 +1,4 @@
+import LogoutIcon from "components/elements/IconsComponents/LogoutIcon";
 import Cookies from "js-cookie";
 import React, { ReactElement } from "react";
 import { useHistory } from "react-router-dom";
@@ -19,13 +20,16 @@ export default function LogoutButton(): ReactElement {
     history.push("/");
   };
   return (
-    <button
-      onClick={signOut}
-      className={`${classes.link} w-full text-left`}
-      type="button"
-      tabIndex={0}
-    >
-      Log out
-    </button>
+    <span className={classes.linkDesktop}>
+      <LogoutIcon />
+      <button
+        onClick={signOut}
+        className="w-full text-left"
+        type="button"
+        tabIndex={0}
+      >
+        Log out
+      </button>
+    </span>
   );
 }
