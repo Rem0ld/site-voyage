@@ -8,15 +8,12 @@ interface AppProperties {
   list: Review[] | undefined;
 }
 
-type Direction = "in" | "out";
-
 export default function CarouselComments({
   list,
 }: AppProperties): ReactElement {
   const [indexCarousel, setIndexCarousel] = useState<number>(0);
   const [carouselItems, setCarouselItems] = useState<Review[]>([]);
   const [displayCarousel, setDisplayCarousel] = useState<Review[]>();
-  const [direction, setDirection] = useState<Direction>("in");
   const numberDisplayedItems = 4;
 
   useEffect(() => {
@@ -35,12 +32,16 @@ export default function CarouselComments({
     setIndexCarousel((previousState) =>
       previousState >= carouselItems.length - 1
         ? 0
+        : previousState + numberDisplayedItems > carouselItems.length - 1
+        ? 0
         : previousState + numberDisplayedItems
     );
   };
   const decrement = () => {
     setIndexCarousel((previousState) =>
       previousState <= 0
+        ? carouselItems.length - 1
+        : previousState - numberDisplayedItems < 0
         ? carouselItems.length - 1
         : previousState - numberDisplayedItems
     );

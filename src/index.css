@@ -55,12 +55,3 @@ btn-danger: red-600
 .margin-children > * {
   margin: 0 0.5em;
 }
-
-@keyframes slidesin {
-  0% {
-    right: 0%;
-  }
-  100% {
-    right: 100%;
-  }
-}
