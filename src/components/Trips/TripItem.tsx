@@ -9,6 +9,7 @@ import React, { ReactElement, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Travel } from "types";
 import FormComment from "./FormComment";
+import FormPicture from "./FormPicture";
 
 interface AppProperties {
   travel: Travel;
@@ -23,6 +24,7 @@ export default function TripItem({
 }: AppProperties): ReactElement {
   const [isOpen, setIsOpen] = useState(false);
   const [isSendingComment, setIsSendingComment] = useState(false);
+  const [isSendingPicture, setIsSendingPicture] = useState(false);
   const history = useHistory();
 
   const toggleOpen = (): void => {
@@ -84,7 +86,6 @@ export default function TripItem({
               ) : (
                 ""
               )}
-
               <Button
                 text="Comment"
                 type="standard"
@@ -94,11 +95,24 @@ export default function TripItem({
                   setIsSendingComment(!isSendingComment);
                 }}
               />
+              {isSendingPicture ? (
+                <FormPicture
+                  destination={travel.destination}
+                  closePopup={() => {
+                    setIsSendingPicture(false);
+                  }}
+                />
+              ) : (
+                ""
+              )}
               <Button
                 text="Add picture"
                 type="standard"
                 size="medium"
                 isButton
+                onclick={() => {
+                  setIsSendingPicture(!isSendingPicture);
+                }}
               />
             </>
           ) : (

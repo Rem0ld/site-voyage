@@ -25,12 +25,12 @@ export default function Trips(): ReactElement {
   const handleUpdateTravel = (id: number): void => {
     updateTravel(id).finally(() => {});
     setTravels((previousState) =>
-      previousState.map((element) => {
-        const object = element;
-        if (object.id === id) {
-          object.done = true;
+      previousState.map((travel) => {
+        const newTravel = travel;
+        if (newTravel.id === id) {
+          newTravel.done = true;
         }
-        return object;
+        return newTravel;
       })
     );
   };
@@ -38,7 +38,7 @@ export default function Trips(): ReactElement {
   const handleDeleteTravel = (id: number): void => {
     deleteTravel(id).finally(() => {});
     setTravels((previousState) =>
-      previousState.filter((element) => element.id !== id)
+      previousState.filter((travel) => travel.id !== id)
     );
   };
 
@@ -54,11 +54,11 @@ export default function Trips(): ReactElement {
 
           {travels &&
             travels
-              ?.filter((element) => !element.done)
-              .map((element) => (
+              ?.filter((travel) => !travel.done)
+              .map((travel) => (
                 <TripItem
-                  travel={element}
-                  key={element.id}
+                  travel={travel}
+                  key={travel.id}
                   updateTravel={handleUpdateTravel}
                   deleteTravel={handleDeleteTravel}
                 />
@@ -69,11 +69,11 @@ export default function Trips(): ReactElement {
           <h3 className="text-xl font-semibold border-b">Done</h3>
           {travels &&
             travels
-              ?.filter((element) => element.done)
-              .map((element) => (
+              ?.filter((travel) => travel.done)
+              .map((travel) => (
                 <TripItem
-                  travel={element}
-                  key={element.id}
+                  travel={travel}
+                  key={travel.id}
                   updateTravel={handleUpdateTravel}
                   deleteTravel={handleDeleteTravel}
                 />
