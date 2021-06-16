@@ -35,8 +35,10 @@ rounded-md
 
 const link = ctl(`
 flex
+items-center
+space-x-2
 py-1 
-px-2 
+px-1
 rounded-md
 hover:bg-gray-100
 `)
@@ -51,7 +53,7 @@ leading-5
 `)
 
 const variant = ctl(`
-w-20
+w-22
 h-9
 grid
 place-items-center

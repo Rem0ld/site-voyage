@@ -9,7 +9,7 @@ import ctl from "helpers/ctl";
 import Cookies from "js-cookie";
 import React, { ReactElement, useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { User } from "types";
 import auth from "../../../firebase-auth";
 import classes from "./styles";
@@ -42,7 +42,6 @@ const signIn = async (
 
 export default function Login(): ReactElement {
   const sessionContext = useContext(SessionContext);
-  const history = useHistory();
   const {
     register,
     handleSubmit,
@@ -66,7 +65,7 @@ export default function Login(): ReactElement {
         const userDB = (await getUser(data.email)) as User;
         // Setting user information in cookie
         Cookies.set("user", userDB);
-        history.goBack();
+        return <Redirect to="/" />;
       })
       .catch((error: ErrorLogin) => {
         const errorCode = error.code;
