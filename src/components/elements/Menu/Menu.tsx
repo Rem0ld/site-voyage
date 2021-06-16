@@ -4,7 +4,7 @@ import { SessionContext } from "../../SessionProvider";
 import Connected from "./Connected";
 import NotConnected from "./NotConnected";
 
-export default function MenuDropdown(): ReactElement {
+export default function Menu(): ReactElement {
   const sessionContext = useContext(SessionContext);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -21,11 +21,11 @@ export default function MenuDropdown(): ReactElement {
 
   return sessionContext ? (
     <div className="relative flex justify-end items-center space-x-2 md:w-auto">
-      <Connected toggleMenu={toggleMenu} isOpen={isOpen} />
+      <Connected toggleMenu={toggleMenu} isMenuOpen={isOpen} />
     </div>
   ) : (
     <div className="w-16 sm:w-40 relative flex justify-end space-x-1">
-      <NotConnected toggleMenu={toggleMenu} isOpen={isOpen} />
+      <NotConnected toggleMenu={toggleMenu} isMenuOpen={isOpen} />
     </div>
   );
 }

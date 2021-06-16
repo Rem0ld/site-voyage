@@ -6,12 +6,12 @@ import classes from "./style";
 
 interface AppProperties {
   toggleMenu: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
-  isOpen: boolean;
+  isMenuOpen: boolean;
 }
 
 export default function NotConnected({
   toggleMenu,
-  isOpen,
+  isMenuOpen,
 }: AppProperties): ReactElement {
   const listNotConnected =
     window.innerWidth < 640 ? (
@@ -26,7 +26,9 @@ export default function NotConnected({
         </div>
         <ul
           role="menu"
-          className={isOpen ? `${classes.menu}` : `${classes.menu} opacity-0`}
+          className={
+            isMenuOpen ? `${classes.menu}` : `${classes.menu} opacity-0`
+          }
         >
           <li>
             <Link to="/signup" className={classes.link} onClick={toggleMenu}>

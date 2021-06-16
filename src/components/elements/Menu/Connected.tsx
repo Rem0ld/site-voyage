@@ -1,3 +1,4 @@
+/* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import LogoutButton from "components/Login/LogoutButton";
 import Cookies from "js-cookie";
@@ -8,24 +9,37 @@ import BellIcon from "../IconsComponents/BellIcon";
 import PersonIcon from "../IconsComponents/PersonIcon";
 import SettingsIcon from "../IconsComponents/SettingsIcon";
 import TripIcon from "../IconsComponents/TripIcon";
+import Notifications from "./Notifications";
 import classes from "./style";
 
 interface AppProperties {
   toggleMenu: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
-  isOpen: boolean;
+  isMenuOpen: boolean;
 }
 
 export default function Connected({
   toggleMenu,
-  isOpen,
+  isMenuOpen,
 }: AppProperties): ReactElement {
   const [user, setUser] = useState<User>();
+  const [isNotificationMenuOpen, setIsNotificationMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!user) {
       setUser(Cookies.getJSON("user") as User);
     }
   }, [user]);
+
+  /**
+   * Will open and close Notification menu
+   * @param event onclick event
+   */
+  const toggleNotificationMenu = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ): void => {
+    event.stopPropagation();
+    setIsNotificationMenuOpen((previousState) => !previousState);
+  };
 
   const cssLinks = window.innerWidth < 640 ? classes.link : classes.linkDesktop;
 
@@ -43,9 +57,9 @@ export default function Connected({
       </div>
       <ul
         role="menu"
-        className={isOpen ? `${classes.menu}` : `${classes.menu} opacity-0`}
+        className={isMenuOpen ? `${classes.menu}` : `${classes.menu} opacity-0`}
       >
-        {isOpen ? (
+        {isMenuOpen ? (
           <>
             <span className="lg:grid place-items-center sm:hidden xs:block px-2">
               Hello {user && user.username}
@@ -93,10 +107,18 @@ export default function Connected({
         </Link>
       </li>
       <li>
-        <Link to="/notifications" className={cssLinks}>
+        <button
+          onClick={toggleNotificationMenu}
+          className={`${cssLinks} relative`}
+        >
+          <span className="absolute flex h-3 w-3 -top-1 right-5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500" />
+          </span>
           <BellIcon />
           Notifications
-        </Link>
+        </button>
+        {isNotificationMenuOpen ? <Notifications /> : ""}
       </li>
       <li>
         <Link to="/settings" className={cssLinks}>

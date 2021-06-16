@@ -33,7 +33,6 @@ export default function App(): ReactElement {
           <Route exact path="/email-submitted" component={EmailSubmitted} />
           <Route exact path="/" component={Home} />
           <Redirect to="/login" />
-          {/* <Route path="/notifications" component={Notifications} /> */}
         </Switch>
       </Suspense>
       {/* <ReactQueryDevtools initialIsOpen={false} /> */}

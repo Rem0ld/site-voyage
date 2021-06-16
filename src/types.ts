@@ -15,7 +15,7 @@ enum Role {
   USER,
 }
 
-type MyNotification = {
+export type MyNotification = {
   readonly id: number;
   readonly createdAt: Date;
   updatedAt: Date;
@@ -35,6 +35,7 @@ export interface User {
   city?: string;
   role: Role;
   notifications: MyNotification[];
+  travel: Travel[];
 }
 
 export interface Hobby {

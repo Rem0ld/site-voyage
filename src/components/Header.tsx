@@ -2,7 +2,7 @@ import ctl from "helpers/ctl";
 import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../public/logo_with_plane.svg";
-import MenuDropdown from "./elements/Menu/Menu";
+import Menu from "./elements/Menu/Menu";
 
 const mainDiv = ctl(`
 fixed 
@@ -26,7 +26,7 @@ export default function Header(): ReactElement {
       <Link to="/" className="relative z-50 focus:outline-primary">
         <img src={logo} alt="logo" width="80px" height="80px" />
       </Link>
-      <MenuDropdown />
+      <Menu />
     </div>
   );
 }
