@@ -4,7 +4,7 @@ import LogoutButton from "components/Login/LogoutButton";
 import Cookies from "js-cookie";
 import React, { ReactElement, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { User } from "types";
+import { Travel, User } from "types";
 import BellIcon from "../IconsComponents/BellIcon";
 import PersonIcon from "../IconsComponents/PersonIcon";
 import SettingsIcon from "../IconsComponents/SettingsIcon";
@@ -23,10 +23,22 @@ export default function Connected({
 }: AppProperties): ReactElement {
   const [user, setUser] = useState<User>();
   const [isNotificationMenuOpen, setIsNotificationMenuOpen] = useState(false);
+  const [notifications, setNotifications] = useState<Travel[]>();
 
   useEffect(() => {
     if (!user) {
       setUser(Cookies.getJSON("user") as User);
+    }
+  }, [user, setUser]);
+
+  useEffect(() => {
+    if (user?.notifications) {
+      const travels = user.notifications.map((notification) =>
+        user.travel.find((element) => element.id === notification.travelId)
+      );
+      if (travels && travels.length > 0) {
+        setNotifications(() => travels);
+      }
     }
   }, [user]);
 
@@ -111,14 +123,22 @@ export default function Connected({
           onClick={toggleNotificationMenu}
           className={`${cssLinks} relative`}
         >
-          <span className="absolute flex h-3 w-3 -top-1 right-5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500" />
-          </span>
+          {notifications && notifications.length > 0 ? (
+            <span className="absolute flex h-3 w-3 -top-1 right-5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500" />
+            </span>
+          ) : (
+            ""
+          )}
           <BellIcon />
           Notifications
         </button>
-        {isNotificationMenuOpen ? <Notifications /> : ""}
+        {isNotificationMenuOpen ? (
+          <Notifications notifications={notifications} />
+        ) : (
+          ""
+        )}
       </li>
       <li>
         <Link to="/settings" className={cssLinks}>

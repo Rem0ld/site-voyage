@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import deleteNotification from "api/server/notificationRoute";
 import { deleteTravel, getTravel, updateTravel } from "api/server/TravelRoutes";
 import React, { ReactElement, useEffect, useState } from "react";
 import { Travel } from "types";
@@ -24,6 +25,7 @@ export default function Trips(): ReactElement {
 
   const handleUpdateTravel = (id: number): void => {
     updateTravel(id).finally(() => {});
+    deleteNotification(id).finally(() => {});
     setTravels((previousState) =>
       previousState.map((travel) => {
         const newTravel = travel;
