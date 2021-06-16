@@ -2,6 +2,7 @@ import { saveTravel } from "api/server/TravelRoutes";
 import Button from "components/elements/Button";
 import Cookies from "js-cookie";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Country, Localisation, User } from "types";
 import { SessionContext } from "../../SessionProvider";
 import CarouselComments from "./CarouselComments/CarouselComments";
@@ -12,6 +13,8 @@ import classes from "./styles";
 
 interface AppProperties {
   country: Country;
+  isSaved: boolean;
+  save: () => void;
 }
 
 interface Dates {
@@ -29,10 +32,13 @@ const INITIAL_STATE_LOCALISATION: Localisation = {
   to: "",
 };
 
-export default function Content({ country }: AppProperties): ReactElement {
+export default function Content({
+  country,
+  isSaved,
+  save,
+}: AppProperties): ReactElement {
   const sessionContext = useContext(SessionContext);
   const [user, setUser] = useState<User>();
-  const [disabled, setDisabled] = useState(false);
   const [dates, setDates] = useState(INITIAL_STATE_DATE);
   const [localisation, setLocalisation] = useState(INITIAL_STATE_LOCALISATION);
 
@@ -97,8 +103,8 @@ export default function Content({ country }: AppProperties): ReactElement {
   return (
     <div className="w-full px-4 bg-gray-100">
       <div className="relative xl:w-4/5 lg:w-4/5 h-16 m-auto">
-        {sessionContext && !disabled ? (
-          <div className="absolute bottom-0 right-0">
+        <div className="absolute bottom-0 right-0">
+          {sessionContext && !isSaved ? (
             <Button
               text="Save"
               type="valid"
@@ -107,15 +113,22 @@ export default function Content({ country }: AppProperties): ReactElement {
               onclick={() => {
                 saveTravel(country, dates, localisation)
                   .then(() => {
-                    setDisabled(true);
+                    save();
                   })
                   .finally(() => {});
               }}
             />
-          </div>
-        ) : (
-          ""
-        )}
+          ) : (
+            <Link to="/trips">
+              <Button
+                text="See in trips"
+                type="standard"
+                size="medium"
+                isButton
+              />
+            </Link>
+          )}
+        </div>
 
         <h1 className="pt-4 text-3xl font-bold text-center">{country.name}</h1>
       </div>

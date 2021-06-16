@@ -19,10 +19,12 @@ interface AppProperties {
 
 export default function Results({ location }: AppProperties): ReactElement {
   const [country, setCountry] = useState<Country>({} as Country);
+  const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
     if (location) {
       if (location.state[0]) {
+        setIsSaved(true);
         setCountry(location.state[0]);
         saveCountry(location.state[0]).finally(() => {});
       } else {
@@ -40,7 +42,13 @@ export default function Results({ location }: AppProperties): ReactElement {
         <BackButton />
       </div>
       <div className="w-full h-96">{mapLeaflet}</div>
-      <Content country={country} />
+      <Content
+        country={country}
+        isSaved={isSaved}
+        save={() => {
+          setIsSaved(true);
+        }}
+      />
     </div>
   );
 }
