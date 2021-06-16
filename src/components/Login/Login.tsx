@@ -3,11 +3,12 @@
 /* eslint-disable no-console */
 import { getUser } from "api/server/UserRoutes";
 import Button from "components/elements/Button";
+import Spinner from "components/elements/IconsComponents/Spinner";
 import { SessionContext } from "components/SessionProvider";
 import firebase from "firebase/app";
 import ctl from "helpers/ctl";
 import Cookies from "js-cookie";
-import React, { ReactElement, useContext } from "react";
+import React, { ReactElement, useContext, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, Redirect } from "react-router-dom";
 import { User } from "types";
@@ -48,14 +49,17 @@ export default function Login(): ReactElement {
     setError,
     formState: { errors },
   } = useForm<Inputs>();
+  const [isLoading, setIsLoading] = useState(false);
 
   if (sessionContext) {
     return <Redirect to="/" />;
   }
 
   const onSubmit: SubmitHandler<Inputs> = (data): void => {
+    setIsLoading(true);
     signIn(data.email, data.password)
       .then(async (result) => {
+        setIsLoading(false);
         const { user } = result;
         // Getting JWT token and saving it
         const token = await user?.getIdToken(true);
@@ -139,6 +143,7 @@ export default function Login(): ReactElement {
               size="medium"
               isButton={false}
             />
+            {isLoading ? <Spinner /> : ""}
             <Link to="/forgot-password" className={link}>
               Forgot Password?
             </Link>
