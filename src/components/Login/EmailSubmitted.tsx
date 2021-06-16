@@ -1,13 +1,11 @@
 import React, { ReactElement, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 export default function EmailSubmitted(): ReactElement {
   const history = useHistory();
 
   useEffect(() => {
-    setTimeout(() => {
-      history.push("/");
-    }, 5000);
+    setTimeout(() => <Redirect to="/" />, 5000);
   }, [history]);
 
   return (

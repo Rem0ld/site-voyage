@@ -7,7 +7,7 @@ import { getSessionStorage } from "helpers/sessionStorage";
 import Cookies from "js-cookie";
 import React, { ReactElement } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { Country, Payload, User } from "types";
 import auth from "../../../firebase-auth";
 import classes from "./styles";
@@ -62,7 +62,6 @@ export default function SignUp(): ReactElement {
     trigger,
     formState: { errors },
   } = useForm<Inputs>();
-  const history = useHistory();
   const listCountries: Country[] = getSessionStorage("countries");
   const options = listCountries.map((element) => (
     <option key={element.numericCode}>{element.name}</option>
@@ -116,7 +115,7 @@ export default function SignUp(): ReactElement {
               const user = result.body as unknown;
               Cookies.set("user", user as User);
               // Redirection to home
-              history.push("/");
+              return <Redirect to="/" />;
             })
             .catch((error) => {
               throw error;
