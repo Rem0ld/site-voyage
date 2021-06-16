@@ -48,7 +48,7 @@ export default function Connected({
         {isOpen ? (
           <>
             <span className="lg:grid place-items-center sm:hidden xs:block px-2">
-              Hello {user?.username}
+              Hello {user && user.username}
             </span>
             <li>
               <Link to="/trips" className={cssLinks} onClick={toggleMenu}>
@@ -84,7 +84,7 @@ export default function Connected({
   ) : (
     <ul className="flex space-x-2">
       <span className="lg:grid place-items-center sm:hidden xs:block px-2">
-        Hello {user?.username}
+        Hello {user && user.username}
       </span>
       <li>
         <Link to="/trips" className={cssLinks}>
