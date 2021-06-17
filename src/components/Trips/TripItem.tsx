@@ -64,7 +64,7 @@ export default function TripItem({
             ""
           )}
         </div>
-        <div className="margin-children relative flex justify-end items-center  w-auto">
+        <div className="margin-children relative flex md:justify-end justify-evenly items-center  w-auto">
           <Button
             text="Detail"
             type="standard"

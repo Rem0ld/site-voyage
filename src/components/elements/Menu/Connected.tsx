@@ -9,6 +9,8 @@ import BellIcon from "../IconsComponents/BellIcon";
 import PersonIcon from "../IconsComponents/PersonIcon";
 import SettingsIcon from "../IconsComponents/SettingsIcon";
 import TripIcon from "../IconsComponents/TripIcon";
+import IndicatorNotification from "../IndicatorNotification";
+import DisplayUsername from "./DisplayUsername";
 import Notifications from "./Notifications";
 import classes from "./style";
 
@@ -29,18 +31,15 @@ export default function Connected({
     if (!user) {
       setUser(Cookies.getJSON("user") as User);
     }
-  }, [user, setUser]);
-
-  useEffect(() => {
     if (user?.notifications) {
       const travels = user.notifications.map((notification) =>
         user.travel.find((element) => element.id === notification.travelId)
       );
       if (travels && travels.length > 0) {
-        setNotifications(() => travels);
+        setNotifications(() => travels as Travel[]);
       }
     }
-  }, [user]);
+  }, [user, setUser]);
 
   /**
    * Will open and close Notification menu
@@ -53,18 +52,35 @@ export default function Connected({
     setIsNotificationMenuOpen((previousState) => !previousState);
   };
 
+  const closeNotificationMenu = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ): void => {
+    event.stopPropagation();
+    if (isNotificationMenuOpen) {
+      setIsNotificationMenuOpen(false);
+    }
+  };
+
   const cssLinks = window.innerWidth < 640 ? classes.link : classes.linkDesktop;
 
   // Instead of having an object with the list and passing the object
   // I wrote it 2 times because of onClick event which should be there only for mobile
   return window.innerWidth < 640 ? (
     <>
+      {/* Mobile menu */}
       <div
         className="relative focus:outline-primary"
         onClick={toggleMenu}
         role="button"
         tabIndex={0}
       >
+        {notifications && notifications.length > 0 ? (
+          <span className="relative w-3 h-3 left-12 -top-1">
+            <IndicatorNotification />
+          </span>
+        ) : (
+          ""
+        )}
         <PersonIcon />
       </div>
       <ul
@@ -73,9 +89,7 @@ export default function Connected({
       >
         {isMenuOpen ? (
           <>
-            <span className="lg:grid place-items-center sm:hidden xs:block px-2">
-              Hello {user && user.username}
-            </span>
+            <DisplayUsername username={user && user.username} />
             <li>
               <Link to="/trips" className={cssLinks} onClick={toggleMenu}>
                 <TripIcon />
@@ -83,14 +97,18 @@ export default function Connected({
               </Link>
             </li>
             <li>
-              <Link
-                to="/notifications"
-                className={cssLinks}
-                onClick={toggleMenu}
+              <button
+                onClick={toggleNotificationMenu}
+                className={`${cssLinks} relative`}
               >
                 <BellIcon />
                 Notifications
-              </Link>
+              </button>
+              {isNotificationMenuOpen ? (
+                <Notifications notifications={notifications} />
+              ) : (
+                ""
+              )}
             </li>
             <li>
               <Link to="/settings" className={cssLinks} onClick={toggleMenu}>
@@ -109,11 +127,10 @@ export default function Connected({
     </>
   ) : (
     <ul className="flex space-x-2">
-      <span className="lg:grid place-items-center sm:hidden xs:block px-2">
-        Hello {user && user.username}
-      </span>
+      {/* desktop menu */}
+      <DisplayUsername username={user && user.username} />
       <li>
-        <Link to="/trips" className={cssLinks}>
+        <Link to="/trips" className={cssLinks} onClick={closeNotificationMenu}>
           <TripIcon />
           Trips
         </Link>
@@ -124,10 +141,7 @@ export default function Connected({
           className={`${cssLinks} relative`}
         >
           {notifications && notifications.length > 0 ? (
-            <span className="absolute flex h-3 w-3 -top-1 right-5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500" />
-            </span>
+            <IndicatorNotification />
           ) : (
             ""
           )}
@@ -141,7 +155,11 @@ export default function Connected({
         )}
       </li>
       <li>
-        <Link to="/settings" className={cssLinks}>
+        <Link
+          to="/settings"
+          className={cssLinks}
+          onClick={closeNotificationMenu}
+        >
           <SettingsIcon />
           Settings
         </Link>

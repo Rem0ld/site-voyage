@@ -58,19 +58,6 @@ export async function saveCountry(country: Country): Promise<any> {
   // const user: User = Cookies.getJSON("user") as User;
   const bearer = localStorage.getItem("@token")
 
-  // Because country is a bit different between front and back
-  // To avoid getting errors from back we remove the properties that
-  // are not in the back
-  // should be fixed when we check if country already exist
-  // if (country.review) {
-  //   // eslint-disable-next-line no-param-reassign
-  //   delete country.review;
-  // }
-  // if (country.picture) {
-  //   // eslint-disable-next-line no-param-reassign
-  //   delete country.picture;
-  // }
-
   const response = await fetch(url, {
     method: "POST",
     mode: "cors",

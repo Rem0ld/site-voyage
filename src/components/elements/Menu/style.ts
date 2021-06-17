@@ -20,6 +20,11 @@ md:text-md
 text-lg
 `);
 
+const menuMobile = ctl(`
+inherit
+h-auto
+`)
+
 const notif = ctl(`
 absolute 
 -top-2 
@@ -37,10 +42,12 @@ const link = ctl(`
 flex
 items-center
 space-x-2
+w-full
 py-1 
 px-1
 rounded-md
 hover:bg-gray-100
+focus:outline-primary
 `)
 
 const linkDesktop = ctl(`
@@ -50,6 +57,7 @@ text-xs
 items-center
 justify-center
 leading-5
+focus:outline-primary
 `)
 
 const variant = ctl(`
@@ -89,6 +97,7 @@ hover:text-gray-100
 
 export default {
   menu,
+  menuMobile,
   notif,
   link,
   linkDesktop,

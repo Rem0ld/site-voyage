@@ -10,16 +10,16 @@ interface AppProperties {
 export default function Notifications({
   notifications,
 }: AppProperties): ReactElement {
+  const cssLinks = window.innerWidth < 640 ? classes.menuMobile : classes.menu;
   return (
-    <div className={`${classes.menu} right-1/4 top-full h-20 p-2`}>
+    <div className={`${cssLinks} right-1/4 top-full h-20 p-2`}>
       <ul>
-        {notifications &&
-          notifications?.map((notification) => (
-            <li key={notification.id}>
-              {notification.destination}{" "}
-              {formatDate(notification.departureDate as Date, "-")}
-            </li>
-          ))}
+        {notifications?.map((notification) => (
+          <li key={notification.id} className=" text-sm">
+            {notification.destination}{" "}
+            {formatDate(notification.departureDate as Date, "-")}
+          </li>
+        ))}
       </ul>
     </div>
   );

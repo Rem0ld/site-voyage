@@ -68,7 +68,9 @@ export default function Trips(): ReactElement {
         </div>
 
         <div className="h-auto md:w-4/5 w-full md:px-4 px-1 m-auto border-gray-400 md:border-l-2">
-          <h3 className="text-xl font-semibold border-b">Done</h3>
+          <h3 className="mb-2 text-xl font-semibold border-gray-400 border-b">
+            Done
+          </h3>
           {travels &&
             travels
               ?.filter((travel) => travel.done)
