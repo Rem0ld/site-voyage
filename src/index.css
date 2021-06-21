@@ -28,6 +28,10 @@ btn-danger: red-600
   @apply bg-gray-200 grid place-items-center pt-16;
 }
 
+.min-height-animation {
+  min-height: 768px;
+}
+
 .h-50vh {
   height: 50vh;
 }

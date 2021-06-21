@@ -6,7 +6,7 @@ import train from "../../public/train.json";
 
 export default function LoadingAnimation(): ReactElement {
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-height-animation flex items-center justify-center">
       <div>
         <Lottie animationData={loader} className="md:w-96 md:h-96 w-60 h-60" />
         <motion.div
