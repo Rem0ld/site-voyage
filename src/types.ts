@@ -22,6 +22,7 @@ export type MyNotification = {
   DateSendNotification: Date;
   readonly userId: number;
   readonly travelId: number;
+  seen: boolean;
 }
 
 export interface User {
@@ -148,3 +149,9 @@ export interface Picture {
   url: string;
   countryId: number;
 }
+
+export type ResponseServer = {
+  type: "valid" | "error";
+  payload?: any[];
+  error?: string;
+};

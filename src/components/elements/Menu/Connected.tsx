@@ -1,14 +1,16 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { getNotificationsUser } from "api/server/notificationRoute";
+import {
+  getNotificationsUser,
+  UpdateNotifications,
+} from "api/server/notificationRoute";
 import LogoutButton from "components/Login/LogoutButton";
 import { SessionContext } from "components/SessionProvider";
-import firebase from "firebase/app";
 import Cookies from "js-cookie";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
-import { MyNotification, User } from "types";
+import { MyNotification, ResponseServer, User } from "types";
 import PersonIcon from "../IconsComponents/PersonIcon";
 import SettingsIcon from "../IconsComponents/SettingsIcon";
 import TripIcon from "../IconsComponents/TripIcon";
@@ -21,80 +23,72 @@ interface AppProperties {
   isMenuOpen: boolean;
 }
 
-type ResponseServer = {
-  type: "valid" | "error";
-  payload?: any[];
-  error?: string;
-};
-
 export default function Connected({
   toggleMenu,
   isMenuOpen,
 }: AppProperties): ReactElement {
   const sessionContext = useContext(SessionContext);
   const [user, setUser] = useState<User>();
-  const { data } = useQuery<MyNotification[] | undefined>("todos", async () => {
-    const response: ResponseServer = (await getNotificationsUser()) as ResponseServer;
-    if (response.type === "error") throw new Error(response.error);
-    return response.payload;
-  });
+  const [notifications, setNotifications] = useState<MyNotification[]>();
+  const { data } = useQuery<MyNotification[] | undefined>(
+    "notifications",
+    async () => {
+      const response: ResponseServer = (await getNotificationsUser()) as ResponseServer;
+      if (response.type === "error") throw new Error(response.error);
+      return response.payload;
+    }
+  );
 
   useEffect(() => {
-    const checkIfWeNeedToRefreshToken = (userConnected: firebase.User) => {
-      const tenMinutes = 10 * 60 * 1000;
-      const lastSignIn: string = userConnected?.metadata
-        .lastSignInTime as string;
-      const now = Date.now();
+    // const checkIfWeNeedToRefreshToken = (userConnected: firebase.User) => {
+    //   const tenMinutes = 10 * 60 * 1000;
+    //   const lastSignIn: string = userConnected?.metadata
+    //     .lastSignInTime as string;
+    //   const now = Date.now();
 
-      if (lastSignIn && now - +lastSignIn >= tenMinutes) {
-        sessionContext?.getIdToken().then((newToken) => {
-          const currentToken = localStorage.getItem("@token");
+    //   if (lastSignIn && now - +lastSignIn >= tenMinutes) {
+    //     console.log("more than 10 minutes");
+    //     sessionContext?.getIdToken().then((newToken) => {
+    //       const currentToken = localStorage.getItem("@token");
 
-          if (currentToken !== newToken) {
-            localStorage.setItem("@token", newToken);
-          }
-        });
-      }
-    };
-    if (sessionContext) {
-      checkIfWeNeedToRefreshToken(sessionContext);
-    }
-    // sessionContext?.getIdToken().then((newToken) => {
-    //   const currentToken = localStorage.getItem("@token");
-
-    //   if (currentToken !== newToken) {
-    //     localStorage.setItem("@token", newToken);
+    //       if (currentToken !== newToken) {
+    //         localStorage.setItem("@token", newToken);
+    //       }
+    //     });
     //   }
-    // });
+    // };
+    // if (sessionContext) {
+    //   checkIfWeNeedToRefreshToken(sessionContext);
+    // }
+    sessionContext?.getIdToken().then((newToken) => {
+      const currentToken = localStorage.getItem("@token");
+
+      if (currentToken !== newToken) {
+        localStorage.setItem("@token", newToken);
+      }
+    });
   }, [sessionContext]);
 
   useEffect(() => {
     if (!user) {
       setUser(Cookies.getJSON("user") as User);
     }
-
-    console.log(data);
+    if (data) {
+      setNotifications(data);
+    }
   }, [user, setUser, data]);
 
-  /**
-   * Will open and close Notification menu
-   * @param event onclick event
-   */
-  // const toggleNotificationMenu = (
-  //   event: React.MouseEvent<HTMLElement, MouseEvent>
-  // ): void => {
-  //   event.stopPropagation();
-  //   setIsNotificationMenuOpen((previousState) => !previousState);
-  // };
-
-  // const closeNotificationMenu = (
-  //   event: React.MouseEvent<HTMLElement, MouseEvent>
-  // ): void => {
-  //   event.stopPropagation();
-  //   if (isNotificationMenuOpen) {
-  //     setIsNotificationMenuOpen(false);
-  //   }
-  // };
+  const handleNotifications = () => {
+    if (notifications && notifications.length > 0) {
+      UpdateNotifications()
+        .then((result: ResponseServer) => {
+          if (result && result.type === "valid") {
+            setNotifications([]);
+          }
+        })
+        .finally(() => {});
+    }
+  };
 
   const cssLinks = window.innerWidth < 640 ? classes.link : classes.linkDesktop;
 
@@ -109,7 +103,7 @@ export default function Connected({
         role="button"
         tabIndex={0}
       >
-        {data && data.length > 0 ? (
+        {notifications && notifications.length > 0 ? (
           <span className="absolute w-3 h-3 -right-1 -top-1">
             <IndicatorNotification />
           </span>
@@ -126,7 +120,14 @@ export default function Connected({
           <>
             <DisplayUsername username={user && user.username} />
             <li>
-              <Link to="/trips" className={cssLinks} onClick={toggleMenu}>
+              <Link
+                to="/trips"
+                className={cssLinks}
+                onClick={(event) => {
+                  toggleMenu(event);
+                  handleNotifications();
+                }}
+              >
                 <TripIcon />
                 Trips
               </Link>
@@ -165,8 +166,12 @@ export default function Connected({
       {/* DESKTOP MENU */}
       <DisplayUsername username={user && user.username} />
       <li className="relative">
-        {data && data.length > 0 ? <IndicatorNotification /> : ""}
-        <Link to="/trips" className={cssLinks}>
+        {notifications && notifications.length > 0 ? (
+          <IndicatorNotification />
+        ) : (
+          ""
+        )}
+        <Link to="/trips" className={cssLinks} onClick={handleNotifications}>
           <TripIcon />
           Trips
         </Link>
