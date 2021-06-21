@@ -1,17 +1,19 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import { getNotificationsUser } from "api/server/notificationRoute";
 import LogoutButton from "components/Login/LogoutButton";
+import { SessionContext } from "components/SessionProvider";
+import firebase from "firebase/app";
 import Cookies from "js-cookie";
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useContext, useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
-import { Travel, User } from "types";
-import BellIcon from "../IconsComponents/BellIcon";
+import { MyNotification, User } from "types";
 import PersonIcon from "../IconsComponents/PersonIcon";
 import SettingsIcon from "../IconsComponents/SettingsIcon";
 import TripIcon from "../IconsComponents/TripIcon";
 import IndicatorNotification from "../IndicatorNotification";
 import DisplayUsername from "./DisplayUsername";
-import Notifications from "./Notifications";
 import classes from "./style";
 
 interface AppProperties {
@@ -19,47 +21,80 @@ interface AppProperties {
   isMenuOpen: boolean;
 }
 
+type ResponseServer = {
+  type: "valid" | "error";
+  payload?: any[];
+  error?: string;
+};
+
 export default function Connected({
   toggleMenu,
   isMenuOpen,
 }: AppProperties): ReactElement {
+  const sessionContext = useContext(SessionContext);
   const [user, setUser] = useState<User>();
-  const [isNotificationMenuOpen, setIsNotificationMenuOpen] = useState(false);
-  const [notifications, setNotifications] = useState<Travel[]>();
+  const { data } = useQuery<MyNotification[] | undefined>("todos", async () => {
+    const response: ResponseServer = (await getNotificationsUser()) as ResponseServer;
+    if (response.type === "error") throw new Error(response.error);
+    return response.payload;
+  });
+
+  useEffect(() => {
+    const checkIfWeNeedToRefreshToken = (userConnected: firebase.User) => {
+      const tenMinutes = 10 * 60 * 1000;
+      const lastSignIn: string = userConnected?.metadata
+        .lastSignInTime as string;
+      const now = Date.now();
+
+      if (lastSignIn && now - +lastSignIn >= tenMinutes) {
+        sessionContext?.getIdToken().then((newToken) => {
+          const currentToken = localStorage.getItem("@token");
+
+          if (currentToken !== newToken) {
+            localStorage.setItem("@token", newToken);
+          }
+        });
+      }
+    };
+    if (sessionContext) {
+      checkIfWeNeedToRefreshToken(sessionContext);
+    }
+    // sessionContext?.getIdToken().then((newToken) => {
+    //   const currentToken = localStorage.getItem("@token");
+
+    //   if (currentToken !== newToken) {
+    //     localStorage.setItem("@token", newToken);
+    //   }
+    // });
+  }, [sessionContext]);
 
   useEffect(() => {
     if (!user) {
       setUser(Cookies.getJSON("user") as User);
     }
-    if (user?.notifications) {
-      const travels = user.notifications.map((notification) =>
-        user.travel.find((element) => element.id === notification.travelId)
-      );
-      if (travels && travels.length > 0) {
-        setNotifications(() => travels as Travel[]);
-      }
-    }
-  }, [user, setUser]);
+
+    console.log(data);
+  }, [user, setUser, data]);
 
   /**
    * Will open and close Notification menu
    * @param event onclick event
    */
-  const toggleNotificationMenu = (
-    event: React.MouseEvent<HTMLElement, MouseEvent>
-  ): void => {
-    event.stopPropagation();
-    setIsNotificationMenuOpen((previousState) => !previousState);
-  };
+  // const toggleNotificationMenu = (
+  //   event: React.MouseEvent<HTMLElement, MouseEvent>
+  // ): void => {
+  //   event.stopPropagation();
+  //   setIsNotificationMenuOpen((previousState) => !previousState);
+  // };
 
-  const closeNotificationMenu = (
-    event: React.MouseEvent<HTMLElement, MouseEvent>
-  ): void => {
-    event.stopPropagation();
-    if (isNotificationMenuOpen) {
-      setIsNotificationMenuOpen(false);
-    }
-  };
+  // const closeNotificationMenu = (
+  //   event: React.MouseEvent<HTMLElement, MouseEvent>
+  // ): void => {
+  //   event.stopPropagation();
+  //   if (isNotificationMenuOpen) {
+  //     setIsNotificationMenuOpen(false);
+  //   }
+  // };
 
   const cssLinks = window.innerWidth < 640 ? classes.link : classes.linkDesktop;
 
@@ -67,15 +102,15 @@ export default function Connected({
   // I wrote it 2 times because of onClick event which should be there only for mobile
   return window.innerWidth < 640 ? (
     <>
-      {/* Mobile menu */}
+      {/* MOBILE MENU */}
       <div
         className="relative focus:outline-primary"
         onClick={toggleMenu}
         role="button"
         tabIndex={0}
       >
-        {notifications && notifications.length > 0 ? (
-          <span className="relative w-3 h-3 left-12 -top-1">
+        {data && data.length > 0 ? (
+          <span className="absolute w-3 h-3 -right-1 -top-1">
             <IndicatorNotification />
           </span>
         ) : (
@@ -96,7 +131,7 @@ export default function Connected({
                 Trips
               </Link>
             </li>
-            <li>
+            {/* <li>
               <button
                 onClick={toggleNotificationMenu}
                 className={`${cssLinks} relative`}
@@ -109,7 +144,7 @@ export default function Connected({
               ) : (
                 ""
               )}
-            </li>
+            </li> */}
             <li>
               <Link to="/settings" className={cssLinks} onClick={toggleMenu}>
                 <SettingsIcon />
@@ -127,24 +162,20 @@ export default function Connected({
     </>
   ) : (
     <ul className="flex space-x-2">
-      {/* desktop menu */}
+      {/* DESKTOP MENU */}
       <DisplayUsername username={user && user.username} />
-      <li>
-        <Link to="/trips" className={cssLinks} onClick={closeNotificationMenu}>
+      <li className="relative">
+        {data && data.length > 0 ? <IndicatorNotification /> : ""}
+        <Link to="/trips" className={cssLinks}>
           <TripIcon />
           Trips
         </Link>
       </li>
-      <li>
+      {/* <li>
         <button
           onClick={toggleNotificationMenu}
           className={`${cssLinks} relative`}
         >
-          {notifications && notifications.length > 0 ? (
-            <IndicatorNotification />
-          ) : (
-            ""
-          )}
           <BellIcon />
           Notifications
         </button>
@@ -153,13 +184,9 @@ export default function Connected({
         ) : (
           ""
         )}
-      </li>
+      </li> */}
       <li>
-        <Link
-          to="/settings"
-          className={cssLinks}
-          onClick={closeNotificationMenu}
-        >
+        <Link to="/settings" className={cssLinks}>
           <SettingsIcon />
           Settings
         </Link>
