@@ -12,7 +12,6 @@ export const SessionContext = React.createContext<firebase.User | null>(null);
 export const SessionProvider = ({ children }: AppProperties): ReactElement => {
   // eslint-disable-next-line unicorn/no-null
   const [user, setUser] = useState<firebase.User | null>(null);
-
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
       setUser(firebaseUser);
