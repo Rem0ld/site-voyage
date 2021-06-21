@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { ReactElement } from "react";
 import { useHistory } from "react-router-dom";
 import BackIcon from "./IconsComponents/BackIcon";
