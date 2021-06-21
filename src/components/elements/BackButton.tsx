@@ -5,16 +5,21 @@ import BackIcon from "./IconsComponents/BackIcon";
 
 export default function BackButton(): ReactElement {
   const history = useHistory();
+  const handleKeyDown = (
+    event: React.KeyboardEvent<HTMLButtonElement>
+  ): void => {
+    if (event.key === "Enter") history.goBack();
+  };
   return (
-    <div
+    <button
       data-cy="BackLink"
-      className="flex items-center gap-1 px-1 m-1 mr-0 text-secondary font-bold bg-white rounded-md"
+      className="flex items-center gap-1 px-1 m-1 mr-0 text-secondary font-bold bg-white rounded-md focus:outline-primary"
       onClick={() => history.goBack()}
-      role="button"
-      tabIndex={0}
+      onKeyDown={handleKeyDown}
+      type="button"
     >
       <BackIcon />
       Back
-    </div>
+    </button>
   );
 }
