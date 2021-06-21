@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import InfoIcon from "components/elements/IconsComponents/InfoIcon";
 import SwipeIcon from "components/elements/IconsComponents/SwipeIcon";
 import ctl from "helpers/ctl";
 import React, { ReactElement } from "react";
@@ -60,10 +61,33 @@ const DashboardList = React.memo(
             ))
         : "";
 
+    const toggleTipText =
+      title === "Excluded"
+        ? "This is your excluded list of countries, so basically you don't want to travel there or may be there are just dangerous."
+        : "This is your included list of countries, the application will randomly choose one of them, be sure to keep only the ones you wanna travel in.";
+
     return (
       <div className=" md:w-2/4 w-11/12 p-2 h-full md:h-96 max-h-screen">
         <div className="flex justify-between items-center">
-          <h3 className="text-md font-semibold text-secondary">{title}</h3>
+          <div className="flex">
+            <h3 className="text-md font-semibold text-secondary">{title}</h3>
+            <div className="relative flex self-center pl-1 focus:outline-none">
+              <button
+                className="focus:outline-primary"
+                type="button"
+                aria-labelledby="info-icon"
+              >
+                <InfoIcon />
+              </button>
+              <div
+                className="absolute top-6 -right-36 z-50 w-60 p-2 shadow-sm border rounded-md bg-white text-center"
+                role="tooltip"
+                id="info-icon"
+              >
+                {toggleTipText}
+              </div>
+            </div>
+          </div>
           <span
             className={link}
             onClick={() => {

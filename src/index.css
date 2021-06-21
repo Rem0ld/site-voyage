@@ -59,3 +59,12 @@ btn-danger: red-600
 .margin-children > * {
   margin: 0 0.5em;
 }
+
+[role="tooltip"] {
+  display: none;
+}
+
+span:focus + [role="tooltip"],
+button:focus + [role="tooltip"] {
+  display: block;
+}

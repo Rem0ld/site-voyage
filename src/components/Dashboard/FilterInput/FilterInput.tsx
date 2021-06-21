@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import InfoIcon from "components/elements/IconsComponents/InfoIcon";
 import MagnifyGlassIcon from "components/elements/IconsComponents/MagnifyGlassIcon";
 import React, { ReactElement, useState } from "react";
 import { Country } from "types";
@@ -66,6 +67,23 @@ export default function FilterInput({
         ) : (
           ""
         )}
+        <div className="relative focus:outline-none">
+          <button
+            className="focus:outline-primary"
+            type="button"
+            aria-labelledby="info-icon"
+          >
+            <InfoIcon />
+          </button>
+          <div
+            className="absolute top-6 -right-32 z-50 w-60 p-2 shadow-sm border rounded-md bg-white text-center"
+            role="tooltip"
+            id="info-icon"
+          >
+            You can filter a list of country, if you click on a country, it will
+            go in the &quot;Excluded list&quot; if it is not already there.
+          </div>
+        </div>
       </div>
     </div>
   );

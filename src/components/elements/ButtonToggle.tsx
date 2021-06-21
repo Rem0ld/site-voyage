@@ -1,6 +1,6 @@
 import { motion, Transition, Variants } from "framer-motion";
 import ctl from "helpers/ctl";
-import React, { MouseEventHandler, ReactElement } from "react";
+import React, { ReactElement } from "react";
 
 type AppProperties = {
   d?: string;
@@ -8,7 +8,7 @@ type AppProperties = {
   transition?: Transition;
 };
 
-type Property = { toggle: MouseEventHandler<HTMLButtonElement> };
+type Property = { toggle: () => void };
 
 const Path = (properties: AppProperties) => (
   <motion.path
@@ -32,7 +32,7 @@ w-10
 shadow-md 
 rounded-r-sm 
 bg-white 
-focus:outline-none
+
 focus:outline-primary
 `);
 

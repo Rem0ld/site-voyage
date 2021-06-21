@@ -121,9 +121,13 @@ export default function Continents({
           <ChevronRightIcon />
         </motion.div>
       </div>
-      <div className={`${filter} ${classesFilterList} ${opacity}`}>
-        <ul>{isOpen ? listItems : ""}</ul>
-      </div>
+      {isOpen ? (
+        <div className={`${filter} ${classesFilterList} ${opacity}`}>
+          <ul>{listItems}</ul>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

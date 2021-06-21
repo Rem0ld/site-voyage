@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import InfoIcon from "components/elements/IconsComponents/InfoIcon";
 import ctl from "helpers/ctl";
 import React, { ReactElement, useState } from "react";
 import { Continent } from "types";
@@ -82,16 +83,32 @@ export default function Filters({
     <div className="py-4">
       <div className="flex items-baseline">
         <h3 className="text-md font-semibold text-secondary">Filters</h3>
-        <span
+        <button
           className={link}
           onClick={() => {
             resetAll(listDangerousCountry);
           }}
-          role="button"
-          tabIndex={0}
+          type="button"
         >
           Reset all
-        </span>
+        </button>
+        <div className="relative flex self-center pl-1 focus:outline-none">
+          <button
+            className="focus:outline-primary"
+            type="button"
+            aria-labelledby="info-icon"
+          >
+            <InfoIcon />
+          </button>
+          <div
+            className="absolute top-6 -right-32 z-50 w-60 p-2 shadow-sm border rounded-md bg-white text-center"
+            role="tooltip"
+            id="info-icon"
+          >
+            Here you access to filters, they are lists you can check so you can
+            have multiple filters at the same time
+          </div>
+        </div>
       </div>
       <div className="flex">
         <Continents
