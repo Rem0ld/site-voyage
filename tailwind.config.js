@@ -54,6 +54,16 @@ module.exports = {
     },
     outline: {
       primary: "2px solid #84CC16",
+      none: "2px solid transparent; outline-offset: 2px;",
+    },
+    maxWidth: {
+      "1/4": "25%",
+      "1/2": "50%",
+      "3/4": "75%",
+      "2/5": "40%",
+      xs: "20rem",
+      lg: "32rem",
+      "7xl": "80rem",
     },
   },
   darkMode: "media",
