@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { getCountryPerName } from "api/server/countryRoutes";
 import Button from "components/elements/Button";
 import DeleteIcon from "components/elements/IconsComponents/DeleteIcon";
@@ -31,6 +30,10 @@ export default function TripItem({
     setIsOpen((previousState) => !previousState);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
+    if (event.key === "Enter") toggleOpen();
+  };
+
   const handleClickDetail = (name: string) =>
     getCountryPerName(name).then((result) => {
       history.push({
@@ -46,24 +49,37 @@ export default function TripItem({
     ? formatDate(travel.returnDate, "/")
     : "";
 
+  // If less than 7 days from departure, we show "coming soon"
+  const comingSoon =
+    travel.departureDate &&
+    new Date(travel.departureDate).getTime() - Date.now() <=
+      60 * 60 * 24 * 7 * 1000 ? (
+      <span className="font-semibold">Coming soon</span>
+    ) : (
+      ""
+    );
+
+  const isPassed =
+    travel.departureDate &&
+    Date.now() > new Date(travel.departureDate).getTime();
+
   return (
     <div className="w-full mt-4 pb-2 border-gray-400 border-b-2">
       <div className="flex lg:flex-row flex-col justify-between lg:items-center gap-2 ">
         <div
-          className="flex items-center w-auto cursor-pointer"
+          className="flex items-center w-auto max-w-2/5 cursor-pointer focus:outline-primary"
           onClick={toggleOpen}
+          onKeyDown={handleKeyDown}
           tabIndex={0}
           role="button"
         >
           <h4 className="pr-4 text-lg font-semibold ">{travel.destination}</h4>
-          {departureDate || returnDate ? (
-            <span>
-              {departureDate} - {returnDate}
-            </span>
-          ) : (
-            ""
-          )}
+          <span>
+            {departureDate ? <> {departureDate} </> : ""}
+            {returnDate ? <> - {returnDate} </> : ""}
+          </span>
         </div>
+        <div>{comingSoon}</div>
         <div className="margin-children relative flex md:justify-end justify-evenly items-center  w-auto">
           <Button
             text="Detail"
@@ -121,28 +137,32 @@ export default function TripItem({
 
           <div className="flex">
             {!travel.done ? (
-              <div
-                className="pr-2"
+              <button
+                className={
+                  !isPassed
+                    ? "mr-2 focus:outline-primary filter grayscale"
+                    : "mr-2 focus:outline-primary"
+                }
                 onClick={() => {
                   updateTravel(travel.id as number);
                 }}
-                tabIndex={0}
-                role="button"
+                type="button"
+                disabled={!isPassed}
               >
                 <ValidIcon />
-              </div>
+              </button>
             ) : (
               ""
             )}
-            <div
+            <button
+              className="focus:outline-primary"
               onClick={() => {
                 deleteTravel(travel.id as number);
               }}
-              tabIndex={0}
-              role="button"
+              type="button"
             >
               <DeleteIcon />
-            </div>
+            </button>
           </div>
         </div>
       </div>
