@@ -1,9 +1,9 @@
-import LogoutIcon from "components/elements/IconsComponents/LogoutIcon";
+import LogoutIcon from "components/Elements/IconsComponents/LogoutIcon";
 import Cookies from "js-cookie";
 import React, { ReactElement } from "react";
 import { Redirect } from "react-router-dom";
 import auth from "../../../firebase-auth";
-import classes from "../elements/Menu/style";
+import classes from "../Elements/Menu/style";
 
 export default function LogoutButton(): ReactElement {
   /**

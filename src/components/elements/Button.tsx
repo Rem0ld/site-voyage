@@ -36,7 +36,7 @@ h-9
 `);
 
 const small = ctl(`
-w-auto
+w-16
 h-6
 `);
 

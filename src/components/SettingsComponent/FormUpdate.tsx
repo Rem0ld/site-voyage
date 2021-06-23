@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { updateUserAddress } from "api/server/UserRoutes";
-import Button from "components/elements/Button";
+import Button from "components/Elements/Button";
 import Cookies from "js-cookie";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";

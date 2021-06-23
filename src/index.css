@@ -13,14 +13,14 @@ btn-danger: red-600
     0 1px 2px 0 rgb(0 0 0 / 6%);
 }
 .height-screen {
-  height: calc(100vh - theme(spacing.16) - 40px);
+  height: calc(768px - theme(spacing.16) - 40px);
 }
 .min-height-screen-dash {
   min-height: calc(100vh - theme(spacing.16) - 40px);
 }
 
 .min-height-screen {
-  min-height: calc(100vh - 40px);
+  min-height: calc(768px - 40px);
 }
 
 .content-container {
@@ -67,4 +67,10 @@ btn-danger: red-600
 span:focus + [role="tooltip"],
 button:focus + [role="tooltip"] {
   display: block;
+}
+
+.bg-img {
+  background-image: url("../public/bg-welcome.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
 }

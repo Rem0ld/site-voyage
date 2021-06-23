@@ -3,10 +3,10 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import savePicture from "api/server/pictureRoute";
-import Button from "components/elements/Button";
+import Button from "components/Elements/Button";
 import ctl from "helpers/ctl";
 import React, { ReactElement, useState } from "react";
-import CrossIcon from "../elements/IconsComponents/CrossIcon";
+import CrossIcon from "../Elements/IconsComponents/CrossIcon";
 
 interface AppProperties {
   closePopup: () => void;

@@ -1,5 +1,5 @@
 import { saveTravel } from "api/server/TravelRoutes";
-import Button from "components/elements/Button";
+import Button from "components/Elements/Button";
 import Cookies from "js-cookie";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";

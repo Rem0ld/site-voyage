@@ -2,7 +2,7 @@ import { deleteNotification } from "api/server/notificationRoute";
 import { deleteTravel, getTravel, updateTravel } from "api/server/TravelRoutes";
 import React, { ReactElement, useEffect, useState } from "react";
 import { Travel } from "types";
-import TopLine from "../elements/TopLine";
+import TopLine from "../Elements/TopLine";
 import TripItem from "./TripItem";
 
 export default function Trips(): ReactElement {

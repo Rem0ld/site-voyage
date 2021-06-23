@@ -3,12 +3,12 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import createReview from "api/server/reviewRoutes";
-import Button from "components/elements/Button";
-import StarEmpty from "components/elements/IconsComponents/StarEmpty";
-import StarFilled from "components/elements/IconsComponents/StarFilled";
+import Button from "components/Elements/Button";
+import StarEmpty from "components/Elements/IconsComponents/StarEmpty";
+import StarFilled from "components/Elements/IconsComponents/StarFilled";
 import ctl from "helpers/ctl";
 import React, { ReactElement, useMemo, useState } from "react";
-import CrossIcon from "../elements/IconsComponents/CrossIcon";
+import CrossIcon from "../Elements/IconsComponents/CrossIcon";
 
 interface AppProperties {
   closePopup: () => void;

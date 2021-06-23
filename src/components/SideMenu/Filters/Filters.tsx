@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import InfoIcon from "components/elements/IconsComponents/InfoIcon";
+import InfoIcon from "components/Elements/IconsComponents/InfoIcon";
 import ctl from "helpers/ctl";
 import React, { ReactElement, useState } from "react";
 import { Continent } from "types";

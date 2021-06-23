@@ -2,8 +2,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-console */
 import { getUser } from "api/server/UserRoutes";
-import Button from "components/elements/Button";
-import Spinner from "components/elements/IconsComponents/Spinner";
+import Button from "components/Elements/Button";
+import Spinner from "components/Elements/IconsComponents/Spinner";
 import { SessionContext } from "components/SessionProvider";
 import firebase from "firebase/app";
 import ctl from "helpers/ctl";

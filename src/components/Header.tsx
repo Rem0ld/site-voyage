@@ -2,7 +2,7 @@ import ctl from "helpers/ctl";
 import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../public/logo_with_plane.svg";
-import Menu from "./elements/Menu/Menu";
+import Menu from "./Elements/Menu/Menu";
 
 const mainDiv = ctl(`
 fixed 

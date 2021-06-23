@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import ChevronRightIcon from "components/elements/IconsComponents/ChevronRightIcon";
+import ChevronRightIcon from "components/Elements/IconsComponents/ChevronRightIcon";
 import { motion } from "framer-motion";
 import capitalize from "helpers/capitalize";
 import ctl from "helpers/ctl";

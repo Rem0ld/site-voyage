@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 import urlMaker from "api/UrlMaker";
-import Button from "components/elements/Button";
+import Button from "components/Elements/Button";
 import { getSessionStorage } from "helpers/sessionStorage";
 import Cookies from "js-cookie";
 import React, { ReactElement } from "react";

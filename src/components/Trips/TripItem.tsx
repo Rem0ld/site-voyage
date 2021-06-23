@@ -1,7 +1,7 @@
 import { getCountryPerName } from "api/server/countryRoutes";
-import Button from "components/elements/Button";
-import DeleteIcon from "components/elements/IconsComponents/DeleteIcon";
-import ValidIcon from "components/elements/IconsComponents/ValidIcon";
+import Button from "components/Elements/Button";
+import DeleteIcon from "components/Elements/IconsComponents/DeleteIcon";
+import ValidIcon from "components/Elements/IconsComponents/ValidIcon";
 import Links from "components/Links/Links";
 import formatDate from "helpers/formatDate";
 import React, { ReactElement, useState } from "react";

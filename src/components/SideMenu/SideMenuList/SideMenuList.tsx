@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import InfoIcon from "components/elements/IconsComponents/InfoIcon";
-import SwipeIcon from "components/elements/IconsComponents/SwipeIcon";
+import InfoIcon from "components/Elements/IconsComponents/InfoIcon";
+import SwipeIcon from "components/Elements/IconsComponents/SwipeIcon";
 import ctl from "helpers/ctl";
 import React, { ReactElement } from "react";
 import { Country } from "types";
@@ -22,7 +22,7 @@ hover:underline
 focus:outline-primary
 `);
 
-const DashboardList = React.memo(
+const SideMenuList = React.memo(
   ({ title, list, onclick, removeAll }: AppProperties): ReactElement => {
     // Making LI elements
     const listItems =
@@ -105,4 +105,4 @@ const DashboardList = React.memo(
   }
 );
 
-export default DashboardList;
+export default SideMenuList;

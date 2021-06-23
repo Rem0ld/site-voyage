@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, useCycle } from "framer-motion";
 import ctl from "helpers/ctl";
 import fisherYatesShuffle from "helpers/fisherYatesShuffle";
 import random from "helpers/randomNumber";
@@ -6,9 +6,10 @@ import { getSessionStorageIncluded } from "helpers/sessionStorage";
 import React, { ReactElement, useState } from "react";
 import { Country } from "types";
 import main from "../../public/main_version2.svg";
-import Dashboard from "./Dashboard/Dashboard";
-import Button from "./elements/Button";
-import Loading from "./elements/Loading";
+import Button from "./Elements/Button";
+import Loading from "./Elements/Loading";
+import ModalWelcome from "./Elements/ModalWelcome";
+import SideMenu from "./SideMenu/SideMenu";
 
 const classesButton = ctl(`
 absolute 
@@ -20,17 +21,18 @@ transform-gpu
 -translate-y-2/4
 `);
 
-const classDivTrain = ctl(`
-absolute 
-z-0 
-transform-gpu 
-bottom-24 
-left-full 
--translate-y-full 
--translate-x-full
-`);
+// const classDivTrain = ctl(`
+// absolute
+// z-0
+// transform-gpu
+// bottom-24
+// left-full
+// -translate-y-full
+// -translate-x-full
+// `);
 
 export default function Home(): ReactElement {
+  const [isSideMenuOpen, toggleSideMenu] = useCycle(false, true);
   const [isLoading, setLoading] = useState(false);
   const [winner, setWinner] = useState<Country>({} as Country);
   // const { data } = useQuery("countries", GetCountries);
@@ -51,8 +53,9 @@ export default function Home(): ReactElement {
   };
 
   return !isLoading ? (
-    <div className="content-container height-screen min-height-screen">
-      <Dashboard />
+    <div className="content-container relative height-screen min-height-screen">
+      <SideMenu isOpen={isSideMenuOpen} toggleMenu={toggleSideMenu} />
+      <ModalWelcome toggleMenu={toggleSideMenu} />
       <motion.div
         className="relative z-10"
         initial={{ y: 0, x: 0 }}

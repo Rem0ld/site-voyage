@@ -1,4 +1,4 @@
-import StarFilled from "components/elements/IconsComponents/StarFilled";
+import StarFilled from "components/Elements/IconsComponents/StarFilled";
 import ctl from "helpers/ctl";
 import formatDate from "helpers/formatDate";
 import React, { ReactElement } from "react";

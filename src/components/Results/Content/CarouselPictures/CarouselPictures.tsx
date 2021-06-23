@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import BackIcon from "components/elements/IconsComponents/BackIcon";
+import BackIcon from "components/Elements/IconsComponents/BackIcon";
 import { motion } from "framer-motion";
 import React, { ReactElement, useEffect, useState } from "react";
 import { Picture, Review } from "types";

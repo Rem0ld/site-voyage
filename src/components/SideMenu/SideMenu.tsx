@@ -2,9 +2,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-restricted-syntax */
 import GetCountries from "api/GetCountries";
-import FilterInput from "components/Dashboard/FilterInput/FilterInput";
-import Filters from "components/Dashboard/Filters/Filters";
-import { motion, useCycle } from "framer-motion";
+import FilterInput from "components/SideMenu/FilterInput/FilterInput";
+import Filters from "components/SideMenu/Filters/Filters";
+import { motion } from "framer-motion";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Continent, Country, Filter, Hobby } from "types";
@@ -17,8 +17,8 @@ import {
   setSessionStorageFilter,
   setSessionStorageIncludedExcluded,
 } from "../../helpers/sessionStorage";
-import ButtonToggle from "../elements/ButtonToggle";
-import DashboardList from "./DashboardList/DashboardList";
+import ButtonToggle from "../Elements/ButtonToggle";
+import DashboardList from "./SideMenuList/SideMenuList";
 import classes from "./styles";
 
 // To move to external file
@@ -33,8 +33,15 @@ const transition = {
   duration: 0.8,
 };
 
-export default function Dashboard(): ReactElement {
-  const [isOpen, toggleOpen] = useCycle(false, true);
+interface AppProperties {
+  isOpen: boolean;
+  toggleMenu: () => void;
+}
+
+export default function SideMenu({
+  isOpen,
+  toggleMenu,
+}: AppProperties): ReactElement {
   const [includedCountry, setIncludedCountry] = useState<Country[]>([]);
   const [excludedCountry, setExcludedCountry] = useState<Country[]>([]);
   const [continents, setContinents] = useState<Continent>({});
@@ -265,7 +272,7 @@ export default function Dashboard(): ReactElement {
       {/* Button to open Dashboard */}
       <ButtonToggle
         toggle={() => {
-          toggleOpen();
+          toggleMenu();
         }}
       />
       <h2 className="text-lg font-bold text-secondary">Options:</h2>
