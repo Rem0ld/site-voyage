@@ -9,6 +9,7 @@
 - [ ] Change the `favicon.png`, `apple-touch-icon.png`, `android-chrome-192x192.png` and `android-chrome-512x512.png`. [favicon.io](https://favicon.io) is a cool tool for generating these assets.
 - [ ] check how to use github actions
 - [ ] Modify or delete the `LICENSE` file.
+- [ ] New map component is created to make an interactive map which you can click to choose countries you wanna go, I need to find a way to implement it if it's possible
 
 ### Before you start coding
 

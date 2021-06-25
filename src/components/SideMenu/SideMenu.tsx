@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable unicorn/no-array-reduce */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-restricted-syntax */
@@ -104,6 +105,7 @@ export default function SideMenu({
     let included: Country[] = [];
     let excluded: Country[] = [];
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     for (const [_, object] of Object.entries(list)) {
       const element: List = object as List;
 
