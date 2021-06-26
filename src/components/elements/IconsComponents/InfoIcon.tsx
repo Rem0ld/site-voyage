@@ -3,6 +3,7 @@ import React, { ReactElement } from "react";
 export default function InfoIcon(): ReactElement {
   return (
     <svg
+      className="inline"
       width="17"
       height="17"
       viewBox="0 0 17 17"

@@ -69,7 +69,7 @@ export default function FilterInput({
         )}
         <div className="relative focus:outline-none">
           <button
-            className="focus:outline-primary"
+            className="focus:outline-primary transition delay-300"
             type="button"
             aria-labelledby="info-icon"
           >

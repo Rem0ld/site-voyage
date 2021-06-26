@@ -1,59 +1,72 @@
+import { motion, useCycle } from "framer-motion";
 import Cookies from "js-cookie";
 import React, { ReactElement, useEffect, useState } from "react";
-import Button from "./Button";
+import FirstStep from "./Steps/FirstStep";
+import SecondStep from "./Steps/SecondStep";
+import ThirdStep from "./Steps/ThirdStep";
 
 interface AppProperties {
   toggleMenu: () => void;
 }
 
+const transition = {
+  duration: 0.8,
+};
+
 export default function ModalWelcome({
   toggleMenu,
 }: AppProperties): ReactElement {
-  const [steps, setsteps] = useState([false, false, false, false]);
-
-  useEffect(() => {
-    // Cookies.set("intro", "true");
-    const intro = Cookies.get("intro");
-    if (intro) {
-      const newSteps = steps.map(() => true);
-      setsteps(newSteps);
-    }
-  }, [steps]);
+  const [needTutorial, setNeedTutorial] = useState(false);
+  const [position, cyclePosition] = useCycle(
+    { x: "0%", y: "0%" },
+    { x: "-100%", y: "-100%" },
+    { x: "140%", y: "-90%" }
+  );
+  const [size, cycleSize] = useCycle(
+    { w: "33%", h: "16rem" },
+    { w: "17%", h: "10rem" },
+    { w: "17%", h: "10rem" }
+  );
 
   const handleNext = () => {
+    cyclePosition();
+    cycleSize();
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    cycleContent();
     toggleMenu();
   };
 
   const closeModal = () => {
-    const newSteps = steps.map(() => true);
-    setsteps(newSteps);
+    setNeedTutorial(false);
+    Cookies.set("intro", "true", { expires: 365 });
   };
 
-  return !steps[0] ? (
-    <div className="bg-img absolute w-2/6 h-64 t-2/4 l-2/4 z-50 bg-white p-4 rounded-md">
-      <div className="grid place-items-center h-5/6 text-center font-bold">
-        <div>
-          <h2>Welcome to Audacious Venture</h2>
-          <h2>Let me show you how to use the application</h2>
-        </div>
-      </div>
-      <div className="flex justify-center space-x-4">
-        <Button
-          text="Cancel"
-          type="standard"
-          size="small"
-          isButton
-          onclick={closeModal}
-        />
-        <Button
-          text="Next"
-          type="valid"
-          size="small"
-          isButton
-          onclick={handleNext}
-        />
-      </div>
-    </div>
+  const [content, cycleContent] = useCycle(
+    <FirstStep handleNext={handleNext} closeModal={closeModal} />,
+    <SecondStep handleNext={handleNext} closeModal={closeModal} />,
+    <ThirdStep closeModal={closeModal} />
+  );
+
+  useEffect(() => {
+    const intro = Cookies.get("intro");
+    if (!intro) {
+      setNeedTutorial(true);
+    }
+  }, []);
+
+  return needTutorial ? (
+    <motion.div
+      animate={{
+        x: position.x,
+        y: position.y,
+        width: size.w,
+        height: size.h,
+      }}
+      transition={transition}
+      className="bg-img absolute w-2/6 h-64 z-50 p-4 bg-white rounded-md border"
+    >
+      {content}
+    </motion.div>
   ) : (
     <div />
   );

@@ -31,7 +31,7 @@ font-bold
 `);
 
 const medium = ctl(`
-w-auto
+w-16
 h-9
 `);
 
