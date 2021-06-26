@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import InfoIcon from "components/Elements/IconsComponents/InfoIcon";
 import MagnifyGlassIcon from "components/Elements/IconsComponents/MagnifyGlassIcon";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { Country } from "types";
 import classes from "./styles";
 
@@ -16,28 +16,18 @@ export default function FilterInput({
   banACountry,
 }: AppProperties): ReactElement {
   const [inputValue, setInputValue] = useState("");
+  const [list, setList] = useState<Country[]>();
+  const [showList, setShowList] = useState(true);
 
-  /**
-   * Filters list of country from user input and maps it into a HTML list
-   */
-  const list =
-    includedCountry.length > 0
-      ? includedCountry
-          .filter((element) =>
-            element.name.toLowerCase().includes(inputValue.toLowerCase())
-          )
-          .map((element) => (
-            <li
-              key={element.numericCode}
-              onClick={() => {
-                banACountry(+element.numericCode);
-              }}
-              className="p-2 cursor-pointer hover:bg-primary rounded-md"
-            >
-              {element.name}
-            </li>
-          ))
-      : "";
+  useEffect(() => {
+    if (inputValue.length > 0 && includedCountry.length > 0) {
+      setList(
+        includedCountry.filter((element) =>
+          element.name.toLowerCase().includes(inputValue.toLowerCase())
+        )
+      );
+    }
+  }, [inputValue, includedCountry]);
 
   return (
     <div className="py-4">
@@ -53,14 +43,33 @@ export default function FilterInput({
           onChange={(event) => {
             setInputValue(() => event.target.value);
           }}
+          onBlur={() => {
+            setTimeout(() => {
+              setShowList(false);
+            }, 50);
+          }}
+          onFocus={() => {
+            setShowList(true);
+          }}
         />
-        {inputValue.length > 0 ? (
+        {showList && inputValue.length > 0 ? (
           <div className={classes.list}>
             <ul>
-              {list.length === 0 ? (
+              {list?.length === 0 ? (
                 <li className="p-2 rounded-md">no result</li>
               ) : (
-                list
+                showList &&
+                list?.map((element) => (
+                  <li
+                    key={element.numericCode}
+                    onClick={() => {
+                      banACountry(+element.numericCode);
+                    }}
+                    className="p-2 cursor-pointer hover:bg-primary rounded-md"
+                  >
+                    {element.name}
+                  </li>
+                ))
               )}
             </ul>
           </div>
