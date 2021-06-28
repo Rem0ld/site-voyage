@@ -31,11 +31,12 @@ font-bold
 `);
 
 const medium = ctl(`
-w-16
+min-w-min
 h-9
 `);
 
 const small = ctl(`
+min-w-min
 w-16
 h-6
 `);
