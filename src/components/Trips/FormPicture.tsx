@@ -33,8 +33,8 @@ export default function FormPicture({
   destination,
 }: AppProperties): ReactElement {
   const [description, setDescription] = useState("");
-  const [picture, setPicture] = useState("");
-
+  const [picture, setPicture] = useState<File>();
+  const working = false;
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(description, destination, picture);
@@ -43,7 +43,7 @@ export default function FormPicture({
       .catch((error) => console.error(error));
   };
 
-  const onImageChange = (event: any) => {
+  const onImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       setPicture(event.target.files[0]);
     }
@@ -51,59 +51,70 @@ export default function FormPicture({
 
   return (
     <div className={container}>
-      <div className="flex justify-between mb-4">
-        <div className="w-4 h-4" />
-        <h2 className="font-bold text-center">Upload an image</h2>
-        <div
-          className="grid place-items-center w-auto h-auto cursor-pointer"
-          onClick={() => {
-            closePopup();
-          }}
-        >
-          <CrossIcon />
-        </div>
-      </div>
-      <form
-        action=""
-        onSubmit={(event) => {
-          handleSubmit(event);
-        }}
-        encType="multipart/form-data"
-      >
-        <div className="">
-          <div className="mb-4">
-            <label htmlFor="picture">Choose a file:</label>
-            <input
-              type="file"
-              name="picture"
-              id="picture"
-              onChange={onImageChange}
-            />
+      {working ? (
+        <>
+          <div className="flex justify-between mb-4">
+            <div className="w-4 h-4" />
+            <h2 className="font-bold text-center">Upload an image</h2>
+            <div
+              className="grid place-items-center w-auto h-auto cursor-pointer"
+              onClick={() => {
+                closePopup();
+              }}
+            >
+              <CrossIcon />
+            </div>
           </div>
-          <div className="relative flex justify-between items-baseline">
-            <label className="block" htmlFor="description">
-              Please give a quick description of the picture:
-            </label>
-            <span className="text-xs">{255 - description.length}/255</span>
-          </div>
-          <textarea
-            className="resize-none"
-            name="comment"
-            id="comment"
-            cols={38}
-            rows={3}
-            maxLength={255}
-            minLength={1}
-            value={description}
-            onChange={(event) => {
-              setDescription(event.target.value);
+          <form
+            action=""
+            onSubmit={(event) => {
+              handleSubmit(event);
             }}
-          />
-        </div>
-        <div className="grid place-items-center">
-          <Button text="Upload" size="medium" type="valid" isButton={false} />
-        </div>
-      </form>
+            encType="multipart/form-data"
+          >
+            <div className="">
+              <div className="mb-4">
+                <label htmlFor="picture">Choose a file:</label>
+                <input
+                  type="file"
+                  name="picture"
+                  id="picture"
+                  onChange={onImageChange}
+                />
+              </div>
+              <div className="relative flex justify-between items-baseline">
+                <label className="block" htmlFor="description">
+                  Please give a quick description of the picture:
+                </label>
+                <span className="text-xs">{255 - description.length}/255</span>
+              </div>
+              <textarea
+                className="resize-none"
+                name="comment"
+                id="comment"
+                cols={38}
+                rows={3}
+                maxLength={255}
+                minLength={1}
+                value={description}
+                onChange={(event) => {
+                  setDescription(event.target.value);
+                }}
+              />
+            </div>
+            <div className="grid place-items-center">
+              <Button
+                text="Upload"
+                size="medium"
+                type="valid"
+                isButton={false}
+              />
+            </div>
+          </form>
+        </>
+      ) : (
+        <p>Not working yet...</p>
+      )}
     </div>
   );
 }
