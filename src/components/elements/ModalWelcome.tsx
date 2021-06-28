@@ -19,8 +19,8 @@ export default function ModalWelcome({
   const [needTutorial, setNeedTutorial] = useState(false);
   const [position, cyclePosition] = useCycle(
     { x: "0%", y: "0%" },
-    { x: "-100%", y: "-100%" },
-    { x: "140%", y: "-90%" }
+    { x: "-100%", y: "-70%" },
+    { x: "140%", y: "-70%" }
   );
   const [size, cycleSize] = useCycle(
     { w: "33%", h: "16rem" },
@@ -51,6 +51,10 @@ export default function ModalWelcome({
     const intro = Cookies.get("intro");
     if (!intro) {
       setNeedTutorial(true);
+    }
+    if (window.innerWidth < 1260) {
+      setNeedTutorial(false);
+      Cookies.set("intro", "true", { expires: 365 });
     }
   }, []);
 
