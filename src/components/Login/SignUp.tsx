@@ -141,8 +141,11 @@ export default function SignUp(): ReactElement {
     <div className="content-container min-height-screen overscroll-auto py-3">
       <div className="w-11/12 max-w-lg mt-16 bg-white rounded-md">
         <h2 className="font-bold text-xl text-center pt-6">Sign Up</h2>
+        <h3 className="text-center text-red-500">
+          You can&apos;t signup yet, sorry
+        </h3>
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          // onSubmit={handleSubmit(onSubmit)}
           className="w-full max-w-lg bg-white rounded-md sm:px-8 px-4 pt-4 pb-8"
         >
           <div className="flex flex-wrap -mx-3 mb-6">
@@ -151,6 +154,7 @@ export default function SignUp(): ReactElement {
                 Username *
               </label>
               <input
+                disabled
                 id="grid-first-name"
                 type="text"
                 placeholder="Jane"
@@ -179,6 +183,7 @@ export default function SignUp(): ReactElement {
                 Email *
               </label>
               <input
+                disabled
                 id="grid-last-name"
                 type="email"
                 placeholder="jane.doe@gmail.com"
@@ -204,6 +209,7 @@ export default function SignUp(): ReactElement {
                 Password *
               </label>
               <input
+                disabled
                 id="grid-password"
                 type="password"
                 placeholder="******************"
@@ -237,6 +243,7 @@ export default function SignUp(): ReactElement {
                 Confirm Password *
               </label>
               <input
+                disabled
                 id="grid-confirm-password"
                 type="password"
                 placeholder="******************"
@@ -261,6 +268,7 @@ export default function SignUp(): ReactElement {
               </label>
               <div className="relative">
                 <select
+                  disabled
                   id="grid-country"
                   className={classes.input}
                   {...register("country")}
@@ -276,6 +284,7 @@ export default function SignUp(): ReactElement {
                 City
               </label>
               <input
+                disabled
                 id="grid-city"
                 type="text"
                 placeholder="Paris"
@@ -294,6 +303,7 @@ export default function SignUp(): ReactElement {
                 Zip
               </label>
               <input
+                disabled
                 id="grid-zip"
                 type="text"
                 placeholder="90210"

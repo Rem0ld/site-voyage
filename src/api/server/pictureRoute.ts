@@ -2,7 +2,7 @@ import urlMaker from "api/UrlMaker";
 import Cookies from "js-cookie";
 import { User } from "types";
 
-export default async function savePicture(picture: string): Promise<any> {
+export default async function savePicture(picture: File): Promise<any> {
   const url = urlMaker("picture", "save");
   const user: User = Cookies.getJSON("user") as User;
   const bearer = localStorage.getItem("@token")

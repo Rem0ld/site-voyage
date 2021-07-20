@@ -37,10 +37,10 @@ export default function FormPicture({
   const working = false;
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(description, destination, picture);
-    savePicture(picture)
-      .then((result) => console.log(result))
-      .catch((error) => console.error(error));
+    if (picture)
+      savePicture(picture)
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
   };
 
   const onImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {

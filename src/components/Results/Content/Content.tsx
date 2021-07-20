@@ -1,8 +1,5 @@
-import { saveTravel } from "api/server/TravelRoutes";
-import Button from "components/Elements/Button";
 import Cookies from "js-cookie";
 import React, { ReactElement, useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { Country, Localisation, User } from "types";
 import { SessionContext } from "../../SessionProvider";
 import CarouselComments from "./CarouselComments/CarouselComments";
@@ -103,7 +100,7 @@ export default function Content({
   return (
     <div className="w-full px-4 bg-gray-100">
       <div className="relative xl:w-4/5 lg:w-4/5 h-16 m-auto">
-        <div className="absolute bottom-0 right-0">
+        {/* <div className="absolute bottom-0 right-0">
           {sessionContext && !isSaved ? (
             <Button
               text="Save"
@@ -128,7 +125,7 @@ export default function Content({
               />
             </Link>
           )}
-        </div>
+        </div> */}
 
         <h1 className="pt-4 text-3xl font-bold text-center">{country.name}</h1>
       </div>

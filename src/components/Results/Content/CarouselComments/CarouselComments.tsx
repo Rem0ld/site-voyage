@@ -47,7 +47,7 @@ export default function CarouselComments({
     );
   };
 
-  return carouselItems ? (
+  return carouselItems.length > 0 ? (
     <>
       <div
         tabIndex={0}
@@ -72,6 +72,6 @@ export default function CarouselComments({
       </div>
     </>
   ) : (
-    <span>No Comments yet...</span>
+    <span>No Comments yet... And not in use at the moment, sorry</span>
   );
 }

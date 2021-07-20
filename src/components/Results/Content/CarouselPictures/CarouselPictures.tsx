@@ -44,7 +44,7 @@ export default function CarouselPictures({
     );
   };
 
-  return carouselItems ? (
+  return carouselItems.length > 0 ? (
     <>
       <div
         tabIndex={0}
@@ -69,6 +69,6 @@ export default function CarouselPictures({
       </div>
     </>
   ) : (
-    <span>No Pictures yet...</span>
+    <span>No pictures yet... And not in use at the moment, sorry</span>
   );
 }
