@@ -8,8 +8,7 @@
     "test": "cypress open",
     "test:headless": "cypress run",
     "build": "tsc --project tsconfig.json && vite build",
-    "serve": "vite preview",
-    "prepare": "husky install"
+    "serve": "vite preview"
   },
   "dependencies": {
     "firebase": "^8.6.2",
