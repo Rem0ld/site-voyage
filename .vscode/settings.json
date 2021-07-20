@@ -11,8 +11,8 @@
     "**/.eslintcache": true,
     "**/.gitignore": true,
     "**/.vscode": true,
-    "**/dist": true,
-    "**/node_modules": true,
+    "**/dist": false,
+    "**/node_modules": false,
     "**/yarn.lock": true
   },
   "git.enableCommitSigning": true,

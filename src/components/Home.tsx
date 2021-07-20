@@ -3,13 +3,13 @@ import ctl from "helpers/ctl";
 import fisherYatesShuffle from "helpers/fisherYatesShuffle";
 import random from "helpers/randomNumber";
 import { getSessionStorageIncluded } from "helpers/sessionStorage";
+import main from "public/main_version2.svg";
 import React, { ReactElement, useState } from "react";
+import Button from "src/components/Elements/Button";
+import Loading from "src/components/Elements/Loading";
+import ModalWelcome from "src/components/Elements/ModalWelcome";
+import SideMenu from "src/components/SideMenu/SideMenu";
 import { Country } from "types";
-import main from "../../public/main_version2.svg";
-import Button from "./Elements/Button";
-import Loading from "./Elements/Loading";
-import ModalWelcome from "./Elements/ModalWelcome";
-import SideMenu from "./SideMenu/SideMenu";
 
 const classesButton = ctl(`
 absolute 
