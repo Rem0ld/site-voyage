@@ -5,7 +5,7 @@ import random from "helpers/randomNumber";
 import { getSessionStorageIncluded } from "helpers/sessionStorage";
 import React, { ReactElement, useState } from "react";
 import { Country } from "types";
-import main from "../../main_version2.svg";
+import main from "../../public/main_version2.svg";
 import Button from "./Elements/Button";
 import Loading from "./Elements/Loading";
 import ModalWelcome from "./Elements/ModalWelcome";
