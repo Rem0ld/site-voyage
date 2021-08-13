@@ -1,6 +1,7 @@
+import urlMaker from "apis/UrlMaker";
 import Cookies from "js-cookie";
 import { Country, Localisation, User } from "types";
-import urlMaker from "../UrlMaker";
+
 
 interface Dates {
   depart: Date | undefined;

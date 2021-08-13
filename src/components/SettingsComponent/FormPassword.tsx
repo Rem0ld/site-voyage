@@ -3,7 +3,7 @@
 import { SessionContext } from "components/SessionProvider";
 import React, { ReactElement, useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import auth from "../../../firebase-auth";
+// import auth from "../../../firebase-auth";
 import Button from "../Elements/Button";
 import classes from "./styles";
 

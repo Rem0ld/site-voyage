@@ -1,6 +1,7 @@
+import urlMaker from "apis/UrlMaker";
 import Cookies from "js-cookie";
 import { User } from "types";
-import urlMaker from "../UrlMaker";
+
 
 export default async function createReview(review: any): Promise<any> {
   const url = urlMaker("review", "new");

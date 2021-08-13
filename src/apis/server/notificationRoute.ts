@@ -1,6 +1,7 @@
+import urlMaker from "apis/UrlMaker";
 import Cookies from "js-cookie";
 import { User } from "types";
-import urlMaker from "../UrlMaker";
+
 
 
 export async function getNotificationsUser(): Promise<any> {

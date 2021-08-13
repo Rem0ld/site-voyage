@@ -70,7 +70,7 @@ button:focus + [role="tooltip"] {
 }
 
 .bg-img {
-  background-image: url("../public/bg-welcome.svg");
+  background-image: url("public/bg-welcome.svg");
   background-repeat: no-repeat;
   background-size: contain;
 }

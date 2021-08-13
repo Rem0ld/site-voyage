@@ -1,6 +1,6 @@
 import Lottie from "lottie-react";
+import plane from "public/9844-loading-40-paperplane.json";
 import React, { ReactElement } from "react";
-import plane from "../../public/9844-loading-40-paperplane.json";
 
 interface Properties {
   error?: Error;

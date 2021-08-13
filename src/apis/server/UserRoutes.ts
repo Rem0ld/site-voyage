@@ -1,5 +1,5 @@
+import urlMaker from "apis/UrlMaker";
 import { Inputs } from "components/SettingsComponent/FormUpdate";
-import urlMaker from "../UrlMaker";
 
 export async function getUser(email: string): Promise<any> {
   const url = urlMaker("user", "one");

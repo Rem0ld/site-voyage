@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
+import loader from "public/loading_earth_globe.json";
+import train from "public/train.json";
 import React, { ReactElement } from "react";
-import loader from "../../public/loading_earth_globe.json";
-import train from "../../public/train.json";
 
 export default function LoadingAnimation(): ReactElement {
   return (

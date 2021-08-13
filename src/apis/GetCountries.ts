@@ -1,4 +1,5 @@
-import { Country } from "../types";
+import { Country } from "types";
+
 
 const url = "https://restcountries.eu/rest/v2/all"
 

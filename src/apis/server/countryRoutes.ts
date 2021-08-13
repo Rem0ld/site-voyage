@@ -1,5 +1,6 @@
+import urlMaker from "apis/UrlMaker";
 import { Country } from "types";
-import urlMaker from "../UrlMaker";
+
 
 export async function getCountry(numericCode: string): Promise<any> {
   const url = urlMaker("country", "one");

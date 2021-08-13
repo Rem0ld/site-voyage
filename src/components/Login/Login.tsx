@@ -9,7 +9,7 @@ import ctl from "helpers/ctl";
 import React, { ReactElement, useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, Redirect } from "react-router-dom";
-import auth from "../../../firebase-auth";
+// import auth from "../../../firebase-auth";
 import classes from "./styles";
 
 type Inputs = {

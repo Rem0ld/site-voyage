@@ -3,7 +3,7 @@
 import React, { ReactElement } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import auth from "../../../firebase-auth";
+// import auth from "../../../firebase-auth";
 import Button from "../Elements/Button";
 import classes from "./styles";
 

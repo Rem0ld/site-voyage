@@ -12,6 +12,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
+    "noUnusedParameters": true,
     "target": "ESNext",
     "types": ["vite/client"]
   },

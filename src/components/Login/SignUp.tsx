@@ -10,7 +10,7 @@ import React, { ReactElement } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Redirect } from "react-router-dom";
 import { Country, Payload, User } from "types";
-import auth from "../../../firebase-auth";
+// import auth from "../../../firebase-auth";
 import classes from "./styles";
 
 type Inputs = {

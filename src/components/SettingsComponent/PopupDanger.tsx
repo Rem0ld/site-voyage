@@ -8,7 +8,7 @@ import ctl from "helpers/ctl";
 import React, { ReactElement, useContext, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Payload, User } from "types";
-import auth from "../../../firebase-auth";
+// import auth from "../../../firebase-auth";
 import classes from "../Login/styles";
 
 interface AppProperties {
