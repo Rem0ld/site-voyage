@@ -3,7 +3,7 @@ import InfoIcon from "components/Elements/IconsComponents/InfoIcon";
 import ctl from "helpers/ctl";
 import React, { ReactElement, useState } from "react";
 import { Continent } from "types";
-import listDangerousCountry from "../../../api/listDangerousCountry";
+import listDangerousCountry from "../../../apis/listDangerousCountry";
 import Continents from "./FilterElement/Continents";
 
 interface AppProperties {

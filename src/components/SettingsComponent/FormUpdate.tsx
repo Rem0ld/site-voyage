@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { updateUserAddress } from "api/server/UserRoutes";
+import { updateUserAddress } from "apis/server/UserRoutes";
 import Button from "components/Elements/Button";
 import Cookies from "js-cookie";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";

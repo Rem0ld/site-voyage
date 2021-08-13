@@ -1,5 +1,9 @@
-import { deleteNotification } from "api/server/notificationRoute";
-import { deleteTravel, getTravel, updateTravel } from "api/server/TravelRoutes";
+import { deleteNotification } from "apis/server/notificationRoute";
+import {
+  deleteTravel,
+  getTravel,
+  updateTravel,
+} from "apis/server/TravelRoutes";
 import React, { ReactElement, useEffect, useState } from "react";
 import { Travel } from "types";
 import TopLine from "../Elements/TopLine";

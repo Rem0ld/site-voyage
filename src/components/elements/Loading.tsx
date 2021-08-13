@@ -1,4 +1,4 @@
-import { getCountry } from "api/server/countryRoutes";
+import { getCountry } from "apis/server/countryRoutes";
 import LoadingAnimation from "components/LoadingAnimation";
 import React, { ReactElement } from "react";
 import { useQuery } from "react-query";

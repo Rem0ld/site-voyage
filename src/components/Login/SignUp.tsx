@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import urlMaker from "api/UrlMaker";
+import urlMaker from "apis/UrlMaker";
 import Button from "components/Elements/Button";
 import { getSessionStorage } from "helpers/sessionStorage";
 import Cookies from "js-cookie";

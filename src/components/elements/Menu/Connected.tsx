@@ -3,7 +3,7 @@
 import {
   getNotificationsUser,
   UpdateNotifications,
-} from "api/server/notificationRoute";
+} from "apis/server/notificationRoute";
 import LogoutButton from "components/Login/LogoutButton";
 import { SessionContext } from "components/SessionProvider";
 import Cookies from "js-cookie";

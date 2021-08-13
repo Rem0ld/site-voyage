@@ -1,4 +1,4 @@
-import urlMaker from "api/UrlMaker";
+import urlMaker from "apis/UrlMaker";
 import Cookies from "js-cookie";
 import { User } from "types";
 

@@ -1,4 +1,4 @@
-import { getCountryPerName } from "api/server/countryRoutes";
+import { getCountryPerName } from "apis/server/countryRoutes";
 import Button from "components/Elements/Button";
 import DeleteIcon from "components/Elements/IconsComponents/DeleteIcon";
 import ValidIcon from "components/Elements/IconsComponents/ValidIcon";

@@ -1,4 +1,4 @@
-import { saveCountry } from "api/server/countryRoutes";
+import { saveCountry } from "apis/server/countryRoutes";
 import BackButton from "components/Elements/BackButton";
 import React, { ReactElement, useEffect, useState } from "react";
 import { Country } from "types";

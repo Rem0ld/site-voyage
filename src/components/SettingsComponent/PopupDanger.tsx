@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { deleteUser } from "api/server/UserRoutes";
+import { deleteUser } from "apis/server/UserRoutes";
 import Button from "components/Elements/Button";
 import { SessionContext } from "components/SessionProvider";
 import ctl from "helpers/ctl";

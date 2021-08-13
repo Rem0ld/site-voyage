@@ -2,14 +2,14 @@
 /* eslint-disable unicorn/no-array-reduce */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-restricted-syntax */
-import GetCountries from "api/GetCountries";
+import GetCountries from "apis/GetCountries";
 import FilterInput from "components/SideMenu/FilterInput/FilterInput";
 import Filters from "components/SideMenu/Filters/Filters";
 import { motion } from "framer-motion";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Continent, Country, Filter, Hobby } from "types";
-import listDangerousCountry from "../../api/listDangerousCountry";
+import listDangerousCountry from "../../apis/listDangerousCountry";
 import {
   getSessionStorage,
   getSessionStorageExcluded,

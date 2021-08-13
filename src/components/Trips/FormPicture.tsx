@@ -2,7 +2,7 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import savePicture from "api/server/pictureRoute";
+import savePicture from "apis/server/pictureRoute";
 import Button from "components/Elements/Button";
 import ctl from "helpers/ctl";
 import React, { ReactElement, useState } from "react";
@@ -10,7 +10,7 @@ import CrossIcon from "../Elements/IconsComponents/CrossIcon";
 
 interface AppProperties {
   closePopup: () => void;
-  destination: string;
+  // destination: string;
 }
 
 const container = ctl(`
@@ -30,7 +30,6 @@ border-gray-200
 
 export default function FormPicture({
   closePopup,
-  destination,
 }: AppProperties): ReactElement {
   const [description, setDescription] = useState("");
   const [picture, setPicture] = useState<File>();
