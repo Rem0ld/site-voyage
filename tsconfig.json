@@ -15,5 +15,5 @@
     "target": "ESNext",
     "types": ["vite/client"]
   },
-  "include": ["src/**/*.ts", "vite.config.ts"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "vite.config.ts"]
 }
